@@ -75,6 +75,11 @@ namespace ugly
                 state = ProcessState::Crash;
         }
 
+        void ProcessWindows::Kill()
+        {
+            TerminateProcess(processInfo.hProcess, 1);
+        }
+
         std::string ProcessWindows::ReadLine(std::chrono::high_resolution_clock::duration timeout)
         {
             char buffer[16384];

@@ -38,6 +38,7 @@ namespace ugly
             void Create() override;
             void Start() override;
             void Stop() override;
+            void Kill() override;
             std::string ReadLine(std::chrono::high_resolution_clock::duration timeout) override;
             void Write(const std::string& data) override;
         private:
