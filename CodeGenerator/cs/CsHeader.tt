@@ -12,7 +12,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
     #>
 
     
-    public enum class <#= Case.CamelCase.Convert(e.Name) #>
+    public enum <#= Case.CamelCase.Convert(e.Name) #>
     {<#
         foreach (KeyValuePair<string, int> kvp in e.Value)
         {
@@ -30,13 +30,13 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
     #>
 
 
-    public partial class <#= Case.CamelCase.Convert(c.Name) #>
+    public class <#= Case.CamelCase.Convert(c.Name) #>
     {<#
         foreach (ClassMember m in c.Member)
         {
             #>
 
-        <#
+        public <#
             BasicType type = CsHelper.Definition.GetBasicType(m.Type);
             if (type.IsBasic())
             {
@@ -59,14 +59,12 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
         }
         #>
 
-
-        <#= Case.CamelCase.Convert(c.Name) #>();
         <#
         foreach (ClassMethod m in c.Method)
         {
             #>
 
-        public partial void <#= Case.CamelCase.Convert(m.Name) #>(<#
+        public void <#= Case.CamelCase.Convert(m.Name) #>(<#
             for (int idxParam = 0; idxParam < m.Param.Count; ++idxParam)
             {
                 MethodParam a = m.Param[idxParam];
@@ -85,7 +83,37 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                 }
                 #> <#= Case.LowerCamelCase.Convert(a.Name) #><#
             }
-            #>);<#
+            #>)
+        {
+            Console.WriteLine("<#= m.MethodId #><#
+            for (int idxParam = 0; idxParam < m.Param.Count; ++idxParam)
+            {
+                #> {<#= idxParam #>}<#
+            }
+            #>"<#
+            foreach (MethodParam a in m.Param)
+            {
+                #>, <#
+                BasicType type = CsHelper.Definition.GetBasicType(a.Type);
+                switch (type)
+                {
+                    case BasicType.Bool:
+                        #><#= Case.LowerCamelCase.Convert(a.Name) #> ? 1 : 0<#
+                        break;
+                    case BasicType.Char:
+                    case BasicType.Enum:
+                        #>(int)<#= Case.LowerCamelCase.Convert(a.Name) #><#
+                        break;
+                    case BasicType.Class:
+                        #><#= Case.LowerCamelCase.Convert(a.Name) #>.<#= Case.CamelCase.Convert(CsHelper.Definition.Class[a.Type].IdMember.Name) #><#
+                        break;
+                    default:
+                        #><#= Case.LowerCamelCase.Convert(a.Name) #><#
+                        break;
+                }
+            }
+                #>);
+        }<#
         }
         #>
 

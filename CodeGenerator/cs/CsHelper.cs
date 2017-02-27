@@ -21,7 +21,6 @@ namespace ugly.CodeGenerator.cs
             {
                 CurrentFile = file;
                 File.WriteAllText(Path.Combine(path, string.Format("{0}.cs", Case.CamelCase.Convert(file.Name))), new CsHeader().TransformText());
-                File.WriteAllText(Path.Combine(path, string.Format("{0}Private.cs", Case.CamelCase.Convert(file.Name))), new CsCode().TransformText());
             }
         }
 

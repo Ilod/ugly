@@ -47,11 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cs\CsCode.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CsCode.tt</DependentUpon>
-    </Compile>
     <Compile Include="cs\CsHeader.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -98,10 +93,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cs\CsCode.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>CsCode.cs</LastGenOutput>
-    </Content>
     <Content Include="cs\CsHeader.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CsHeader.cs</LastGenOutput>

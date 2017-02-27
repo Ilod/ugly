@@ -10,13 +10,24 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
 {
     public interface GameClient
     {
-        void InitGame(<#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup) #>& <#= Case.LowerCamelCase.Convert(CsHelper.Definition.Config.GameSetup) #>, <#= Case.CamelCase.Convert(CsHelper.Definition.Config.PlayerSetup) #>& <#= Case.LowerCamelCase.Convert(CsHelper.Definition.Config.PlayerSetup) #>);
-        void PlayTurn(<#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #>& <#= Case.LowerCamelCase.Convert(CsHelper.Definition.Config.GameState) #>, <#= Case.CamelCase.Convert(CsHelper.Definition.Config.PlayerState) #>& <#= Case.LowerCamelCase.Convert(CsHelper.Definition.Config.PlayerState) #>);
+        void InitGame(<#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup) #> <#= Case.LowerCamelCase.Convert(CsHelper.Definition.Config.GameSetup) #>, <#= Case.CamelCase.Convert(CsHelper.Definition.Config.PlayerSetup) #> <#= Case.LowerCamelCase.Convert(CsHelper.Definition.Config.PlayerSetup) #>);
+        void PlayTurn(<#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #> <#= Case.LowerCamelCase.Convert(CsHelper.Definition.Config.GameState) #>, <#= Case.CamelCase.Convert(CsHelper.Definition.Config.PlayerState) #> <#= Case.LowerCamelCase.Convert(CsHelper.Definition.Config.PlayerState) #>);
         void Cleanup();
     }
 
     public static partial class GameServer
     {
-        public static partial void Play(GameClient client);
+        public static void Play(GameClient client)
+        {
+            Tuple<<#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup) #>, <#= Case.CamelCase.Convert(CsHelper.Definition.Config.PlayerSetup) #>> setup = ReadSetup();
+            int playerId = setup.Item2.Id;
+            client.InitGame(setup.Item1, setup.Item2);
+            <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #> turn = null;
+            while ((turn = ReadTurn()) != null)
+            {
+                client.PlayTurn(turn, turn.Player[playerId]);
+            }
+            client.Cleanup();
+        }
     }
 }

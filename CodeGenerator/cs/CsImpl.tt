@@ -8,169 +8,228 @@ using System.IO;
 
 namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
 {
-    private class Parser
-    {
-        private string Line;
-        private int Index = 0;
-
-        public Parser(string line)
-        {
-            Line = line;
-        }
-
-        public T ReadNextInt<T>()
-        {
-            unsigned long data = 0;
-            bool negative = false;
-            if (Index < Line.Length && Line[Index] == '-')
-            {
-                negative = true;
-                ++Index;
-            }
-
-            while (Index < Line.Length && Line[Index] >= '0' && Line[Index] <= '9')
-            {
-                data *= 10;
-                data += (Line[Index] - '0');
-                ++Index;
-            }
-            ++Index;
-            if (negative)
-                return (T)(-((long)data));
-            return (T)data;
-        }<#
-
-    foreach (GameClass c in CsHelper.Definition.Class.Values)
-    {
-        #>
-
-
-        public void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>)
-        {<#
-
-        foreach (ClassMember m in c.Member)
-        {
-            #>
-
-            {<#
-
-            BasicType type = CsHelper.Definition.GetBasicType(m.Type);
-            if (m.Array == 0)
-            {
-                if (type == BasicType.Class)
-                {
-                    #>
-
-                Deserialize(data.<#= Case.CamelCase.Convert(m.Name) #>);<#
-                }
-                else
-                {
-                    #>
-
-                data.<#= Case.CamelCase.Convert(m.Name) #> = ReadNextInt<#= type.IsBasic() ? CsHelper.GetBasicTypeName(type) : Case.CamelCase.Convert(m.Name) #>;<#
-                }
-            }
-            else
-            {
-                for (int i = 0; i < m.Array; ++i)
-                {
-                        #>
-
-                int size<#= i #> = ReadNextInt<int>();<#
-                }#>
-
-                data.<#= Case.CamelCase.Convert(m.Name) #> = new <#
-                if (type.IsBasic())
-                {
-                    #><#= CsHelper.GetBasicTypeName(type) #><#
-                }
-                else
-                {
-                    #><#= Case.CamelCase.Convert(m.Type) #><#
-                }
-                #>[<#
-                for (int i = 0; i < m.Array; ++i)
-                {
-                    if (i != 0)
-                    {
-                        #>, <#
-                    }
-                    #>size<#= i #><#
-                }
-                #>];<#
-
-                for (int i = 0; i < m.Array; ++i)
-                {
-                    #>
-
-                for (int idx<#= i #> = 0; idx<#= i #> < size<#= i #>; ++idx<#= i #>)
-                {<#
-                    this.PushIndent("    ");
-                }
-                if (type == BasicType.Class)
-                {#>
-
-                <#= Case.CamelCase.Convert(m.Type) #> element = new <#= Case.CamelCase.Convert(m.Type) #>();
-                Deserialize(element);<#
-                }#>
-
-                data.<#= Case.CamelCase.Convert(m.Name) #>[idx0<#
-                for (int i = 1; i < m.Array; ++i)
-                {
-                    #>, idx<#= i #><#
-                }
-                #>] = <#
-                if (type == BasicType.Class)
-                {
-                    #>element<#
-                }
-                else
-                {
-                    #>ReadNextInt<<#= CsHelper.GetBasicTypeName(type) #>>()<#
-                }
-                #>;<#
-                
-                for (int i = 0; i < m.Array; ++i)
-                {
-                    this.PopIndent();
-                    #>
-
-                }<#
-                }
-            }
-            #>
-
-            }<#
-
-        }         
-        #>
-           
-        }<#
-    }
-    #>
-
-    }
-
     public static partial class GameServer
     {
-        public static partial void Play(GameClient client)
+        private static <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #> ReadTurn()
         {
-            Parser parser = new Parser(Console.ReadLine());
-            int playerId = parserReadNextInt<int>();
+            string line = Console.ReadLine();
+            if (line == "EOT")
+                return null;
+            Parser parser = new Parser(line);
+            <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #> turn = new <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #>();
+            parser.Deserialize(turn);
+            return turn;
+        }
+        
+        private static Tuple<<#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup) #>, <#= Case.CamelCase.Convert(CsHelper.Definition.Config.PlayerSetup) #>> ReadSetup()
+        {
+            string line = Console.ReadLine();
+            Parser parser = new Parser(line);
+            int playerId = parser.ReadNextInt();
             <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup) #> data = new <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup) #>();
             parser.Deserialize(data);
-            client.InitGame(data, data.Player[playerId]);
-            for (;;)
+            return Tuple.Create(data, data.Player[playerId]);
+        }
+
+        private class Parser
+        {
+            private string Line;
+            private int Index = 0;
+
+            public Parser(string line)
             {
-                string line = Console.ReadLine();
-                if (line == "EOT")
-                    break;
-                parser = new Parser(line);
-                <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #> turn = new <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #>();
-                parser.Deserialize(turn);
-                client.PlayTurn(turn, turn.Player[playerId]);
+                Line = line;
             }
-            client.Shutdown();
+
+            public long ReadNextLong()
+            {
+                long data = 0;
+                bool negative = false;
+                if (Index < Line.Length && Line[Index] == '-')
+                {
+                    negative = true;
+                    ++Index;
+                }
+
+                while (Index < Line.Length && Line[Index] >= '0' && Line[Index] <= '9')
+                {
+                    data *= 10;
+                    data += (long)(Line[Index] - '0');
+                    ++Index;
+                }
+                ++Index;
+                return negative ? -data : data;
+            }
+            
+            public ulong ReadNextUlong()
+            {
+                ulong data = 0;
+
+                while (Index < Line.Length && Line[Index] >= '0' && Line[Index] <= '9')
+                {
+                    data *= 10;
+                    data += (ulong)(Line[Index] - '0');
+                    ++Index;
+                }
+                ++Index;
+                return data;
+            }
+            
+            public int ReadNextInt()
+            {
+                return (int)ReadNextLong();
+            }
+            
+            public short ReadNextShort()
+            {
+                return (short)ReadNextLong();
+            }
+            
+            public sbyte ReadNextSbyte()
+            {
+                return (sbyte)ReadNextLong();
+            }
+            
+            public uint ReadNextUint()
+            {
+                return (uint)ReadNextUlong();
+            }
+            
+            public ushort ReadNextUshort()
+            {
+                return (ushort)ReadNextUlong();
+            }
+            
+            public byte ReadNextByte()
+            {
+                return (byte)ReadNextUlong();
+            }
+            
+            public char ReadNextChar()
+            {
+                return (char)ReadNextUlong();
+            }
+            
+            public bool ReadNextBool()
+            {
+                return ReadNextLong() != 0;
+            }<#
+
+        foreach (GameClass c in CsHelper.Definition.Class.Values)
+        {
+            #>
+
+
+            public void Deserialize(<#= Case.CamelCase.Convert(c.Name) #> data)
+            {<#
+
+            foreach (ClassMember m in c.Member)
+            {
+                #>
+
+                {<#
+
+                BasicType type = CsHelper.Definition.GetBasicType(m.Type);
+                if (m.Array == 0)
+                {
+                    if (type.IsBasic())
+                    {
+                        #>
+
+                    data.<#= Case.CamelCase.Convert(m.Name) #> = ReadNext<#=  Case.CamelCase.Convert(CsHelper.GetBasicTypeName(type)) #>();<#
+                    }
+                    else if (type == BasicType.Class)
+                    {
+                        #>
+
+                    Deserialize(data.<#= Case.CamelCase.Convert(m.Name) #>);<#
+                    }
+                    else // Enum
+                    {
+                        #>
+
+                    data.<#= Case.CamelCase.Convert(m.Name) #> = (<#=  Case.CamelCase.Convert(m.Type) #>)ReadNextInt();<#
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < m.Array; ++i)
+                    {
+                            #>
+
+                    int size<#= i #> = ReadNextInt();<#
+                    }#>
+
+                    data.<#= Case.CamelCase.Convert(m.Name) #> = new <#
+                    if (type.IsBasic())
+                    {
+                        #><#= CsHelper.GetBasicTypeName(type) #><#
+                    }
+                    else
+                    {
+                        #><#= Case.CamelCase.Convert(m.Type) #><#
+                    }
+                    #>[<#
+                    for (int i = 0; i < m.Array; ++i)
+                    {
+                        if (i != 0)
+                        {
+                            #>, <#
+                        }
+                        #>size<#= i #><#
+                    }
+                    #>];<#
+
+                    for (int i = 0; i < m.Array; ++i)
+                    {
+                        #>
+
+                    for (int idx<#= i #> = 0; idx<#= i #> < size<#= i #>; ++idx<#= i #>)
+                    {<#
+                        this.PushIndent("    ");
+                    }
+                    if (type == BasicType.Class)
+                    {#>
+
+                    <#= Case.CamelCase.Convert(m.Type) #> element = new <#= Case.CamelCase.Convert(m.Type) #>();
+                    Deserialize(element);<#
+                    }#>
+
+                    data.<#= Case.CamelCase.Convert(m.Name) #>[idx0<#
+                    for (int i = 1; i < m.Array; ++i)
+                    {
+                        #>, idx<#= i #><#
+                    }
+                    #>] = <#
+                    if (type == BasicType.Class)
+                    {
+                        #>element<#
+                    }
+                    else
+                    {
+                        #>ReadNext<#= Case.CamelCase.Convert(CsHelper.GetBasicTypeName(type)) #>()<#
+                    }
+                    #>;<#
+                
+                    for (int i = 0; i < m.Array; ++i)
+                    {
+                        this.PopIndent();
+                        #>
+
+                    }<#
+                    }
+                }
+                #>
+
+                }<#
+
+            }         
+            #>
+           
+            }<#
+        }
+        #>
+
         }
     }
 }

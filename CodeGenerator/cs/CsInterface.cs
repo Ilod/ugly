@@ -42,7 +42,7 @@ namespace ugly.CodeGenerator.cs
             
             #line default
             #line hidden
-            this.Write("& ");
+            this.Write(" ");
             
             #line 13 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CsHelper.Definition.Config.GameSetup)));
@@ -56,7 +56,7 @@ namespace ugly.CodeGenerator.cs
             
             #line default
             #line hidden
-            this.Write("& ");
+            this.Write(" ");
             
             #line 13 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CsHelper.Definition.Config.PlayerSetup)));
@@ -70,7 +70,7 @@ namespace ugly.CodeGenerator.cs
             
             #line default
             #line hidden
-            this.Write("& ");
+            this.Write(" ");
             
             #line 14 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CsHelper.Definition.Config.GameState)));
@@ -84,7 +84,7 @@ namespace ugly.CodeGenerator.cs
             
             #line default
             #line hidden
-            this.Write("& ");
+            this.Write(" ");
             
             #line 14 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CsHelper.Definition.Config.PlayerState)));
@@ -92,7 +92,32 @@ namespace ugly.CodeGenerator.cs
             #line default
             #line hidden
             this.Write(");\r\n        void Cleanup();\r\n    }\r\n\r\n    public static partial class GameServer\r" +
-                    "\n    {\r\n        public static partial void Play(GameClient client);\r\n    }\r\n}");
+                    "\n    {\r\n        public static void Play(GameClient client)\r\n        {\r\n         " +
+                    "   Tuple<");
+            
+            #line 22 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup)));
+            
+            #line default
+            #line hidden
+            this.Write(", ");
+            
+            #line 22 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.PlayerSetup)));
+            
+            #line default
+            #line hidden
+            this.Write("> setup = ReadSetup();\r\n            int playerId = setup.Item2.Id;\r\n            c" +
+                    "lient.InitGame(setup.Item1, setup.Item2);\r\n            ");
+            
+            #line 25 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.GameState)));
+            
+            #line default
+            #line hidden
+            this.Write(" turn = null;\r\n            while ((turn = ReadTurn()) != null)\r\n            {\r\n  " +
+                    "              client.PlayTurn(turn, turn.Player[playerId]);\r\n            }\r\n    " +
+                    "        client.Cleanup();\r\n        }\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
