@@ -13,7 +13,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
 {
     namespace
     {
-        template<class T> T ReadNextInt(const char*& buf)
+        template<class T> T ReadNext(const char*& buf)
         {
             std::uint64_t data = 0;
             bool negative = false;
@@ -30,13 +30,13 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             if (*buf)
                 ++buf;
             if (negative)
-                return static_cast<T>(-static_cast<int64_t>(data));
+                return static_cast<T>(-static_cast<std::int64_t>(data));
             return static_cast<T>(data);
         }
 
         template<class T> void Deserialize(T& data, const char*& buf)
         {
-            data = ReadNextInt<T>(buf);
+            data = ReadNext<T>(buf);
         }<#
     foreach (GameClass c in CxxHelper.Definition.Class.Values)
     {
@@ -61,7 +61,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             {
                 #>
 
-                int size<#= i #> = ReadNextInt<int>(buf);<#
+                int size<#= i #> = ReadNext<int>(buf);<#
             }
             if (m.Array != 0)
             {
@@ -133,7 +133,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
         std::string line;
         std::getline(std::cin, line);
         const char* buf = line.c_str();
-        int playerId = ReadNextInt<int>(buf);
+        int playerId = ReadNext<int>(buf);
         <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #> data;
         Deserialize(data, buf);
         client.InitGame(data, data.player[playerId]);

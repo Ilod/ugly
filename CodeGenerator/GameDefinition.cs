@@ -13,10 +13,11 @@ namespace ugly.CodeGenerator
         public List<GameFile> Files = new List<GameFile>();
         public Dictionary<string, GameClass> Class = new Dictionary<string, GameClass>();
         public Dictionary<string, GameEnum> Enum = new Dictionary<string, GameEnum>();
+        public List<ClassMethod> Method = new List<ClassMethod>();
 
         public void ParseTypes()
         {
-            int methodCount = 0;
+            Method.Clear();
             foreach (GameFile file in Files)
             {
                 foreach (GameClass c in file.Class)
@@ -24,7 +25,8 @@ namespace ugly.CodeGenerator
                     Class[c.Name] = c;
                     foreach (ClassMethod m in c.Method)
                     {
-                        m.MethodId = methodCount++;
+                        m.MethodId = Method.Count;
+                        Method.Add(m);
                     }
                     foreach (ClassMember m in c.Member)
                     {

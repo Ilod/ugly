@@ -84,6 +84,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CxxInterface.tt</DependentUpon>
     </Compile>
+    <Compile Include="cxx\CxxSerializationCode.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CxxSerializationCode.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxx\CxxSerializerHeader.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CxxSerializerHeader.tt</DependentUpon>
+    </Compile>
     <Compile Include="GameDefinition.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +130,14 @@
     <Content Include="cxx\CxxInterface.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CxxInterface.cs</LastGenOutput>
+    </Content>
+    <Content Include="cxx\CxxSerializationCode.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CxxSerializationCode.cs</LastGenOutput>
+    </Content>
+    <Content Include="cxx\CxxSerializerHeader.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CxxSerializerHeader.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

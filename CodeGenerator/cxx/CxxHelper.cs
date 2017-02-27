@@ -12,9 +12,11 @@ namespace ugly.CodeGenerator.cxx
     {
         public static GameDefinition Definition { get; private set; }
         public static GameFile CurrentFile { get; private set; }
+        public static bool Server { get; private set; }
 
         public static void GenerateFiles(string path, GameDefinition gameDef)
         {
+            Server = false;
             Definition = gameDef;
             Directory.CreateDirectory(path);
             File.WriteAllText(Path.Combine(path, "Client.h"), new CxxInterface().TransformText());
@@ -24,6 +26,21 @@ namespace ugly.CodeGenerator.cxx
                 CurrentFile = file;
                 File.WriteAllText(Path.Combine(path, string.Format("{0}.h", Case.CamelCase.Convert(file.Name))), new CxxHeader().TransformText());
                 File.WriteAllText(Path.Combine(path, string.Format("{0}.cpp", Case.CamelCase.Convert(file.Name))), new CxxCode().TransformText());
+            }
+        }
+
+        public static void GenerateServerFiles(string path, GameDefinition gameDef)
+        {
+            Server = true;
+            Definition = gameDef;
+            Directory.CreateDirectory(path);
+            File.WriteAllText(Path.Combine(path, "Serializer.h"), new CxxSerializerHeader().TransformText());
+            File.WriteAllText(Path.Combine(path, "Serializer.cpp"), new CxxSerializationCode().TransformText());
+            foreach (GameFile file in gameDef.Files)
+            {
+                CurrentFile = file;
+                File.WriteAllText(Path.Combine(path, string.Format("{0}.h", Case.CamelCase.Convert(file.Name))), new CxxHeader().TransformText());
+                //File.WriteAllText(Path.Combine(path, string.Format("{0}.cpp", Case.CamelCase.Convert(file.Name))), new CxxCode().TransformText());
             }
         }
 

@@ -1,0 +1,47 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+#pragma once
+#include <map><#
+foreach (GameFile file in CxxHelper.Definition.Files)
+{
+    #>
+
+#include "<#= Case.CamelCase.Convert(file.Name) #>.h"<#
+}
+#>
+
+namespace ugly
+{
+    namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
+    {
+        class Serializer
+        {
+        private:
+            class IdMap
+            {
+            public:<#
+foreach (GameClass c in CxxHelper.Definition.Class.Values)
+{
+    if (c.IdMember != null)
+    {
+        #>
+
+                std::map<<#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.IdMember.Type)) #>, <#= Case.CamelCase.Convert(c.Name) #>*> <#= Case.LowerCamelCase.Convert(c.Name) #>;<#        
+    }
+}
+#>
+
+                void Clear();
+            };
+            IdMap gameSetupId;
+            IdMap gameStateId;
+        public:
+            std::string Serialize(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup);
+            std::string Serialize(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState);
+            bool ExecuteOrder(const std::string& order, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, int playerId);
+        };
+    }
+}

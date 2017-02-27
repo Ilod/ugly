@@ -12,8 +12,16 @@ foreach (string d in CxxHelper.CurrentFile.Dependency)
 
 #include "<#= Case.CamelCase.Convert(d) #>.h"<#
 }
-#>
+if (CxxHelper.Server)
+{
+    #>
 
+
+namespace ugly
+{<#
+    this.PushIndent("    ");
+}
+#>
 
 namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
 {<#
@@ -76,6 +84,10 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             #>
 
         void <#= Case.CamelCase.Convert(m.Name) #>(<#
+            if (CxxHelper.Server)
+            {
+                #><#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState, <#
+            }
             for (int idxParam = 0; idxParam < m.Param.Count; ++idxParam)
             {
                 MethodParam a = m.Param[idxParam];
@@ -110,4 +122,12 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
     }
     #>
 
+}<#
+if (CxxHelper.Server)
+{
+    this.PopIndent();
+    #>
+
+}<#
 }
+#>
