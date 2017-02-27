@@ -1,0 +1,30 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+#pragma once<#
+foreach (GameFile file in CxxHelper.Definition.Files)
+{
+    #>
+
+#include "<#= Case.CamelCase.Convert(file.Name) #>.h"<#
+}
+#>
+
+namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
+{
+    class GameClient
+    {
+        virtual ~GameClient();
+        virtual void InitGame(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& <#= Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& <#= Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>) = 0;
+        virtual void PlayTurn(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& <#= Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.GameState) #>, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& <#= Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>) = 0;
+        virtual void Cleanup() {};
+    }
+
+    class GameServer
+    {
+    public:
+        static void Play(GameClient& client);
+    }
+}

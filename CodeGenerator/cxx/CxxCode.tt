@@ -1,0 +1,121 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+#include "<#= Case.CamelCase.Convert(CxxHelper.CurrentFile.Name) #>.h"
+#include <cstdio>
+
+namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
+{<#
+    foreach (GameClass c in CxxHelper.CurrentFile.Class)
+    {
+    #>
+
+    <#= Case.CamelCase.Convert(c.Name) #>::<#= Case.CamelCase.Convert(c.Name) #>()<#
+        for (int i = 0; i < c.Member.Count; ++i)
+        {
+            #>
+
+        <#
+            if (i == 0)
+            {
+                #>:<#
+            }
+            else
+            {
+                #>,<#
+            }
+            #> <#= Case.LowerCamelCase.Convert(c.Member[i].Name) #>()<#
+        }
+        #>
+
+    { }
+        <#
+        foreach (ClassMethod m in c.Method)
+        {
+            #>
+
+    void <#= Case.CamelCase.Convert(c.Name) #>::<#= Case.CamelCase.Convert(m.Name) #>(<#
+            for (int idxParam = 0; idxParam < m.Param.Count; ++idxParam)
+            {
+                MethodParam a = m.Param[idxParam];
+                BasicType type = CxxHelper.Definition.GetBasicType(a.Type);
+                if (idxParam != 0)
+                {
+                    #>, <#
+                }
+                if (a.Array > 0)
+                {
+                    #>const <#
+                }
+                for (int i = 0; i < a.Array; ++i)
+                {
+                    #>std::vector<<#
+                }
+                if (type == BasicType.Class)
+                {
+                    #>const <#
+                }
+                if (type.IsBasic())
+                {
+                    #><#= CxxHelper.GetBasicTypeName(type) #><#
+                }
+                else
+                {
+                    #><#= Case.CamelCase.Convert(a.Type) #><#
+                }
+                if (a.Array > 0 && type == BasicType.Class)
+                {
+                    #>*<#
+                }
+                for (int i = 0; i < a.Array; ++i)
+                {
+                    #>><#
+                }
+                if (a.Array > 0 || type == BasicType.Class)
+                {
+                    #>&<#
+                }
+                #> <#= Case.LowerCamelCase.Convert(a.Name) #><#
+            }
+            #>)
+    {
+        std::printf("<#= m.MethodId #><#
+            foreach (MethodParam a in m.Param)
+            {
+                BasicType type = CxxHelper.Definition.GetBasicType(a.Type);
+                if (type == BasicType.Class)
+                    type = CxxHelper.Definition.GetBasicType(CxxHelper.Definition.Class[a.Type].IdMember.Type);
+                #> %<#= CxxHelper.GetBasicTypePrinter(type) #><#
+            }
+            #>\n"<#
+            foreach (MethodParam a in m.Param)
+            {
+                BasicType type = CxxHelper.Definition.GetBasicType(a.Type);
+                if (type == BasicType.Class)
+                {                
+                    BasicType realType = CxxHelper.Definition.GetBasicType(CxxHelper.Definition.Class[a.Type].IdMember.Type);
+                    #>, <#
+                    if (realType == BasicType.Enum)
+                    {
+                        #>(int)<#
+                    }
+                    #><#= Case.LowerCamelCase.Convert(a.Name) #>.<#= Case.LowerCamelCase.Convert(CxxHelper.Definition.Class[a.Type].IdMember.Name) #><#
+                }
+                else if (type == BasicType.Enum)
+                {
+                    #>, (int)<#= Case.LowerCamelCase.Convert(a.Name) #><#
+                }
+                else
+                {
+                    #>, <#= Case.LowerCamelCase.Convert(a.Name) #><#
+                }
+            }
+            #>);
+    }<#
+        }
+    }
+    #>
+
+}

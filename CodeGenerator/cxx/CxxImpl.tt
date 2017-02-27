@@ -1,0 +1,150 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+#include "Client.h"
+#include <string>
+#include <iostream>
+#include <cstdint>
+#include <cctype>
+
+namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
+{
+    namespace
+    {
+        template<class T> T ReadNextInt(const char*& buf)
+        {
+            std::uint64_t data = 0;
+            bool negative = false;
+            if (*buf == '-')
+            {
+                negative = true;
+                ++buf;
+            }
+            while (std::isdigit(*buf))
+            {
+                data *= 10;
+                data += ((*buf) - '0');
+            }
+            if (*buf)
+                ++buf;
+            if (negative)
+                return static_cast<T>(-static_cast<int64_t>(data));
+            return static_cast<T>(data);
+        }
+
+        template<class T> void Deserialize(T& data, const char*& buf)
+        {
+            data = ReadNextInt<T>(buf);
+        }<#
+    foreach (GameClass c in CxxHelper.Definition.Class.Values)
+    {
+        #>
+
+        template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const char*& buf);<#
+    }
+    foreach (GameClass c in CxxHelper.Definition.Class.Values)
+    {
+        #>
+
+
+        template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const char*& buf)
+        {<#
+        foreach (ClassMember m in c.Member)
+        {
+            #>
+
+            {
+                auto& member = data.<#= Case.LowerCamelCase.Convert(m.Name) #>;<#
+            for (int i = 0; i < m.Array; ++i)
+            {
+                #>
+
+                int size<#= i #> = ReadNextInt<int>(buf);<#
+            }
+            if (m.Array != 0)
+            {
+                #>
+
+                auto& array0 = member;
+                array0.resize(size0);<#
+            }
+            for (int i = 1; i < m.Array; ++i)
+            {
+                #>
+
+                for (int idx<#= i - 1 #> = 0; i < size<#= i - 1 #>; ++i)
+                {
+                    auto& array<#= i #> = array<#= i - 1 #>[idx<#= i - 1 #>];
+                    array<#= i #>.resize(size<#= i #>);<#
+            }
+            for (int i = 1; i < m.Array; ++i)
+            {
+                #>
+
+                }<#
+            }
+            for (int i = 0; i < m.Array; ++i)
+            {
+                #>
+
+                for (int idx<#= i #> = 0; i < size<#= i #>; ++i)
+                {
+                    auto& array<#= i + 1 #> = array<#= i #>[idx<#= i #>];<#
+            }
+            if (m.Array != 0)
+            {
+                #>
+
+                    Deserialize(array<#= m.Array #>, buf);<#
+            }
+            else
+            {
+                #>
+
+                Deserialize(member, buf);<#
+            }
+            for (int i = 0; i < m.Array; ++i)
+            {
+                #>
+
+                }<#
+            }
+            #>
+
+            }<#
+        }
+        #>
+
+        }<#
+        
+    }
+    #>
+
+    }
+
+    GameServer::~GameServer() {}
+
+    void GameServer::Play(GameClient& client)
+    {
+        std::string line;
+        std::getline(std::cin, line);
+        const char* buf = line.c_str();
+        int playerId = ReadNextInt<int>(buf);
+        <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #> data;
+        Deserialize(data, buf);
+        client.InitGame(data, data.player[playerId]);
+        for (;;)
+        {
+            std::getline(std::cin, line);
+            if (line == "EOT")
+                break;
+            buf = line.c_str();
+            <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #> turn;
+            Deserialize(turn, buf);
+            client.PlayTurn(turn, turn.player[playerId]);
+        }
+        client.Shutdown();
+    }
+}

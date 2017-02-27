@@ -1,0 +1,129 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+#pragma once
+#include <vector>
+#include <cstdint><#
+foreach (string d in CxxHelper.CurrentFile.Dependency)
+{
+#>
+
+#include "<#= Case.CamelCase.Convert(d) #>.h"<#
+}
+#>
+
+
+namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
+{<#
+    foreach (GameEnum e in CxxHelper.CurrentFile.Enum)
+    {
+    #>
+
+    
+    enum class <#= Case.CamelCase.Convert(e.Name) #>
+    {<#
+        foreach (KeyValuePair<string, int> kvp in e.Value)
+        {
+        #>
+        
+        <#= Case.CamelCase.Convert(kvp.Key) #> = <#= kvp.Value #>,<#
+        }
+        #>
+
+    };<#
+    }
+    
+    foreach (GameClass c in CxxHelper.CurrentFile.Class)
+    {
+    #>
+
+
+    struct <#= Case.CamelCase.Convert(c.Name) #>
+    {<#
+        foreach (ClassMember m in c.Member)
+        {
+            #>
+
+        <#
+            for (int i = 0; i < m.Array; ++i)
+            {
+                #>std::vector<<#
+            }
+            BasicType type = CxxHelper.Definition.GetBasicType(m.Type);
+            if (type.IsBasic())
+            {
+                #><#= CxxHelper.GetBasicTypeName(type) #><#
+            }
+            else
+            {
+                #><#= Case.CamelCase.Convert(m.Type) #><#
+            }
+            for (int i = 0; i < m.Array; ++i)
+            {
+                #>><#
+            }
+            #> <#= Case.LowerCamelCase.Convert(m.Name) #>;<#
+        }
+        #>
+
+
+        <#= Case.CamelCase.Convert(c.Name) #>();
+        <#
+        foreach (ClassMethod m in c.Method)
+        {
+            #>
+
+        void <#= Case.CamelCase.Convert(m.Name) #>(<#
+            for (int idxParam = 0; idxParam < m.Param.Count; ++idxParam)
+            {
+                MethodParam a = m.Param[idxParam];
+                BasicType type = CxxHelper.Definition.GetBasicType(a.Type);
+                if (idxParam != 0)
+                {
+                    #>, <#
+                }
+                if (a.Array > 0)
+                {
+                    #>const <#
+                }
+                for (int i = 0; i < a.Array; ++i)
+                {
+                    #>std::vector<<#
+                }
+                if (type == BasicType.Class)
+                {
+                    #>const <#
+                }
+                if (type.IsBasic())
+                {
+                    #><#= CxxHelper.GetBasicTypeName(type) #><#
+                }
+                else
+                {
+                    #><#= Case.CamelCase.Convert(a.Type) #><#
+                }
+                if (a.Array > 0 && type == BasicType.Class)
+                {
+                    #>*<#
+                }
+                for (int i = 0; i < a.Array; ++i)
+                {
+                    #>><#
+                }
+                if (a.Array > 0 || type == BasicType.Class)
+                {
+                    #>&<#
+                }
+                #> <#= Case.LowerCamelCase.Convert(a.Name) #><#
+            }
+            #>);<#
+        }
+        #>
+
+    };<#
+    }
+    #>
+
+}

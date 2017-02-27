@@ -1,0 +1,89 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ugly.CodeGenerator.cxx
+{
+
+    public static class CxxHelper
+    {
+        public static GameDefinition Definition { get; private set; }
+        public static GameFile CurrentFile { get; private set; }
+
+        public static void GenerateFiles(string path, GameDefinition gameDef)
+        {
+            Definition = gameDef;
+            Directory.CreateDirectory(path);
+            File.WriteAllText(Path.Combine(path, "Client.h"), new CxxInterface().TransformText());
+            File.WriteAllText(Path.Combine(path, "Client.cpp"), new CxxImpl().TransformText());
+            foreach (GameFile file in gameDef.Files)
+            {
+                CurrentFile = file;
+                File.WriteAllText(Path.Combine(path, string.Format("{0}.h", Case.CamelCase.Convert(file.Name))), new CxxHeader().TransformText());
+                File.WriteAllText(Path.Combine(path, string.Format("{0}.cpp", Case.CamelCase.Convert(file.Name))), new CxxCode().TransformText());
+            }
+        }
+
+        public static string GetBasicTypeName(BasicType type)
+        {
+            switch (type)
+            {
+                case BasicType.Bool:
+                    return "bool";
+                case BasicType.Char:
+                    return "char";
+                case BasicType.Void:
+                    return "void";
+                case BasicType.Class:
+                    return "struct";
+                case BasicType.Enum:
+                    return "enum class";
+                case BasicType.U8:
+                    return "std::uint8_t";
+                case BasicType.U16:
+                    return "std::uint16_t";
+                case BasicType.U32:
+                    return "std::uint32_t";
+                case BasicType.U64:
+                    return "std::uint64_t";
+                case BasicType.I8:
+                    return "std::int8_t";
+                case BasicType.I16:
+                    return "std::int16_t";
+                case BasicType.I32:
+                    return "std::int32_t";
+                case BasicType.I64:
+                    return "std::int64_t";
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public static string GetBasicTypePrinter(BasicType type)
+        {
+            switch (type)
+            {
+                case BasicType.Bool:
+                case BasicType.Char:
+                case BasicType.Enum:
+                case BasicType.I8:
+                case BasicType.I16:
+                case BasicType.I32:
+                    return "d";
+                case BasicType.U8:
+                case BasicType.U16:
+                case BasicType.U32:
+                    return "u";
+                case BasicType.U64:
+                    return "llu";
+                case BasicType.I64:
+                    return "lld";
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+    }
+}
