@@ -81,9 +81,19 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
         <#
         foreach (ClassMethod m in c.Method)
         {
-            #>
+            if (CxxHelper.Server)
+            {
+                #>
 
-        void <#= Case.CamelCase.Convert(m.Name) #>(<#
+        bool<#
+            }
+            else
+            {
+                #>
+
+        void<#
+            }
+            #> <#= Case.CamelCase.Convert(m.Name) #>(<#
             if (CxxHelper.Server)
             {
                 #><#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState, <#

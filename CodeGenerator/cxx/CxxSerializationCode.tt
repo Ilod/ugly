@@ -152,27 +152,74 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             return buffer.str();
         }
 
-        bool Serializer::ExecuteOrder(const std::string& order, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, int playerId)
+        bool Serializer::ExecuteOrder(const std::string& order, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, int currentPlayerId)
         {
             const char* buf = order.c_str();
             int _methodId = ReadNext<int>(buf);
             switch (_methodId)
             {<#
-foreach (ClassMethod m in CxxHelper.Definition.Method)
-{
-    #>
-                case <#= m.MethodId #>:
-                {<#
-    foreach (MethodParam a in m.Param)
+    foreach (GameFile f in CxxHelper.Definition.Files)
     {
-    
-    }
+        foreach (GameClass c in f.Class)
+        {
+            foreach (ClassMethod m in c.Method)
+            {
                 #>
 
-                    return false;
+                case <#= m.MethodId #>:
+                {
+                    <#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.IdMember.Type)) #> argThisId = ReadNext<<#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.IdMember.Type)) #>>();
+                    auto argThisIt = gameStateId.<#= Case.LowerCamelCase.Convert(c.Name) #>.find(argThisId);
+                    if (argThisIt == gameStateId.<#= Case.LowerCamelCase.Convert(c.Name) #>.end())
+                    {
+                        argThisIt = gameSetupId.<#= Case.LowerCamelCase.Convert(c.Name) #>.find(argThisId);
+                        if (argThisIt == gameSetupId.<#= Case.LowerCamelCase.Convert(c.Name) #>.end())
+                            return false;
+                    }
+                    <#= Case.CamelCase.Convert(c.Name) #>& argThis = argThisIt->second;<#
+                    foreach (MethodParam a in m.Param)
+                    {
+                        BasicType type = CxxHelper.Definition.GetBasicType(a.Type);
+                        if (type == BasicType.Class)
+                        {
+                            #>
+
+                    <#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(CxxHelper.Definition.Class[a.Type].IdMember.Type)) #> <#= Case.LowerCamelCase.Convert(a.Name) #>_id = ReadNext<<#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(CxxHelper.Definition.Class[a.Type].IdMember.Type)) #>>();
+                    auto <#= Case.LowerCamelCase.Convert(a.Name) #>_it = gameStateId.<#= Case.LowerCamelCase.Convert(a.Type) #>.find(<#= Case.LowerCamelCase.Convert(a.Name) #>_id);
+                    if (<#= Case.LowerCamelCase.Convert(a.Name) #>_it == gameStateId.<#= Case.LowerCamelCase.Convert(a.Type) #>.end())
+                    {
+                        <#= Case.LowerCamelCase.Convert(a.Name) #>_it = gameSetupId.<#= Case.LowerCamelCase.Convert(a.Type) #>.find(<#= Case.LowerCamelCase.Convert(a.Name) #>_id);
+                        if (<#= Case.LowerCamelCase.Convert(a.Name) #>_it == gameSetupId.<#= Case.LowerCamelCase.Convert(a.Type) #>.end())
+                            return false;
+                    }
+                    <#= Case.CamelCase.Convert(a.Type) #>& <#= Case.LowerCamelCase.Convert(a.Name) #> = <#= Case.LowerCamelCase.Convert(a.Name) #>_it->second;<#
+                        }
+                        else if (type == BasicType.Enum)
+                        {
+                            #>
+
+                    <#= Case.CamelCase.Convert(a.Type) #> <#= Case.LowerCamelCase.Convert(a.Name) #> = ReadNext<<#= Case.CamelCase.Convert(a.Type) #>>();<#
+                        }
+                        else
+                        {
+                            #>
+
+                    <#= CxxHelper.GetBasicTypeName(type) #> <#= Case.LowerCamelCase.Convert(a.Name) #> = ReadNext<<#= CxxHelper.GetBasicTypeName(type) #>>();<#
+                        }
+                    }
+                #>
+
+                    return argThis.<#= Case.CamelCase.Convert(m.Name) #>(gameSetup, gameSetup.Player[currentPlayerId], gameState, gameState.Player[currentPlayerId]<#
+                    foreach (MethodParam a in m.Param)
+                    {
+                        #>, <#= Case.LowerCamelCase.Convert(a.Name) #><#
+                    }
+                    #>);
                 }<#
-}
-#>
+            }
+        }
+    }#>
+
                 default:
                     return false;
         }
