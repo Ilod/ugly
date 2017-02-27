@@ -36,6 +36,8 @@ namespace ugly.CodeGenerator.cxx
             Directory.CreateDirectory(path);
             Generator.WriteFile(Path.Combine(path, "Serializer.h"), new CxxSerializerHeader().TransformText());
             Generator.WriteFile(Path.Combine(path, "Serializer.cpp"), new CxxSerializationCode().TransformText());
+            Generator.WriteFile(Path.Combine(path, "Game.h"), new CxxServerHeader().TransformText());
+            Generator.WriteFile(Path.Combine(path, "Game.cpp"), new CxxServerCode().TransformText());
             foreach (GameFile file in gameDef.Files)
             {
                 CurrentFile = file;

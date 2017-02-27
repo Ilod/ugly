@@ -1,0 +1,47 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+#include "Game.h"
+
+namespace ugly
+{
+    namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
+    {
+        void Game::InitGame()
+        {
+
+        }
+
+        void Game::PlayTurn()
+        {
+
+        }
+
+        ugly::server::GameResult Game::ComputeScore()
+        {
+            return ugly::server::GameResult();
+        }
+
+        bool Game::ShouldPlay()
+        {
+            return false;
+        }
+
+        std::chrono::milliseconds Game::GetNextTurnTimeLimit(int player)
+        {
+            return std::chrono::milliseconds(100);
+        }
+
+        std::chrono::milliseconds Game::GetSetupTimeLimit(int player)
+        {
+            return std::chrono::milliseconds(500);
+        }
+
+        std::chrono::milliseconds Game::GetCleanupTimeLimit(int player)
+        {
+            return std::chrono::milliseconds(1000);
+        }
+    }
+}
