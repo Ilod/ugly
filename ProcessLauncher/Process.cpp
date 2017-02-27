@@ -20,14 +20,16 @@ namespace ugly
             {
                 std::string line = ReadLine(remaining);
                 remaining = (std::chrono::high_resolution_clock::now() - time);
-                result.data.push_back(std::move(line));
-                if (result.data.back() == endStepMarker)
+                if (line.empty())
+                    continue;
+                if (line == endStepMarker)
                 {
                     Stop();
                     result.result = ProcessState::Success;
                     result.executionDuration = std::min(timeout - remaining, timeout);
                     return result;
                 }
+                result.data.push_back(std::move(line));
             }
             result.result = ProcessState::Timeout;
             result.executionDuration = timeout;

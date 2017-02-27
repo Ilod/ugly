@@ -8,6 +8,6 @@ namespace ugly
             : executablePath(executablePath)
         {}
         
-        static std::string ProcessNative::empty;
+        std::string ProcessNative::empty;
     }
 }

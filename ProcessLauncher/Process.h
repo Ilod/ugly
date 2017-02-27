@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <chrono>
 #include <vector>
@@ -37,7 +38,7 @@ namespace ugly
             virtual const std::string& GetArguments() const = 0;
 
             ProcessStepResult Run(std::chrono::high_resolution_clock::duration timeout, const std::string& endStepMarker);
-        private:
+        protected:
             ProcessState state = ProcessState::NotCreated;
         };
     }

@@ -139,6 +139,7 @@
     <ClInclude Include="ProcessNative.h" />
     <ClInclude Include="ProcessPlatform.h" />
     <ClInclude Include="ProcessWindows.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
