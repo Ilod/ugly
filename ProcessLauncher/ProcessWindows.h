@@ -35,12 +35,12 @@ namespace ugly
         public:
             ProcessWindows();
         protected:
-            void Create() override;
-            void Start() override;
-            void Stop() override;
-            void Kill() override;
+            bool TryCreate() override;
+            bool TryStart() override;
+            bool TryStop() override;
+            bool TryKill() override;
             std::string ReadLine(std::chrono::high_resolution_clock::duration timeout) override;
-            void Write(const std::string& data) override;
+            bool TryWrite(const std::string& data) override;
         private:
             Pipe processStdInPipe;
             Pipe processStdOutPipe;

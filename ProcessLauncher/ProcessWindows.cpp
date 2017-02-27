@@ -42,11 +42,6 @@ namespace ugly
             ZeroMemory(&processInfo, sizeof(processInfo));
         }
 
-        void ProcessWindows::Create()
-        {
-            state = TryCreate() ? ProcessState::Running : ProcessState::Crash;
-        }
-
         bool ProcessWindows::TryCreate()
         {
             if (!processStdInPipe.isValid() || !processStdOutPipe.isValid())
@@ -63,21 +58,19 @@ namespace ugly
             return true;
         }
 
-        void ProcessWindows::Start()
+        bool ProcessWindows::TryStart()
         {
-            if (!DebugActiveProcessStop(processInfo.dwProcessId))
-                state = ProcessState::Crash;
+            return !!DebugActiveProcessStop(processInfo.dwProcessId);
         }
 
-        void ProcessWindows::Stop()
+        bool ProcessWindows::TryStop()
         {
-            if (!DebugActiveProcess(processInfo.dwProcessId))
-                state = ProcessState::Crash;
+            return !!DebugActiveProcess(processInfo.dwProcessId));
         }
 
-        void ProcessWindows::Kill()
+        bool ProcessWindows::TryKill()
         {
-            TerminateProcess(processInfo.hProcess, 1);
+            return !!TerminateProcess(processInfo.hProcess, 1);
         }
 
         std::string ProcessWindows::ReadLine(std::chrono::high_resolution_clock::duration timeout)
@@ -95,10 +88,10 @@ namespace ugly
             return std::string(buffer, read);
         }
 
-        void ProcessWindows::Write(const std::string& data)
+        bool ProcessWindows::TryWrite(const std::string& data)
         {
             DWORD wrote = 0;
-            WriteFile(processStdInPipe.getWriteHandle(), data.c_str(), (DWORD)data.size(), &wrote, NULL);
+            return !!WriteFile(processStdInPipe.getWriteHandle(), data.c_str(), (DWORD)data.size(), &wrote, NULL);
         }
     }
 }

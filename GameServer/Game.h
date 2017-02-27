@@ -3,8 +3,6 @@
 #include <vector>
 #include <memory>
 #include "Result.h"
-#include "GameState.h"
-#include "Player.h"
 #include "../ProcessLauncher/Process.h"
 
 namespace ugly
@@ -16,17 +14,22 @@ namespace ugly
         {
         public:
             virtual ~Game();
+            GameResult Play();
             void AddPlayer(std::unique_ptr<process::Process> process);
-            virtual GameResult Play() = 0;
-            void RunPlayers();
-            virtual std::chrono::milliseconds GetNextTurnTimeLimit() = 0;
+            int GetPlayerCount() const { return players.size(); }
         protected:
-            virtual std::unique_ptr<GameState> CreateGameState() = 0;
-            virtual std::unique_ptr<PlayerState> CreatePlayerState() = 0;
+            virtual void InitGame() = 0;
+            virtual std::string GetGameSetup() = 0;
+            virtual std::string GetGameState() = 0;
+            virtual void PlayTurn() = 0;
+            virtual GameResult ComputeScore() = 0;
+            virtual bool ShouldPlay() = 0;
+            virtual std::chrono::milliseconds GetNextTurnTimeLimit(int player) = 0;
+            virtual std::chrono::milliseconds GetSetupTimeLimit(int player) = 0;
+            virtual std::chrono::milliseconds GetCleanupTimeLimit(int player) = 0;
         private:
             const std::string endOfTurnMarker = "EOT";
-            std::unique_ptr<GameState> gameState;
-            std::vector<Player> players;
+            std::vector<std::unique_ptr<process::Process>> players;
         };
     }
 }

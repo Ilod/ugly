@@ -11,9 +11,31 @@ namespace ugly
         {
             NotCreated,
             Running,
+            Paused,
             Success,
             Timeout,
             Crash,
+        };
+
+        struct ProcessData
+        {
+            ProcessData() {}
+            ProcessData(const ProcessData&) = delete;
+            ProcessData(ProcessData&&) = default;
+            ProcessData(std::string&& data, std::chrono::high_resolution_clock::duration time)
+                : data(std::move(data))
+                , time(time)
+            {}
+
+            std::string data;
+            std::chrono::high_resolution_clock::duration time;
+        };
+
+        class ProcessResultStreamer
+        {
+        public:
+            virtual ~ProcessResultStreamer();
+            virtual void OnDataReceived(const std::string& data, std::chrono::high_resolution_clock::duration time) = 0;
         };
 
         struct ProcessStepResult
@@ -22,23 +44,28 @@ namespace ugly
 
             ProcessState result = ProcessState::Running;
             std::chrono::high_resolution_clock::duration executionDuration;
-            std::vector<std::string> data;
+            std::vector<ProcessData> data;
         };
 
         class Process
         {
         public:
-            virtual void Create() = 0;
-            virtual void Start() = 0;
-            virtual void Stop() = 0;
-            virtual void Kill() = 0;
-            virtual std::string ReadLine(std::chrono::high_resolution_clock::duration timeout) = 0;
-            virtual void Write(const std::string& data) = 0;
+            bool Create();
+            bool Start();
+            bool Stop();
+            bool Kill();
             virtual const std::string& GetExecutable() const = 0;
             virtual const std::string& GetArguments() const = 0;
 
-            ProcessStepResult Run(std::chrono::high_resolution_clock::duration timeout, const std::string& endStepMarker);
+            ProcessStepResult Run(const std::string& input, std::chrono::high_resolution_clock::duration timeout, const std::string& endStepMarker, ProcessResultStreamer* streamer = nullptr);
         protected:
+            virtual std::string ReadLine(std::chrono::high_resolution_clock::duration timeout) = 0;
+            virtual bool TryWrite(const std::string& data) = 0;
+            virtual bool TryCreate() = 0;
+            virtual bool TryStart() = 0;
+            virtual bool TryStop() = 0;
+            virtual bool TryKill() = 0;
+            virtual bool IgnoreTimeout() const { return false; }
             ProcessState state = ProcessState::NotCreated;
         };
     }
