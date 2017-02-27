@@ -361,13 +361,14 @@ namespace ugly.CodeGenerator.cxx
         client.InitGame(data, data.player[playerId]);
         for (;;)
         {
+            printf(""EOT\n"");
             std::getline(std::cin, line);
             if (line == ""EOT"")
                 break;
             buf = line.c_str();
             ");
             
-            #line 146 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 147 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default

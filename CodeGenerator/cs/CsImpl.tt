@@ -12,6 +12,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
     {
         private static <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #> ReadTurn()
         {
+            Console.WriteLine("EOT");
             string line = Console.ReadLine();
             if (line == "EOT")
                 return null;

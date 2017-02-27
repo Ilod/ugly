@@ -139,6 +139,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
         client.InitGame(data, data.player[playerId]);
         for (;;)
         {
+            printf("EOT\n");
             std::getline(std::cin, line);
             if (line == "EOT")
                 break;
