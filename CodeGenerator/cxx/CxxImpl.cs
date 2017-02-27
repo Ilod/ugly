@@ -235,14 +235,28 @@ namespace ugly.CodeGenerator.cxx
             
             #line default
             #line hidden
-            this.Write(" = 0; i < size");
+            this.Write(" = 0; idx");
             
             #line 94 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
-            this.Write("; ++i)\r\n                {\r\n                    auto& array");
+            this.Write(" < size");
+            
+            #line 94 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(i));
+            
+            #line default
+            #line hidden
+            this.Write("; ++idx");
+            
+            #line 94 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(i));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n                {\r\n                    auto& array");
             
             #line 96 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i + 1));
@@ -333,20 +347,11 @@ namespace ugly.CodeGenerator.cxx
             
             #line default
             #line hidden
-            this.Write(@"
-    }
-
-    GameServer::~GameServer() {}
-
-    void GameServer::Play(GameClient& client)
-    {
-        std::string line;
-        std::getline(std::cin, line);
-        const char* buf = line.c_str();
-        int playerId = ReadNextInt<int>(buf);
-        ");
+            this.Write("\r\n    }\r\n\r\n    void GameServer::Play(GameClient& client)\r\n    {\r\n        std::str" +
+                    "ing line;\r\n        std::getline(std::cin, line);\r\n        const char* buf = line" +
+                    ".c_str();\r\n        int playerId = ReadNextInt<int>(buf);\r\n        ");
             
-            #line 139 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 137 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
             
             #line default
@@ -362,13 +367,13 @@ namespace ugly.CodeGenerator.cxx
             buf = line.c_str();
             ");
             
-            #line 148 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 146 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default
             #line hidden
             this.Write(" turn;\r\n            Deserialize(turn, buf);\r\n            client.PlayTurn(turn, tu" +
-                    "rn.player[playerId]);\r\n        }\r\n        client.Shutdown();\r\n    }\r\n}");
+                    "rn.player[playerId]);\r\n        }\r\n        client.Cleanup();\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

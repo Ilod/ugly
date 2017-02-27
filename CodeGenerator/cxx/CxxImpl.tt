@@ -91,7 +91,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             {
                 #>
 
-                for (int idx<#= i #> = 0; i < size<#= i #>; ++i)
+                for (int idx<#= i #> = 0; idx<#= i #> < size<#= i #>; ++idx<#= i #>)
                 {
                     auto& array<#= i + 1 #> = array<#= i #>[idx<#= i #>];<#
                 this.PushIndent("    ");
@@ -128,8 +128,6 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
 
     }
 
-    GameServer::~GameServer() {}
-
     void GameServer::Play(GameClient& client)
     {
         std::string line;
@@ -149,6 +147,6 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             Deserialize(turn, buf);
             client.PlayTurn(turn, turn.player[playerId]);
         }
-        client.Shutdown();
+        client.Cleanup();
     }
 }

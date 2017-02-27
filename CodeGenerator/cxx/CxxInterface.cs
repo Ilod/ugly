@@ -61,65 +61,65 @@ foreach (GameFile file in CxxHelper.Definition.Files)
             
             #line default
             #line hidden
-            this.Write("\r\n{\r\n    class GameClient\r\n    {\r\n        virtual ~GameClient();\r\n        virtual" +
-                    " void InitGame(");
+            this.Write("\r\n{\r\n    class GameClient\r\n    {\r\n    public:\r\n        virtual ~GameClient();\r\n  " +
+                    "      virtual void InitGame(");
             
-            #line 20 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
+            #line 21 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
             
             #line default
             #line hidden
             this.Write("& ");
             
-            #line 20 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
+            #line 21 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 20 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
+            #line 21 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup)));
             
             #line default
             #line hidden
             this.Write("& ");
             
-            #line 20 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
+            #line 21 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup)));
             
             #line default
             #line hidden
             this.Write(") = 0;\r\n        virtual void PlayTurn(");
             
-            #line 21 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
+            #line 22 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default
             #line hidden
             this.Write("& ");
             
-            #line 21 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
+            #line 22 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 21 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
+            #line 22 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState)));
             
             #line default
             #line hidden
             this.Write("& ");
             
-            #line 21 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
+            #line 22 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.PlayerState)));
             
             #line default
             #line hidden
-            this.Write(") = 0;\r\n        virtual void Cleanup() {};\r\n    }\r\n\r\n    class GameServer\r\n    {\r" +
-                    "\n    public:\r\n        static void Play(GameClient& client);\r\n    }\r\n}");
+            this.Write(") = 0;\r\n        virtual void Cleanup() {};\r\n    };\r\n\r\n    class GameServer\r\n    {" +
+                    "\r\n    public:\r\n        static void Play(GameClient& client);\r\n    };\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
