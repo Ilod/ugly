@@ -15,12 +15,12 @@ namespace ugly.CodeGenerator.cs
         {
             Definition = gameDef;
             Directory.CreateDirectory(path);
-            File.WriteAllText(Path.Combine(path, "Client.cs"), new CsInterface().TransformText());
-            File.WriteAllText(Path.Combine(path, "ClientPrivate.cs"), new CsImpl().TransformText());
+            Generator.WriteFile(Path.Combine(path, "Client.cs"), new CsInterface().TransformText());
+            Generator.WriteFile(Path.Combine(path, "ClientPrivate.cs"), new CsImpl().TransformText());
             foreach (GameFile file in gameDef.Files)
             {
                 CurrentFile = file;
-                File.WriteAllText(Path.Combine(path, string.Format("{0}.cs", Case.CamelCase.Convert(file.Name))), new CsHeader().TransformText());
+                Generator.WriteFile(Path.Combine(path, string.Format("{0}.cs", Case.CamelCase.Convert(file.Name))), new CsHeader().TransformText());
             }
         }
 

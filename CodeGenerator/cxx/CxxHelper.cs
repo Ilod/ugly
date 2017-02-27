@@ -19,13 +19,13 @@ namespace ugly.CodeGenerator.cxx
             Server = false;
             Definition = gameDef;
             Directory.CreateDirectory(path);
-            File.WriteAllText(Path.Combine(path, "Client.h"), new CxxInterface().TransformText());
-            File.WriteAllText(Path.Combine(path, "Client.cpp"), new CxxImpl().TransformText());
+            Generator.WriteFile(Path.Combine(path, "Client.h"), new CxxInterface().TransformText());
+            Generator.WriteFile(Path.Combine(path, "Client.cpp"), new CxxImpl().TransformText());
             foreach (GameFile file in gameDef.Files)
             {
                 CurrentFile = file;
-                File.WriteAllText(Path.Combine(path, string.Format("{0}.h", Case.CamelCase.Convert(file.Name))), new CxxHeader().TransformText());
-                File.WriteAllText(Path.Combine(path, string.Format("{0}.cpp", Case.CamelCase.Convert(file.Name))), new CxxCode().TransformText());
+                Generator.WriteFile(Path.Combine(path, string.Format("{0}.h", Case.CamelCase.Convert(file.Name))), new CxxHeader().TransformText());
+                Generator.WriteFile(Path.Combine(path, string.Format("{0}.cpp", Case.CamelCase.Convert(file.Name))), new CxxCode().TransformText());
             }
         }
 
@@ -34,13 +34,12 @@ namespace ugly.CodeGenerator.cxx
             Server = true;
             Definition = gameDef;
             Directory.CreateDirectory(path);
-            File.WriteAllText(Path.Combine(path, "Serializer.h"), new CxxSerializerHeader().TransformText());
-            File.WriteAllText(Path.Combine(path, "Serializer.cpp"), new CxxSerializationCode().TransformText());
+            Generator.WriteFile(Path.Combine(path, "Serializer.h"), new CxxSerializerHeader().TransformText());
+            Generator.WriteFile(Path.Combine(path, "Serializer.cpp"), new CxxSerializationCode().TransformText());
             foreach (GameFile file in gameDef.Files)
             {
                 CurrentFile = file;
-                File.WriteAllText(Path.Combine(path, string.Format("{0}.h", Case.CamelCase.Convert(file.Name))), new CxxHeader().TransformText());
-                //File.WriteAllText(Path.Combine(path, string.Format("{0}.cpp", Case.CamelCase.Convert(file.Name))), new CxxCode().TransformText());
+                Generator.WriteFile(Path.Combine(path, string.Format("{0}.h", Case.CamelCase.Convert(file.Name))), new CxxHeader().TransformText());
             }
         }
 

@@ -21,6 +21,14 @@ namespace ugly
         {
             public static string Namespace = "FreeMarket";
 
+            public static bool WriteFile(string path, string text)
+            {
+                if (File.Exists(path) && File.ReadAllText(path) == text)
+                    return false;
+                File.WriteAllText(path, text);
+                return true;
+            }
+
             public static bool IsBasic(this BasicType type)
             {
                 switch (type)
@@ -72,6 +80,7 @@ namespace ugly
                         baseDir = args[1];
                     }
                     cxx.CxxHelper.GenerateFiles(Path.Combine(baseDir, "cxx"), def);
+                    cxx.CxxHelper.GenerateServerFiles(Path.Combine(baseDir, "server"), def);
                     cs.CsHelper.GenerateFiles(Path.Combine(baseDir, "cs"), def);
                     return 0;
                 }
