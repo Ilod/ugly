@@ -208,16 +208,18 @@ namespace ugly.CodeGenerator.cxx
             
             #line 80 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
 
+                    this.PushIndent("    ");
             }
             for (int i = 1; i < m.Array; ++i)
             {
+                this.PopIndent();
                 
             
             #line default
             #line hidden
             this.Write("\r\n                }");
             
-            #line 86 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 88 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
 
             }
             for (int i = 0; i < m.Array; ++i)
@@ -228,43 +230,44 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write("\r\n                for (int idx");
             
-            #line 92 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 94 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write(" = 0; i < size");
             
-            #line 92 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 94 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write("; ++i)\r\n                {\r\n                    auto& array");
             
-            #line 94 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 96 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i + 1));
             
             #line default
             #line hidden
             this.Write(" = array");
             
-            #line 94 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 96 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write("[idx");
             
-            #line 94 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 96 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write("];");
             
-            #line 94 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 96 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
 
+                this.PushIndent("    ");
             }
             if (m.Array != 0)
             {
@@ -274,14 +277,14 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write("\r\n                    Deserialize(array");
             
-            #line 100 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 103 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.Array));
             
             #line default
             #line hidden
             this.Write(", buf);");
             
-            #line 100 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 103 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
 
             }
             else
@@ -292,18 +295,19 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write("\r\n                Deserialize(member, buf);");
             
-            #line 106 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 109 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
 
             }
             for (int i = 0; i < m.Array; ++i)
             {
+                this.PopIndent();
                 
             
             #line default
             #line hidden
             this.Write("\r\n                }");
             
-            #line 112 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 116 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
 
             }
             
@@ -312,7 +316,7 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write("\r\n            }");
             
-            #line 116 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 120 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
 
         }
         
@@ -321,7 +325,7 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write("\r\n        }");
             
-            #line 120 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 124 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
 
         
     }
@@ -342,7 +346,7 @@ namespace ugly.CodeGenerator.cxx
         int playerId = ReadNextInt<int>(buf);
         ");
             
-            #line 135 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 139 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
             
             #line default
@@ -358,7 +362,7 @@ namespace ugly.CodeGenerator.cxx
             buf = line.c_str();
             ");
             
-            #line 144 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
+            #line 148 "D:\ugly\CodeGenerator\cxx\CxxImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default

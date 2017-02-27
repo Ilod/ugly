@@ -110,7 +110,6 @@ namespace ugly.CodeGenerator
         public string Name;
         public string Type;
         public bool Id = false;
-        public bool Weak = false;
         public int Array = 0;
         public Condition Condition;
     }
@@ -126,7 +125,6 @@ namespace ugly.CodeGenerator
     {
         public string Name;
         public string Type;
-        public int Array = 0;
     }
 
     public class Condition

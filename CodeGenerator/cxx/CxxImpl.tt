@@ -78,9 +78,11 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
                 {
                     auto& array<#= i #> = array<#= i - 1 #>[idx<#= i - 1 #>];
                     array<#= i #>.resize(size<#= i #>);<#
+                    this.PushIndent("    ");
             }
             for (int i = 1; i < m.Array; ++i)
             {
+                this.PopIndent();
                 #>
 
                 }<#
@@ -92,6 +94,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
                 for (int idx<#= i #> = 0; i < size<#= i #>; ++i)
                 {
                     auto& array<#= i + 1 #> = array<#= i #>[idx<#= i #>];<#
+                this.PushIndent("    ");
             }
             if (m.Array != 0)
             {
@@ -107,6 +110,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             }
             for (int i = 0; i < m.Array; ++i)
             {
+                this.PopIndent();
                 #>
 
                 }<#

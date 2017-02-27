@@ -165,7 +165,7 @@ namespace ugly.CodeGenerator.cxx
             #line 46 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
                 }
-                if (a.Array > 0)
+                if (type == BasicType.Class)
                 {
                     
             
@@ -176,28 +176,6 @@ namespace ugly.CodeGenerator.cxx
             #line 50 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
                 }
-                for (int i = 0; i < a.Array; ++i)
-                {
-                    
-            
-            #line default
-            #line hidden
-            this.Write("std::vector<");
-            
-            #line 54 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
-
-                }
-                if (type == BasicType.Class)
-                {
-                    
-            
-            #line default
-            #line hidden
-            this.Write("const ");
-            
-            #line 58 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
-
-                }
                 if (type.IsBasic())
                 {
                     
@@ -205,13 +183,13 @@ namespace ugly.CodeGenerator.cxx
             #line default
             #line hidden
             
-            #line 62 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 54 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(type)));
             
             #line default
             #line hidden
             
-            #line 62 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 54 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
                 }
                 else
@@ -221,38 +199,16 @@ namespace ugly.CodeGenerator.cxx
             #line default
             #line hidden
             
-            #line 66 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 58 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(a.Type)));
             
             #line default
             #line hidden
             
-            #line 66 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 58 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
                 }
-                if (a.Array > 0 && type == BasicType.Class)
-                {
-                    
-            
-            #line default
-            #line hidden
-            this.Write("*");
-            
-            #line 70 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
-
-                }
-                for (int i = 0; i < a.Array; ++i)
-                {
-                    
-            
-            #line default
-            #line hidden
-            this.Write(">");
-            
-            #line 74 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
-
-                }
-                if (a.Array > 0 || type == BasicType.Class)
+                if (type == BasicType.Class)
                 {
                     
             
@@ -260,7 +216,7 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write("&");
             
-            #line 78 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 62 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
                 }
                 
@@ -269,13 +225,13 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write(" ");
             
-            #line 80 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 64 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             
-            #line 80 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 64 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
             }
             
@@ -284,13 +240,13 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write(")\r\n    {\r\n        std::printf(\"");
             
-            #line 84 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 68 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.MethodId));
             
             #line default
             #line hidden
             
-            #line 84 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 68 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
             foreach (MethodParam a in m.Param)
             {
@@ -303,13 +259,13 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write(" %");
             
-            #line 90 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 74 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypePrinter(type)));
             
             #line default
             #line hidden
             
-            #line 90 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 74 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
             }
             
@@ -318,7 +274,7 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write("\\n\"");
             
-            #line 92 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 76 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
             foreach (MethodParam a in m.Param)
             {
@@ -332,7 +288,7 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write(", ");
             
-            #line 99 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 83 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
                     if (realType == BasicType.Enum)
                     {
@@ -342,7 +298,7 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write("(int)");
             
-            #line 102 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 86 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
                     }
                     
@@ -350,20 +306,20 @@ namespace ugly.CodeGenerator.cxx
             #line default
             #line hidden
             
-            #line 104 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 88 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 104 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 88 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CxxHelper.Definition.Class[a.Type].IdMember.Name)));
             
             #line default
             #line hidden
             
-            #line 104 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 88 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
                 }
                 else if (type == BasicType.Enum)
@@ -374,13 +330,13 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write(", (int)");
             
-            #line 108 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 92 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             
-            #line 108 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 92 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
                 }
                 else
@@ -391,13 +347,13 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write(", ");
             
-            #line 112 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 96 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             
-            #line 112 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 96 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
                 }
             }
@@ -407,7 +363,7 @@ namespace ugly.CodeGenerator.cxx
             #line hidden
             this.Write(");\r\n    }");
             
-            #line 116 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 100 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
         }
     }

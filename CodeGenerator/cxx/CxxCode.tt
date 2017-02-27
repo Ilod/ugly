@@ -45,14 +45,6 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
                 {
                     #>, <#
                 }
-                if (a.Array > 0)
-                {
-                    #>const <#
-                }
-                for (int i = 0; i < a.Array; ++i)
-                {
-                    #>std::vector<<#
-                }
                 if (type == BasicType.Class)
                 {
                     #>const <#
@@ -65,15 +57,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
                 {
                     #><#= Case.CamelCase.Convert(a.Type) #><#
                 }
-                if (a.Array > 0 && type == BasicType.Class)
-                {
-                    #>*<#
-                }
-                for (int i = 0; i < a.Array; ++i)
-                {
-                    #>><#
-                }
-                if (a.Array > 0 || type == BasicType.Class)
+                if (type == BasicType.Class)
                 {
                     #>&<#
                 }

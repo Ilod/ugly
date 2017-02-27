@@ -262,7 +262,7 @@ foreach (string d in CxxHelper.CurrentFile.Dependency)
             #line 85 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 }
-                if (a.Array > 0)
+                if (type == BasicType.Class)
                 {
                     
             
@@ -273,28 +273,6 @@ foreach (string d in CxxHelper.CurrentFile.Dependency)
             #line 89 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 }
-                for (int i = 0; i < a.Array; ++i)
-                {
-                    
-            
-            #line default
-            #line hidden
-            this.Write("std::vector<");
-            
-            #line 93 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
-
-                }
-                if (type == BasicType.Class)
-                {
-                    
-            
-            #line default
-            #line hidden
-            this.Write("const ");
-            
-            #line 97 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
-
-                }
                 if (type.IsBasic())
                 {
                     
@@ -302,13 +280,13 @@ foreach (string d in CxxHelper.CurrentFile.Dependency)
             #line default
             #line hidden
             
-            #line 101 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 93 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(type)));
             
             #line default
             #line hidden
             
-            #line 101 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 93 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 }
                 else
@@ -318,38 +296,16 @@ foreach (string d in CxxHelper.CurrentFile.Dependency)
             #line default
             #line hidden
             
-            #line 105 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 97 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(a.Type)));
             
             #line default
             #line hidden
             
-            #line 105 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 97 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 }
-                if (a.Array > 0 && type == BasicType.Class)
-                {
-                    
-            
-            #line default
-            #line hidden
-            this.Write("*");
-            
-            #line 109 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
-
-                }
-                for (int i = 0; i < a.Array; ++i)
-                {
-                    
-            
-            #line default
-            #line hidden
-            this.Write(">");
-            
-            #line 113 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
-
-                }
-                if (a.Array > 0 || type == BasicType.Class)
+                if (type == BasicType.Class)
                 {
                     
             
@@ -357,7 +313,7 @@ foreach (string d in CxxHelper.CurrentFile.Dependency)
             #line hidden
             this.Write("&");
             
-            #line 117 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 101 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 }
                 
@@ -366,13 +322,13 @@ foreach (string d in CxxHelper.CurrentFile.Dependency)
             #line hidden
             this.Write(" ");
             
-            #line 119 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 103 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             
-            #line 119 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 103 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
             
@@ -381,7 +337,7 @@ foreach (string d in CxxHelper.CurrentFile.Dependency)
             #line hidden
             this.Write(");");
             
-            #line 121 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 105 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
         }
         
@@ -390,7 +346,7 @@ foreach (string d in CxxHelper.CurrentFile.Dependency)
             #line hidden
             this.Write("\r\n    };");
             
-            #line 125 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 109 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
     }
     
