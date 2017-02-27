@@ -72,6 +72,7 @@ namespace ugly
                         baseDir = args[1];
                     }
                     cxx.CxxHelper.GenerateFiles(Path.Combine(baseDir, "cxx"), def);
+                    cs.CsHelper.GenerateFiles(Path.Combine(baseDir, "cs"), def);
                     return 0;
                 }
                 catch (Exception e)

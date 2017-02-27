@@ -47,6 +47,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cs\CsCode.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CsCode.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cs\CsHeader.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CsHeader.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cs\CsHelper.cs" />
+    <Compile Include="cs\CsImpl.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CsImpl.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cs\CsInterface.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CsInterface.tt</DependentUpon>
+    </Compile>
     <Compile Include="cxx\CxxHelper.cs" />
     <Compile Include="cxx\CxxCode.cs">
       <AutoGen>True</AutoGen>
@@ -77,6 +98,22 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="cs\CsCode.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CsCode.cs</LastGenOutput>
+    </Content>
+    <Content Include="cs\CsHeader.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CsHeader.cs</LastGenOutput>
+    </Content>
+    <Content Include="cs\CsImpl.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CsImpl.cs</LastGenOutput>
+    </Content>
+    <Content Include="cs\CsInterface.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CsInterface.cs</LastGenOutput>
+    </Content>
     <Content Include="cxx\CxxCode.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CxxCode.cs</LastGenOutput>
