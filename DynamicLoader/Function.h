@@ -27,7 +27,7 @@ namespace ugly
             }
             R operator()(Args... args)
             {
-                return function(arg...);
+                return function(args...);
             }
             template<typename R, typename... Args> Function<R, Args...> LoadFunction(const std::string& function)
             {

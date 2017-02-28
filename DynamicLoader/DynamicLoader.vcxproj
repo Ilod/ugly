@@ -129,12 +129,14 @@
   <ItemGroup>
     <ClCompile Include="Library.cpp" />
     <ClCompile Include="LibraryHandlerWindows.cpp" />
+    <ClCompile Include="Registry.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Function.h" />
     <ClInclude Include="Library.h" />
     <ClInclude Include="LibraryHandler.h" />
     <ClInclude Include="LibraryHandlerWindows.h" />
+    <ClInclude Include="Registry.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
