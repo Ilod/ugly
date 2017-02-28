@@ -103,40 +103,43 @@ namespace ugly
         {
             CommandLineResult res = CommandLineResult::NotFound;
             bool foundAnyValid = false;
-            for (auto it = data.begin(); it != data.end(); ++it)
+            auto it = data.begin();
+            while (it != data.end())
             {
                 bool negative = (std::find(negativeOptions.begin(), negativeOptions.end(), it->first) != negativeOptions.end());
                 bool found = negative || (std::find(options.begin(), options.end(), it->first) != options.end());
-                if (found)
+                if (!found)
                 {
-                    T val;
-                    if (TryParse(val, it->second))
-                    {
-                        foundAnyValid = true;
-                        std::vector<T>& toAdd = negative ? negativeValue : value;
-                        std::vector<T>& toRemove = negative ? value : negativeValue;
-                        size_t sizeBefore = toRemove.size();
-                        std::remove(toRemove.begin(), toRemove.end(), val);
-                        if (toRemove.size() == sizeBefore)
-                        {
-                            toAdd.push_back(val);
-                        }
-                    }
-                    else
-                    {
-                        res = CommandLineResult::ParseError;
-                        error.push_back(CommandLineError());
-                        error.back().error = it->second.empty() ? CommandLineError::Type::NoValue : CommandLineError::Type::BadValue;
-                        error.back().option = it->first;
-                        error.back().value = it->second;
-                        error.back().expected
-                            = std::is_same_v<bool, T> ? "bool"
-                            : std::is_integral_v<T> ? "int"
-                            : std::is_floating_point_v<T> ? "float"
-                            : std::is_same_v<std::string, T> ? "string" : "unknown";
-                    }
-                    it = data.erase(it);
+                    ++it;
+                    continue;
                 }
+                T val;
+                if (TryParse(val, it->second))
+                {
+                    foundAnyValid = true;
+                    std::vector<T>& toAdd = negative ? negativeValue : value;
+                    std::vector<T>& toRemove = negative ? value : negativeValue;
+                    size_t sizeBefore = toRemove.size();
+                    std::remove(toRemove.begin(), toRemove.end(), val);
+                    if (toRemove.size() == sizeBefore)
+                    {
+                        toAdd.push_back(val);
+                    }
+                }
+                else
+                {
+                    res = CommandLineResult::ParseError;
+                    error.push_back(CommandLineError());
+                    error.back().error = it->second.empty() ? CommandLineError::Type::NoValue : CommandLineError::Type::BadValue;
+                    error.back().option = it->first;
+                    error.back().value = it->second;
+                    error.back().expected
+                        = std::is_same_v<bool, T> ? "bool"
+                        : std::is_integral_v<T> ? "int"
+                        : std::is_floating_point_v<T> ? "float"
+                        : std::is_same_v<std::string, T> ? "string" : "unknown";
+                }
+                it = data.erase(it);
             }
             if (res != CommandLineResult::ParseError && foundAnyValid)
                 res = CommandLineResult::Success;
