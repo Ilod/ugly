@@ -65,7 +65,7 @@ namespace ugly
 
         bool ProcessWindows::TryStop()
         {
-            return !!DebugActiveProcess(processInfo.dwProcessId));
+            return !!DebugActiveProcess(processInfo.dwProcessId);
         }
 
         bool ProcessWindows::TryKill()

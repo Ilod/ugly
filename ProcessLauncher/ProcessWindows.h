@@ -45,7 +45,6 @@ namespace ugly
             Pipe processStdInPipe;
             Pipe processStdOutPipe;
             PROCESS_INFORMATION processInfo;
-            bool TryCreate();
         };
     }
     template<> constexpr const bool is_enum_flag<process::Pipe::Inherit> = true;
