@@ -1,22 +1,25 @@
 #pragma once
 #include <type_traits>
+#include <memory>
+#include "LibraryHandler.h"
 
 namespace ugly
 {
     namespace loader
     {
-        typename LibraryHandler;
         template<typename T> class unique_ptr;
         template<typename T> class shared_ptr;
-        template<typename T, typename... Args> unique_ptr<T> make_unique(std::shared_ptr<LibraryHandler> library, Args... args);
-        template<typename T, typename RealType, typename... Args> unique_ptr<T> make_unique_virtual(std::shared_ptr<LibraryHandler> library, Args... args);
-        template<typename T, typename... Args> shared_ptr<T> make_shared(std::shared_ptr<LibraryHandler> library, Args... args);
-        template<typename T, typename RealType, typename... Args> shared_ptr<T> make_shared_virtual(std::shared_ptr<LibraryHandler> library, Args... args);
+        template<typename T, typename... Args> unique_ptr<T> make_unique(std::shared_ptr<LibraryHandler> library, Args&&... args);
+        template<typename T, typename... Args> shared_ptr<T> make_shared(std::shared_ptr<LibraryHandler> library, Args&&... args);
 
         template<typename T> class unique_ptr
         {
         public:
             unique_ptr()
+                : object(nullptr)
+                , deleter(nullptr)
+            {}
+            unique_ptr(std::nullptr_t)
                 : object(nullptr)
                 , deleter(nullptr)
             {}
@@ -111,7 +114,7 @@ namespace ugly
             void(*deleter)(void*);
             std::shared_ptr<LibraryHandler> library;
 
-            template<typename... Args> static T* Create(Args... args)
+            template<typename... Args> static T* Create(Args&&... args)
             {
                 return new T(std::forward<Args>(args)...);
             }
@@ -122,10 +125,8 @@ namespace ugly
             }
 
             template<typename R> friend class unique_ptr;
-            template<typename R, typename... Args> friend unique_ptr<R> make_unique(std::shared_ptr<LibraryHandler> library, Args... args);
-            template<typename R, typename Realtype, typename... Args> friend unique_ptr<R> make_unique_virtual(std::shared_ptr<LibraryHandler> library, Args... args);
-            template<typename R, typename... Args> friend shared_ptr<R> make_shared(std::shared_ptr<LibraryHandler> library, Args... args);
-            template<typename R, typename Realtype, typename... Args> friend shared_ptr<R> make_shared_virtual(std::shared_ptr<LibraryHandler> library, Args... args);
+            template<typename R, typename... Args> friend unique_ptr<R> make_unique(std::shared_ptr<LibraryHandler> library, Args&&... args);
+            template<typename R, typename... Args> friend shared_ptr<R> make_shared(std::shared_ptr<LibraryHandler> library, Args&&... args);
             friend class shared_ptr<T>;
         };
 
@@ -203,24 +204,14 @@ namespace ugly
             template<typename R> friend class shared_ptr;
         };
 
-        template<typename T, typename... Args> unique_ptr<T> make_unique(std::shared_ptr<LibraryHandler> library, Args... args)
+        template<typename T, typename... Args> unique_ptr<T> make_unique(std::shared_ptr<LibraryHandler> library, Args&&... args)
         {
             return unique_ptr<T>(unique_ptr<T>::Create(std::forward<Args>(args)...), &unique_ptr<T>::Delete, library);
         }
 
-        template<typename T, typename RealType, typename... Args> unique_ptr<T> make_unique_virtual(std::shared_ptr<LibraryHandler> library, Args... args)
-        {
-            return unique_ptr<T>(unique_ptr<RealType>::Create(std::forward<Args>(args)...), &unique_ptr<T>::Delete, library);
-        }
-
-        template<typename T, typename... Args> shared_ptr<T> make_shared(std::shared_ptr<LibraryHandler> library, Args... args)
+        template<typename T, typename... Args> shared_ptr<T> make_shared(std::shared_ptr<LibraryHandler> library, Args&&... args)
         {
             return shared_ptr<T>(make_unique<T>(library, std::forward<Args>(args)...));
-        }
-
-        template<typename T, typename RealType, typename... Args> shared_ptr<T> make_shared_virtual(std::shared_ptr<LibraryHandler> library, Args... args)
-        {
-            return shared_ptr<T>(make_unique_virtual<T, RealType>(library, std::forward<Args>(args)...));
         }
     }
 }
