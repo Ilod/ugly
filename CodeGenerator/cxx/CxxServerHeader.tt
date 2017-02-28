@@ -11,7 +11,7 @@ namespace ugly
 {
     namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
     {
-        class <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer) #>: public ugly::server::IGame
+        class <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer) #> : public ugly::server::GameBase
         {
         protected:
             void InitGame() override;
@@ -27,6 +27,7 @@ namespace ugly
             <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #> gameSetup;
             <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #> gameState;
             Serializer serializer;
+            int turn = 0;
         };
     }
 }

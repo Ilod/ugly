@@ -66,8 +66,8 @@ namespace ugly.CodeGenerator.cxx
             
             #line default
             #line hidden
-            this.Write("::ShouldPlay()\r\n        {\r\n            return false;\r\n        }\r\n\r\n        std::c" +
-                    "hrono::milliseconds ");
+            this.Write("::ShouldPlay()\r\n        {\r\n            return ++turn <= 50;\r\n        }\r\n\r\n       " +
+                    " std::chrono::milliseconds ");
             
             #line 36 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer)));
@@ -102,7 +102,7 @@ namespace ugly.CodeGenerator.cxx
                 : library(library)
             {}
 
-            ugly::loader::unique_ptr<ugly::server::IGame> CreateGame(const std::map<std::string, std::string>& params) const
+            ugly::loader::unique_ptr<ugly::server::IGame> CreateGame(const util::CommandLine& params) const
             {
                 return ugly::loader::make_unique<");
             

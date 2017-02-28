@@ -43,7 +43,7 @@ namespace ugly.CodeGenerator.cxx
             
             #line default
             #line hidden
-            this.Write(@": public ugly::server::IGame
+            this.Write(@" : public ugly::server::GameBase
         {
         protected:
             void InitGame() override;
@@ -70,7 +70,8 @@ namespace ugly.CodeGenerator.cxx
             
             #line default
             #line hidden
-            this.Write(" gameState;\r\n            Serializer serializer;\r\n        };\r\n    }\r\n}");
+            this.Write(" gameState;\r\n            Serializer serializer;\r\n            int turn = 0;\r\n     " +
+                    "   };\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

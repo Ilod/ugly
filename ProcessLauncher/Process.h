@@ -47,18 +47,30 @@ namespace ugly
             std::vector<ProcessData> data;
         };
 
-        class Process
+        class IProcess
         {
         public:
-            bool Create();
-            bool Start();
-            bool Stop();
-            bool Kill();
+            virtual ~IProcess();
+            virtual bool Create() = 0;
+            virtual bool Start() = 0;
+            virtual bool Stop() = 0;
+            virtual bool Kill() = 0;
+
+            virtual ProcessStepResult Run(const std::string& input, std::chrono::high_resolution_clock::duration timeout, const std::string& endStepMarker, ProcessResultStreamer* streamer = nullptr) = 0;
+        };
+
+        class Process : public IProcess
+        {
+        public:
+            bool Create() override;
+            bool Start() override;
+            bool Stop() override;
+            bool Kill() override;
+
+            ProcessStepResult Run(const std::string& input, std::chrono::high_resolution_clock::duration timeout, const std::string& endStepMarker, ProcessResultStreamer* streamer = nullptr) override;
+        protected:
             virtual const std::string& GetExecutable() const = 0;
             virtual const std::string& GetArguments() const = 0;
-
-            ProcessStepResult Run(const std::string& input, std::chrono::high_resolution_clock::duration timeout, const std::string& endStepMarker, ProcessResultStreamer* streamer = nullptr);
-        protected:
             virtual std::string ReadLine(std::chrono::high_resolution_clock::duration timeout) = 0;
             virtual bool TryWrite(const std::string& data) = 0;
             virtual bool TryCreate() = 0;

@@ -27,7 +27,7 @@ namespace ugly
             while (elapsed < timeout || IgnoreTimeout())
             {
                 std::string line = ReadLine(timeout - elapsed);
-                std::chrono::high_resolution_clock::duration elapsed = std::chrono::high_resolution_clock::now() - startTime;
+                elapsed = std::chrono::high_resolution_clock::now() - startTime;
                 if (line.empty())
                     continue;
                 if (streamer)
@@ -51,6 +51,8 @@ namespace ugly
         {
             data.reserve(100);
         }
+
+        IProcess::~IProcess() {}
 
         bool Process::Create()
         {

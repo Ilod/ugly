@@ -5,18 +5,35 @@ namespace ugly
 {
     namespace process
     {
+        std::atomic_uint32_t Pipe::PipeId = 0;
 
         Pipe::Pipe()
             : Pipe(Inherit::None)
         { }
         
         Pipe::Pipe(Inherit inheritance)
+            : read(NULL)
+            , write(NULL)
         {
             SECURITY_ATTRIBUTES pipeAttributes;
             pipeAttributes.nLength = sizeof(pipeAttributes);
             pipeAttributes.bInheritHandle = TRUE;
             pipeAttributes.lpSecurityDescriptor = NULL;
-            valid = !!CreatePipe(&read, &write, &pipeAttributes, 16384);
+
+
+            
+            char pipeName[ MAX_PATH ];
+            sprintf_s(pipeName, MAX_PATH, "\\\\.\\Pipe\\RemoteExeAnon.%08x.%08x",
+                GetCurrentProcessId(), PipeId++);
+
+            read = CreateNamedPipeA(pipeName, PIPE_ACCESS_INBOUND | FILE_FLAG_OVERLAPPED,
+                            PIPE_TYPE_BYTE | PIPE_WAIT,
+                            1, 16384, 16384, 0, &pipeAttributes);
+
+            write = CreateFileA(pipeName, GENERIC_WRITE, 0, &pipeAttributes, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+            valid = !!read && !!write;
+
             if (valid)
             {
                 if (!(inheritance & Inherit::Read))
@@ -55,7 +72,10 @@ namespace ugly
             PROCESS_INFORMATION pi;
             ZeroMemory(&pi, sizeof(pi));
             if (!CreateProcessA(GetExecutable().c_str(), const_cast<char*>(GetArguments().c_str()), NULL, NULL, FALSE, DEBUG_ONLY_THIS_PROCESS, NULL, NULL, &si, &pi))
+            {
+                DWORD a = GetLastError();
                 return false;
+            }
             process = pi.hProcess;
             processId = pi.dwProcessId;
             return true;
@@ -83,6 +103,7 @@ namespace ugly
             OVERLAPPED overlapped;
             ZeroMemory(&overlapped, sizeof(overlapped));
             ReadFile(processStdOutPipe.getReadHandle(), &buffer, sizeof(buffer), &read, &overlapped);
+            DWORD time = (DWORD)(timeout.count() * 1000 * std::chrono::high_resolution_clock::period::num / std::chrono::high_resolution_clock::period::den);
             if (!GetOverlappedResultEx(processStdOutPipe.getReadHandle(), &overlapped, &read, (DWORD)(timeout.count() * 1000 * std::chrono::high_resolution_clock::period::num / std::chrono::high_resolution_clock::period::den), FALSE))
             {
                 CancelIoEx(processStdOutPipe.getReadHandle(), &overlapped);

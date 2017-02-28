@@ -4,6 +4,7 @@
 #include <memory>
 #include "Result.h"
 #include "../ProcessLauncher/Process.h"
+#include "../DynamicLoader/Memory.h"
 
 namespace ugly
 {
@@ -14,9 +15,17 @@ namespace ugly
         {
         public:
             virtual ~IGame();
-            GameResult Play();
-            void AddPlayer(std::unique_ptr<process::Process> process);
-            int GetPlayerCount() const { return (int)players.size(); }
+            virtual GameResult Play() = 0;
+            virtual void AddPlayer(loader::unique_ptr<process::IProcess> process) = 0;
+            virtual int GetPlayerCount() const = 0;
+        };
+        
+        class GameBase : public IGame
+        {
+        public:
+            GameResult Play() override;
+            void AddPlayer(loader::unique_ptr<process::IProcess> process) override;
+            int GetPlayerCount() const override { return (int)players.size(); }
         protected:
             virtual void InitGame() = 0;
             virtual std::string GetGameSetup() = 0;
@@ -29,7 +38,7 @@ namespace ugly
             virtual std::chrono::milliseconds GetCleanupTimeLimit(int player) = 0;
         private:
             const std::string endOfTurnMarker = "EOT";
-            std::vector<std::unique_ptr<process::Process>> players;
+            std::vector<loader::unique_ptr<process::IProcess>> players;
         };
     }
 }

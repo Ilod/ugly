@@ -7,8 +7,10 @@ namespace ugly
     {
         IGame::~IGame() {}
 
-        GameResult IGame::Play()
+        GameResult GameBase::Play()
         {
+            for (int i = 0; i < players.size(); ++i)
+                players[i]->Create();
             std::string gameSetup = GetGameSetup();
             for (int i = 0; i < players.size(); ++i)
             {
@@ -26,10 +28,12 @@ namespace ugly
             std::string end = "EOT\n";
             for (int i = 0; i < players.size(); ++i)
                 players[i]->Run(end, GetCleanupTimeLimit(i), endOfTurnMarker);
+            for (int i = 0; i < players.size(); ++i)
+                players[i]->Kill();
             return ComputeScore();
         }
 
-        void IGame::AddPlayer(std::unique_ptr<process::Process> process)
+        void GameBase::AddPlayer(loader::unique_ptr<process::IProcess> process)
         {
             players.push_back(std::move(process));
         }

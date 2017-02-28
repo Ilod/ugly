@@ -21,7 +21,7 @@ namespace ugly
         class Server
         {
         public:
-            static int Launch(const ServerArgs& args);
+            static int Launch(util::CommandLine& commandLine);
         };
     }
 }

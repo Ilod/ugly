@@ -4,8 +4,8 @@ namespace ugly
 {
     namespace process
     {
-        ProcessNative::ProcessNative(const std::string executablePath)
-            : executablePath(executablePath)
+        ProcessNative::ProcessNative(const std::string& path)
+            : executablePath(path)
         {}
         
         std::string ProcessNative::empty;

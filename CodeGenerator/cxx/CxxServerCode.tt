@@ -30,7 +30,7 @@ namespace ugly
 
         bool <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer) #>::ShouldPlay()
         {
-            return false;
+            return ++turn <= 50;
         }
 
         std::chrono::milliseconds <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer) #>::GetNextTurnTimeLimit(int player)
@@ -55,7 +55,7 @@ namespace ugly
                 : library(library)
             {}
 
-            ugly::loader::unique_ptr<ugly::server::IGame> CreateGame(const std::map<std::string, std::string>& params) const
+            ugly::loader::unique_ptr<ugly::server::IGame> CreateGame(const util::CommandLine& params) const
             {
                 return ugly::loader::make_unique<<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer) #>>(library);
             }

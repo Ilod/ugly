@@ -3,6 +3,7 @@
 #include <memory>
 #include <map>
 #include <string>
+#include "../CommandLine/CommandLine.h"
 #include "../DynamicLoader/Registry.h"
 #include "../DynamicLoader/Memory.h"
 
@@ -15,7 +16,7 @@ namespace ugly
         {
         public:
             virtual ~GameServerEntryPoint();
-            virtual loader::unique_ptr<IGame> CreateGame(const std::map<std::string, std::string>& params) const = 0;
+            virtual loader::unique_ptr<IGame> CreateGame(const util::CommandLine& params) const = 0;
         };
 
         class GameServerRegistry : public ugly::loader::Registry

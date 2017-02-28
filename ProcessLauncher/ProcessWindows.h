@@ -2,6 +2,7 @@
 #include "Process.h"
 #include "Util.h"
 #include <cstdint>
+#include <atomic>
 
 using HANDLE = void*;
 
@@ -30,6 +31,7 @@ namespace ugly
             HANDLE read;
             HANDLE write;
             bool valid;
+            static std::atomic_uint32_t PipeId;
         };
 
         class ProcessWindows : public Process
