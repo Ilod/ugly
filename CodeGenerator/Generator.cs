@@ -64,7 +64,7 @@ namespace ugly
             static int Main(string[] args)
             {
                 SharpYaml.Serialization.Serializer serializer = new SharpYaml.Serialization.Serializer();
-                if (args.Length != 1)
+                if (args.Length < 1)
                 {
                     Console.Error.WriteLine("You must provide an input YAML file!");
                     Console.In.Read();
