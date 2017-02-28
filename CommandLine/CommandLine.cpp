@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cctype>
 #include <limits>
+#include <sstream>
 
 namespace ugly
 {
@@ -10,8 +11,8 @@ namespace ugly
         CommandLine::CommandLine(int argn, const char** argv)
         {
             std::vector<std::string> commandLine;
-            commandLine.reserve(argn);
-            for (int i = 0; i < argn; ++i)
+            commandLine.reserve(argn - 1);
+            for (int i = 1; i < argn; ++i)
                 commandLine.push_back(argv[i]);
             ParseOptions(commandLine);
         }
@@ -175,6 +176,33 @@ namespace ugly
         {
             value = str;
             return true;
+        }
+
+        std::string CommandLine::GetErrorString() const
+        {
+            std::stringstream str;
+            for (const CommandLineError& err : error)
+            {
+                switch (err.error)
+                {
+                case CommandLineError::Type::BadValue:
+                    str << "Error on option " << err.option << ": expecting " << err.expected << ", got " << err.value << std::endl;
+                    break;
+                case CommandLineError::Type::NotConsummed:
+                    str << "Unknown option " << err.option << " " << err.value << std::endl;
+                    break;
+                case CommandLineError::Type::NoValue:
+                    str << "Option " << err.option << " requires a " << err.expected << " value, none provided" << std::endl;
+                    break;
+                case CommandLineError::Type::MissingArg:
+                    str << "Mandatory option " << err.option << " (" << err.expected << ") not foud" << std::endl;
+                    break;
+                default:
+                    str << "Unknown error " << (int)err.error << " on option " << err.option << " " << err.value << std::endl;
+                    break;
+                }
+            }
+            return str.str();
         }
     }
 }
