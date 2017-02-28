@@ -43,7 +43,7 @@ namespace ugly.CodeGenerator.cxx
             
             #line default
             #line hidden
-            this.Write(@": public ugly::server::Game
+            this.Write(@": public ugly::server::IGame
         {
         protected:
             void InitGame() override;

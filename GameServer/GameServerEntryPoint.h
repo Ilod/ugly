@@ -10,12 +10,12 @@ namespace ugly
 {
     namespace server
     {
-        class Game;
+        class IGame;
         class GameServerEntryPoint
         {
         public:
             virtual ~GameServerEntryPoint();
-            virtual loader::unique_ptr<Game> CreateGame(const std::map<std::string, std::string>& params) const = 0;
+            virtual loader::unique_ptr<IGame> CreateGame(const std::map<std::string, std::string>& params) const = 0;
         };
 
         class GameServerRegistry : public ugly::loader::Registry

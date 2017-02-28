@@ -102,7 +102,7 @@ namespace ugly.CodeGenerator.cxx
                 : library(library)
             {}
 
-            ugly::loader::unique_ptr<ugly::server::Game> CreateGame(const std::map<std::string, std::string>& params) const
+            ugly::loader::unique_ptr<ugly::server::IGame> CreateGame(const std::map<std::string, std::string>& params) const
             {
                 return ugly::loader::make_unique<");
             

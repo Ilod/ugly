@@ -5,9 +5,9 @@ namespace ugly
 {
     namespace server
     {
-        Game::~Game() {}
+        IGame::~IGame() {}
 
-        GameResult Game::Play()
+        GameResult IGame::Play()
         {
             std::string gameSetup = GetGameSetup();
             for (int i = 0; i < players.size(); ++i)
@@ -29,7 +29,7 @@ namespace ugly
             return ComputeScore();
         }
 
-        void Game::AddPlayer(std::unique_ptr<process::Process> process)
+        void IGame::AddPlayer(std::unique_ptr<process::Process> process)
         {
             players.push_back(std::move(process));
         }

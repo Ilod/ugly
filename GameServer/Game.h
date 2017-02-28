@@ -10,10 +10,10 @@ namespace ugly
     namespace server
     {
 
-        class Game
+        class IGame
         {
         public:
-            virtual ~Game();
+            virtual ~IGame();
             GameResult Play();
             void AddPlayer(std::unique_ptr<process::Process> process);
             int GetPlayerCount() const { return (int)players.size(); }
