@@ -40,7 +40,7 @@ namespace ugly
             }
 
             unique_ptr& operator=(const unique_ptr<T>&) = delete;
-            unique_ptr&& operator=(unique_ptr<T>&& other)
+            unique_ptr& operator=(unique_ptr<T>&& other)
             {
                 reset();
                 object = other.object;
@@ -48,6 +48,7 @@ namespace ugly
                 deleter = other.deleter;
                 other.deleter = nullptr;
                 library = std::move(other.library);
+                return *this;
             }
             template<class V, typename = typename std::enable_if<std::is_base_of<T, V>::value>::type> unique_ptr&& operator=(unique_ptr<V>&& other)
             {
