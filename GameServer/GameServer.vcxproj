@@ -27,6 +27,14 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameServerEntryPoint.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DynamicLoader\DynamicLoader.vcxproj">
+      <Project>{bcf0dd64-4af5-4088-b375-f95a727d2fe9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ProcessLauncher\ProcessLauncher.vcxproj">
+      <Project>{cb3d8559-8f0f-4343-af0b-3e1bec1bc50d}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{86413759-BFF5-4AA3-8FF5-1D1FA87AAC4B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
