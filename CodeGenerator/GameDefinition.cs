@@ -18,6 +18,7 @@ namespace ugly.CodeGenerator
         public void ParseTypes()
         {
             Method.Clear();
+            Dictionary<int, List<ClassMethod>> methods = new Dictionary<int, List<ClassMethod>>();
             foreach (GameFile file in Files)
             {
                 foreach (GameClass c in file.Class)
@@ -25,8 +26,9 @@ namespace ugly.CodeGenerator
                     Class[c.Name] = c;
                     foreach (ClassMethod m in c.Method)
                     {
-                        m.MethodId = Method.Count;
-                        Method.Add(m);
+                        if (!methods.ContainsKey(m.ApiVersion))
+                            methods[m.ApiVersion] = new List<ClassMethod>();
+                        methods[m.ApiVersion].Add(m);
                     }
                     foreach (ClassMember m in c.Member)
                     {
@@ -39,6 +41,11 @@ namespace ugly.CodeGenerator
                 }
                 foreach (GameEnum e in file.Enum)
                     Enum[e.Name] = e;
+            }
+            foreach (ClassMethod m in methods.Values.SelectMany(l => l))
+            {
+                m.MethodId = Method.Count;
+                Method.Add(m);
             }
         }
 
@@ -121,6 +128,8 @@ namespace ugly.CodeGenerator
     {
         public string Name;
         public List<MethodParam> Param = new List<MethodParam>();
+        public int ApiVersion;
+        [NonSerialized]
         public int MethodId = -1;
     }
 
