@@ -127,9 +127,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Process.cpp" />
     <ClCompile Include="ProcessNative.cpp" />
     <ClCompile Include="ProcessWindows.cpp" />
