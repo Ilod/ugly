@@ -28,51 +28,44 @@ namespace ugly.CodeGenerator.cxx
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("#include \"Game.h\"\r\n\r\nnamespace ugly\r\n{\r\n    namespace ");
+            this.Write("#include \"Game.h\"\r\n#include <map>\r\n#include <string>\r\n#include \"../GameServer/Gam" +
+                    "eServerEntryPoint.h\"\r\n#include \"../DynamicLoader/Memory.h\"\r\n\r\nnamespace ugly\r\n{\r" +
+                    "\n    namespace ");
             
-            #line 10 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
+            #line 14 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace)));
             
             #line default
             #line hidden
-            this.Write(@"
-    {
-        void Game::InitGame()
-        {
-
-        }
-
-        void Game::PlayTurn()
-        {
-
-        }
-
-        ugly::server::GameResult Game::ComputeScore()
-        {
-            return ugly::server::GameResult();
-        }
-
-        bool Game::ShouldPlay()
-        {
-            return false;
-        }
-
-        std::chrono::milliseconds Game::GetNextTurnTimeLimit(int player)
-        {
-            return std::chrono::milliseconds(100);
-        }
-
-        std::chrono::milliseconds Game::GetSetupTimeLimit(int player)
-        {
-            return std::chrono::milliseconds(500);
-        }
-
-        std::chrono::milliseconds Game::GetCleanupTimeLimit(int player)
-        {
-            return std::chrono::milliseconds(1000);
-        }
-    }
-}");
+            this.Write("\r\n    {\r\n        void Game::InitGame()\r\n        {\r\n\r\n        }\r\n\r\n        void Ga" +
+                    "me::PlayTurn()\r\n        {\r\n\r\n        }\r\n\r\n        ugly::server::GameResult Game:" +
+                    ":ComputeScore()\r\n        {\r\n            return ugly::server::GameResult();\r\n    " +
+                    "    }\r\n\r\n        bool Game::ShouldPlay()\r\n        {\r\n            return false;\r\n" +
+                    "        }\r\n\r\n        std::chrono::milliseconds Game::GetNextTurnTimeLimit(int pl" +
+                    "ayer)\r\n        {\r\n            return std::chrono::milliseconds(100);\r\n        }\r" +
+                    "\n\r\n        std::chrono::milliseconds Game::GetSetupTimeLimit(int player)\r\n      " +
+                    "  {\r\n            return std::chrono::milliseconds(500);\r\n        }\r\n\r\n        st" +
+                    "d::chrono::milliseconds Game::GetCleanupTimeLimit(int player)\r\n        {\r\n      " +
+                    "      return std::chrono::milliseconds(1000);\r\n        }\r\n\r\n        class GameSe" +
+                    "rverEntryPoint : public ugly::server::GameServerEntryPoint\r\n        {\r\n        p" +
+                    "ublic:\r\n            GameServerEntryPoint(std::shared_ptr<ugly::loader::LibraryHa" +
+                    "ndler> library)\r\n                : library(library)\r\n            {}\r\n\r\n         " +
+                    "   ugly::loader::unique_ptr<ugly::server::Game> CreateGame(const std::map<std::s" +
+                    "tring, std::string>& params) const\r\n            {\r\n                return ugly::" +
+                    "loader::make_unique<Game>(library);\r\n            }\r\n        private:\r\n          " +
+                    "  std::shared_ptr<ugly::loader::LibraryHandler> library;\r\n        };\r\n    }\r\n}\r\n" +
+                    "\r\nextern \"C\"\r\n{\r\n    void ugly_GameServerEntryPoint(void* registry, void* librar" +
+                    "y);\r\n}\r\n\r\nvoid ugly_GameServerEntryPoint(void* registry, void* library)\r\n{\r\n    " +
+                    "std::shared_ptr<ugly::loader::LibraryHandler> libraryPtr = *((std::shared_ptr<ug" +
+                    "ly::loader::LibraryHandler>*)library);\r\n    static_cast<ugly::server::GameServer" +
+                    "Registry*>(registry)->RegisterEntryPoint(ugly::loader::make_unique<ugly::");
+            
+            #line 76 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace)));
+            
+            #line default
+            #line hidden
+            this.Write("::GameServerEntryPoint>(libraryPtr, libraryPtr);\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

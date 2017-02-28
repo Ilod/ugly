@@ -16,7 +16,7 @@ namespace ugly
             virtual ~Game();
             GameResult Play();
             void AddPlayer(std::unique_ptr<process::Process> process);
-            int GetPlayerCount() const { return players.size(); }
+            int GetPlayerCount() const { return (int)players.size(); }
         protected:
             virtual void InitGame() = 0;
             virtual std::string GetGameSetup() = 0;

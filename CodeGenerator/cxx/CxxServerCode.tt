@@ -4,6 +4,10 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 #include "Game.h"
+#include <map>
+#include <string>
+#include "../GameServer/GameServerEntryPoint.h"
+#include "../DynamicLoader/Memory.h"
 
 namespace ugly
 {
@@ -43,5 +47,31 @@ namespace ugly
         {
             return std::chrono::milliseconds(1000);
         }
+
+        class GameServerEntryPoint : public ugly::server::GameServerEntryPoint
+        {
+        public:
+            GameServerEntryPoint(std::shared_ptr<ugly::loader::LibraryHandler> library)
+                : library(library)
+            {}
+
+            ugly::loader::unique_ptr<ugly::server::Game> CreateGame(const std::map<std::string, std::string>& params) const
+            {
+                return ugly::loader::make_unique<Game>(library);
+            }
+        private:
+            std::shared_ptr<ugly::loader::LibraryHandler> library;
+        };
     }
+}
+
+extern "C"
+{
+    void ugly_GameServerEntryPoint(void* registry, void* library);
+}
+
+void ugly_GameServerEntryPoint(void* registry, void* library)
+{
+    std::shared_ptr<ugly::loader::LibraryHandler> libraryPtr = *((std::shared_ptr<ugly::loader::LibraryHandler>*)library);
+    static_cast<ugly::server::GameServerRegistry*>(registry)->RegisterEntryPoint(ugly::loader::make_unique<ugly::<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>::GameServerEntryPoint>(libraryPtr, libraryPtr);
 }

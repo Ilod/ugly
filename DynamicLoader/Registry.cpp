@@ -12,11 +12,11 @@ namespace ugly
             Library lib(libraryName);
             if (!lib)
                 return false;
-            Function<void, void*> func = lib.LoadFunction<void, void*>(GetFunctionName());
+            Function<void, void*, void*> func = lib.LoadFunction<void, void*, void*>(GetFunctionName());
             if (!func)
                 return false;
             library.push_back(lib);
-            func(this);
+            func(this, &(lib.handler));
             return true;
         }
     }

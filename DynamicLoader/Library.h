@@ -20,6 +20,7 @@ namespace ugly
             operator bool() const;
         private:
             std::shared_ptr<LibraryHandler> handler;
+            friend class Registry;
         };
     }
 }

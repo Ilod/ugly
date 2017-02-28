@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include "../DynamicLoader/Registry.h"
+#include "../DynamicLoader/Memory.h"
 
 namespace ugly
 {
@@ -14,7 +15,7 @@ namespace ugly
         {
         public:
             virtual ~GameServerEntryPoint();
-            virtual std::unique_ptr<Game> CreateGame(std::map<std::string, std::string> params) const = 0;
+            virtual loader::unique_ptr<Game> CreateGame(const std::map<std::string, std::string>& params) const = 0;
         };
 
         class GameServerRegistry : ugly::loader::Registry
@@ -22,7 +23,7 @@ namespace ugly
         public:
             virtual ~GameServerRegistry();
             const char* GetFunctionName() const override { return "ugly_GameServerEntryPoint";  }
-            virtual void RegisterEntryPoint(const GameServerEntryPoint& entryPoint) = 0;
+            virtual void RegisterEntryPoint(loader::unique_ptr<GameServerEntryPoint> entryPoint) = 0;
         };
     }
 }
