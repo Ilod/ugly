@@ -135,6 +135,7 @@
     <ClInclude Include="Function.h" />
     <ClInclude Include="Library.h" />
     <ClInclude Include="LibraryHandler.h" />
+    <ClInclude Include="LibraryHandlerPlatform.h" />
     <ClInclude Include="LibraryHandlerWindows.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Registry.h" />

@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
 #include <string>
+#include "LibraryHandler.h"
 
 namespace ugly
 {
     namespace loader
     {
-        typename LibraryHandler;
         template<typename R, typename... Args> class Function
         {
         public:
@@ -39,7 +39,7 @@ namespace ugly
             friend class Library;
             Function(std::shared_ptr<LibraryHandler> handler, void* function)
                 : handler(handler)
-                , function(function)
+                , function((functionType)function)
             {}
             functionType function;
             std::shared_ptr<LibraryHandler> handler;

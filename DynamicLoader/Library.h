@@ -2,12 +2,12 @@
 #include <memory>
 #include <string>
 #include "Function.h"
+#include "LibraryHandler.h"
 
 namespace ugly
 {
     namespace loader
     {
-        typename LibraryHandler;
         class Library
         {
         public:

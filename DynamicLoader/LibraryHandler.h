@@ -1,10 +1,10 @@
 #pragma once
-#include "LibraryHandlerWindows.h"
 
 namespace ugly
 {
     namespace loader
     {
+        class LibraryHandlerWindows;
         using LibraryHandler = LibraryHandlerWindows;
     }
 }
