@@ -15,10 +15,11 @@ namespace ugly
             Library(const std::string& library);
             template<typename R, typename... Args> Function<R, Args...> LoadFunction(const std::string& function)
             {
-                return Function<R, Args...>(handler, function);
+                return Function<R, Args...>(handler, LoadRawFunction(function));
             }
             operator bool() const;
         private:
+            void* LoadRawFunction(const std::string& function);
             std::shared_ptr<LibraryHandler> handler;
             friend class Registry;
         };

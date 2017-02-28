@@ -1,7 +1,9 @@
 #pragma once
 #include "Process.h"
-#include <windows.h>
 #include "Util.h"
+#include <cstdint>
+
+using HANDLE = void*;
 
 namespace ugly
 {
@@ -44,7 +46,8 @@ namespace ugly
         private:
             Pipe processStdInPipe;
             Pipe processStdOutPipe;
-            PROCESS_INFORMATION processInfo;
+            HANDLE process;
+            std::int32_t processId;
         };
     }
     template<> constexpr const bool is_enum_flag<process::Pipe::Inherit> = true;

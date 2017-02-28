@@ -1,5 +1,5 @@
 #include "ProcessWindows.h"
-#include "Util.h"
+#include <windows.h>
 
 namespace ugly
 {
@@ -39,7 +39,6 @@ namespace ugly
             : processStdInPipe(Pipe::Inherit::Read)
             , processStdOutPipe(Pipe::Inherit::Write)
         {
-            ZeroMemory(&processInfo, sizeof(processInfo));
         }
 
         bool ProcessWindows::TryCreate()
@@ -53,24 +52,28 @@ namespace ugly
             si.hStdOutput = processStdOutPipe.getWriteHandle();
             si.hStdError = processStdOutPipe.getWriteHandle();
             si.dwFlags |= STARTF_USESTDHANDLES;
-            if (!CreateProcessA(GetExecutable().c_str(), const_cast<char*>(GetArguments().c_str()), NULL, NULL, FALSE, DEBUG_ONLY_THIS_PROCESS, NULL, NULL, &si, &processInfo))
+            PROCESS_INFORMATION pi;
+            ZeroMemory(&pi, sizeof(pi));
+            if (!CreateProcessA(GetExecutable().c_str(), const_cast<char*>(GetArguments().c_str()), NULL, NULL, FALSE, DEBUG_ONLY_THIS_PROCESS, NULL, NULL, &si, &pi))
                 return false;
+            process = pi.hProcess;
+            processId = pi.dwProcessId;
             return true;
         }
 
         bool ProcessWindows::TryStart()
         {
-            return !!DebugActiveProcessStop(processInfo.dwProcessId);
+            return !!DebugActiveProcessStop(processId);
         }
 
         bool ProcessWindows::TryStop()
         {
-            return !!DebugActiveProcess(processInfo.dwProcessId);
+            return !!DebugActiveProcess(processId);
         }
 
         bool ProcessWindows::TryKill()
         {
-            return !!TerminateProcess(processInfo.hProcess, 1);
+            return !!TerminateProcess(process, 1);
         }
 
         std::string ProcessWindows::ReadLine(std::chrono::high_resolution_clock::duration timeout)
