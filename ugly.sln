@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenerator", "CodeGenera
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DynamicLoader", "DynamicLoader\DynamicLoader.vcxproj", "{BCF0DD64-4AF5-4088-B375-F95A727D2FE9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommandLine", "CommandLine\CommandLine.vcxproj", "{EDEE3C05-5FBD-4D3B-93F5-4A281C6F6203}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,16 @@ Global
 		{BCF0DD64-4AF5-4088-B375-F95A727D2FE9}.Release|x64.Build.0 = Release|x64
 		{BCF0DD64-4AF5-4088-B375-F95A727D2FE9}.Release|x86.ActiveCfg = Release|Win32
 		{BCF0DD64-4AF5-4088-B375-F95A727D2FE9}.Release|x86.Build.0 = Release|Win32
+		{EDEE3C05-5FBD-4D3B-93F5-4A281C6F6203}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{EDEE3C05-5FBD-4D3B-93F5-4A281C6F6203}.Debug|x64.ActiveCfg = Debug|x64
+		{EDEE3C05-5FBD-4D3B-93F5-4A281C6F6203}.Debug|x64.Build.0 = Debug|x64
+		{EDEE3C05-5FBD-4D3B-93F5-4A281C6F6203}.Debug|x86.ActiveCfg = Debug|Win32
+		{EDEE3C05-5FBD-4D3B-93F5-4A281C6F6203}.Debug|x86.Build.0 = Debug|Win32
+		{EDEE3C05-5FBD-4D3B-93F5-4A281C6F6203}.Release|Any CPU.ActiveCfg = Release|Win32
+		{EDEE3C05-5FBD-4D3B-93F5-4A281C6F6203}.Release|x64.ActiveCfg = Release|x64
+		{EDEE3C05-5FBD-4D3B-93F5-4A281C6F6203}.Release|x64.Build.0 = Release|x64
+		{EDEE3C05-5FBD-4D3B-93F5-4A281C6F6203}.Release|x86.ActiveCfg = Release|Win32
+		{EDEE3C05-5FBD-4D3B-93F5-4A281C6F6203}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
