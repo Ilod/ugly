@@ -121,6 +121,9 @@ namespace ugly.CodeGenerator.cxx
 
 extern ""C""
 {
+#ifdef _MSC_VER
+    __declspec(dllexport)
+#endif
     void ugly_GameServerEntryPoint(void* registry, void* library);
 }
 
@@ -129,7 +132,7 @@ void ugly_GameServerEntryPoint(void* registry, void* library)
     std::shared_ptr<ugly::loader::LibraryHandler> libraryPtr = *((std::shared_ptr<ugly::loader::LibraryHandler>*)library);
     static_cast<ugly::server::GameServerRegistry*>(registry)->RegisterEntryPoint(ugly::loader::make_unique<ugly::");
             
-            #line 76 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
+            #line 79 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace)));
             
             #line default
