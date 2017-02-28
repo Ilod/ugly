@@ -96,7 +96,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             #> <#= Case.CamelCase.Convert(m.Name) #>(<#
             if (CxxHelper.Server)
             {
-                #><#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState, <#
+                #>struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState, <#
             }
             for (int idxParam = 0; idxParam < m.Param.Count; ++idxParam)
             {

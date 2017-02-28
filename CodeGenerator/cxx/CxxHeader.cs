@@ -287,27 +287,28 @@ if (CxxHelper.Server)
             
             #line default
             #line hidden
+            this.Write("struct ");
             
             #line 99 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
             
             #line default
             #line hidden
-            this.Write("& gameSetup, ");
+            this.Write("& gameSetup, struct ");
             
             #line 99 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup)));
             
             #line default
             #line hidden
-            this.Write("& playerSetup, ");
+            this.Write("& playerSetup, struct ");
             
             #line 99 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default
             #line hidden
-            this.Write("& gameState, ");
+            this.Write("& gameState, struct ");
             
             #line 99 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState)));

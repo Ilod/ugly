@@ -19,7 +19,11 @@ namespace ugly
     {
         class Serializer
         {
-        private:
+        public:
+            std::string Serialize(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup);
+            std::string Serialize(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState);
+            bool ExecuteOrder(const std::string& order, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, int playerId);
+            
             class IdMap
             {
             public:<#
@@ -36,12 +40,9 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
 
                 void Clear();
             };
+        private:
             IdMap gameSetupId;
             IdMap gameStateId;
-        public:
-            std::string Serialize(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup);
-            std::string Serialize(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState);
-            bool ExecuteOrder(const std::string& order, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, int playerId);
         };
     }
 }

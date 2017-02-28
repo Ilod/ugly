@@ -36,16 +36,21 @@ namespace ugly.CodeGenerator.cxx
             
             #line default
             #line hidden
-            this.Write(@"
-    {
-        class Game : public ugly::server::Game
+            this.Write("\r\n    {\r\n        class ");
+            
+            #line 14 "D:\ugly\CodeGenerator\cxx\CxxServerHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer)));
+            
+            #line default
+            #line hidden
+            this.Write(@": public ugly::server::Game
         {
         protected:
             void InitGame() override;
             std::string GetGameSetup() override { return serializer.Serialize(gameSetup); }
             std::string GetGameState() override { return serializer.Serialize(gameState); }
             void PlayTurn() override;
-            ugly::Server::GameResult ComputeScore() override;
+            ugly::server::GameResult ComputeScore() override;
             bool ShouldPlay() override;
             std::chrono::milliseconds GetNextTurnTimeLimit(int player) override;
             std::chrono::milliseconds GetSetupTimeLimit(int player) override;

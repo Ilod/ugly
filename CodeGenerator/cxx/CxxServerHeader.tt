@@ -11,14 +11,14 @@ namespace ugly
 {
     namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
     {
-        class Game : public ugly::server::Game
+        class <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer) #>: public ugly::server::Game
         {
         protected:
             void InitGame() override;
             std::string GetGameSetup() override { return serializer.Serialize(gameSetup); }
             std::string GetGameState() override { return serializer.Serialize(gameState); }
             void PlayTurn() override;
-            ugly::Server::GameResult ComputeScore() override;
+            ugly::server::GameResult ComputeScore() override;
             bool ShouldPlay() override;
             std::chrono::milliseconds GetNextTurnTimeLimit(int player) override;
             std::chrono::milliseconds GetSetupTimeLimit(int player) override;

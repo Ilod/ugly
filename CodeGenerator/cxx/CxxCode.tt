@@ -4,7 +4,17 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 #include "<#= Case.CamelCase.Convert(CxxHelper.CurrentFile.Name) #>.h"
-#include <cstdio>
+#include <cstdio><#
+if (CxxHelper.Server)
+{
+    #>
+
+
+namespace ugly
+{<#
+    this.PushIndent("    ");
+}
+#>
 
 namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
 {<#
@@ -36,7 +46,20 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
         {
             #>
 
-    void <#= Case.CamelCase.Convert(c.Name) #>::<#= Case.CamelCase.Convert(m.Name) #>(<#
+    <#
+            if (CxxHelper.Server)
+            {
+                #>bool<#
+            }
+            else
+            {
+                #>void<#
+            }
+            #> <#= Case.CamelCase.Convert(c.Name) #>::<#= Case.CamelCase.Convert(m.Name) #>(<#
+            if (CxxHelper.Server)
+            {
+                #>struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState, <#
+            }
             for (int idxParam = 0; idxParam < m.Param.Count; ++idxParam)
             {
                 MethodParam a = m.Param[idxParam];
@@ -64,7 +87,16 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
                 #> <#= Case.LowerCamelCase.Convert(a.Name) #><#
             }
             #>)
-    {
+    {<#
+            if (CxxHelper.Server)
+            {
+                #>
+
+        return false;<#
+            }
+            else
+            {
+                #>
         std::printf("<#= m.MethodId #><#
             foreach (MethodParam a in m.Param)
             {
@@ -96,10 +128,20 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
                     #>, <#= Case.LowerCamelCase.Convert(a.Name) #><#
                 }
             }
-            #>);
+            #>);<#
+            }#>
+
     }<#
         }
     }
     #>
 
+}<#
+if (CxxHelper.Server)
+{
+    this.PopIndent();
+    #>
+
+}<#
 }
+#>

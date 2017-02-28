@@ -42,6 +42,7 @@ namespace ugly.CodeGenerator.cxx
             {
                 CurrentFile = file;
                 Generator.WriteFile(Path.Combine(path, string.Format("{0}.h", Case.CamelCase.Convert(file.Name))), new CxxHeader().TransformText());
+                Generator.WriteFile(Path.Combine(path, string.Format("{0}.cpp", Case.CamelCase.Convert(file.Name))), new CxxCode().TransformText());
             }
         }
 

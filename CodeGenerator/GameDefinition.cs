@@ -83,6 +83,7 @@ namespace ugly.CodeGenerator
         public string PlayerSetup;
         public string GameState;
         public string PlayerState;
+        public string GameServer;
     }
 
     public class GameFile
