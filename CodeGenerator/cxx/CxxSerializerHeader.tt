@@ -20,8 +20,8 @@ namespace ugly
         class Serializer
         {
         public:
-            std::string Serialize(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup);
-            std::string Serialize(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState);
+            std::string SerializeState(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState);
+            std::string SerializeSetup(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState);
             bool ExecuteOrder(const std::string& order, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, int playerId);
             
             class IdMap

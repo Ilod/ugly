@@ -62,21 +62,63 @@ foreach (GameFile file in CxxHelper.Definition.Files)
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        class Serializer\r\n        {\r\n        public:\r\n            std::s" +
-                    "tring Serialize(");
+                    "tring SerializeState(");
             
             #line 23 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
             
             #line default
             #line hidden
-            this.Write("& gameSetup);\r\n            std::string Serialize(");
+            this.Write("& gameSetup, ");
+            
+            #line 23 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup)));
+            
+            #line default
+            #line hidden
+            this.Write("& playerSetup, ");
+            
+            #line 23 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
+            
+            #line default
+            #line hidden
+            this.Write("& gameState, ");
+            
+            #line 23 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState)));
+            
+            #line default
+            #line hidden
+            this.Write("& playerState);\r\n            std::string SerializeSetup(");
+            
+            #line 24 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
+            
+            #line default
+            #line hidden
+            this.Write("& gameSetup, ");
+            
+            #line 24 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup)));
+            
+            #line default
+            #line hidden
+            this.Write("& playerSetup, ");
             
             #line 24 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default
             #line hidden
-            this.Write("& gameState);\r\n            bool ExecuteOrder(const std::string& order, ");
+            this.Write("& gameState, ");
+            
+            #line 24 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState)));
+            
+            #line default
+            #line hidden
+            this.Write("& playerState);\r\n            bool ExecuteOrder(const std::string& order, ");
             
             #line 25 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));

@@ -413,13 +413,73 @@ if (CxxHelper.Server)
             #line 127 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
         }
+        if (CxxHelper.Server)
+        {
+            if (c.ConditionMethod.Any())
+            {
+                
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 135 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+
+            }
+            foreach (string m in c.ConditionMethod)
+            {
+                
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        bool ");
+            
+            #line 141 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m)));
+            
+            #line default
+            #line hidden
+            this.Write("(struct ");
+            
+            #line 141 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
+            
+            #line default
+            #line hidden
+            this.Write("& gameSetup, struct ");
+            
+            #line 141 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup)));
+            
+            #line default
+            #line hidden
+            this.Write("& playerSetup, struct ");
+            
+            #line 141 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
+            
+            #line default
+            #line hidden
+            this.Write("& gameState, struct ");
+            
+            #line 141 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState)));
+            
+            #line default
+            #line hidden
+            this.Write("& playerState);");
+            
+            #line 141 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+
+            }
+        }
         
             
             #line default
             #line hidden
             this.Write("\r\n    };");
             
-            #line 131 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 146 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
     }
     
@@ -428,7 +488,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n}");
             
-            #line 135 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 150 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
 if (CxxHelper.Server)
 {
@@ -439,7 +499,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n}");
             
-            #line 141 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 156 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
 }
 

@@ -33,6 +33,11 @@ namespace ugly
             return ++turn <= 50;
         }
 
+        bool <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer) #>::CanPlayThisTurn(int player)
+        {
+            return true;
+        }
+
         std::chrono::milliseconds <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer) #>::GetNextTurnTimeLimit(int player)
         {
             return std::chrono::milliseconds(100);

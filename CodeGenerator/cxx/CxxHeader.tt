@@ -126,6 +126,21 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             }
             #>);<#
         }
+        if (CxxHelper.Server)
+        {
+            if (c.ConditionMethod.Any())
+            {
+                #>
+
+<#
+            }
+            foreach (string m in c.ConditionMethod)
+            {
+                #>
+
+        bool <#= Case.CamelCase.Convert(m) #>(struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState);<#
+            }
+        }
         #>
 
     };<#

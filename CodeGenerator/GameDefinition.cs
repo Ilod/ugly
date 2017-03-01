@@ -19,6 +19,7 @@ namespace ugly.CodeGenerator
         {
             Method.Clear();
             Dictionary<int, List<ClassMethod>> methods = new Dictionary<int, List<ClassMethod>>();
+            List<KeyValuePair<string, string>> conditions = new List<KeyValuePair<string, string>>();
             foreach (GameFile file in Files)
             {
                 foreach (GameClass c in file.Class)
@@ -37,10 +38,16 @@ namespace ugly.CodeGenerator
                             c.IdMember = m;
                             break;
                         }
+                        if (m.Condition != null)
+                            conditions.Add(new KeyValuePair<string, string>(m.Type, m.Condition.Function));
                     }
                 }
                 foreach (GameEnum e in file.Enum)
                     Enum[e.Name] = e;
+            }
+            foreach (KeyValuePair<string, string> condition in conditions)
+            {
+                Class[condition.Key].ConditionMethod.Add(condition.Value);
             }
             foreach (ClassMethod m in methods.Values.SelectMany(l => l))
             {
@@ -112,6 +119,7 @@ namespace ugly.CodeGenerator
         public string Name;
         public List<ClassMember> Member = new List<ClassMember>();
         public List<ClassMethod> Method = new List<ClassMethod>();
+        public SortedSet<string> ConditionMethod = new SortedSet<string>();
         public ClassMember IdMember = null;
     }
 

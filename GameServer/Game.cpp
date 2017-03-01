@@ -11,18 +11,19 @@ namespace ugly
         {
             for (int i = 0; i < players.size(); ++i)
                 players[i]->Create();
-            std::string gameSetup = GetGameSetup();
             for (int i = 0; i < players.size(); ++i)
             {
-                std::stringstream buffer;
-                buffer << i << '\n' << gameSetup << '\n';
-                players[i]->Run(buffer.str(), GetSetupTimeLimit(i), endOfTurnMarker);
+                players[i]->Run(GetGameSetup(i), GetSetupTimeLimit(i), endOfTurnMarker);
             }
             while (ShouldPlay())
             {
-                std::string gameState = GetGameState() + "\n";
                 for (int i = 0; i < players.size(); ++i)
-                    players[i]->Run(gameState, GetNextTurnTimeLimit(i), endOfTurnMarker);
+                {
+                    if (CanPlayThisTurn(i))
+                    {
+                        players[i]->Run(GetGameState(i), GetNextTurnTimeLimit(i), endOfTurnMarker);
+                    }
+                }
                 PlayTurn();
             }
             std::string end = "EOT\n";

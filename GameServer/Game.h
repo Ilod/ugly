@@ -28,11 +28,12 @@ namespace ugly
             int GetPlayerCount() const override { return (int)players.size(); }
         protected:
             virtual void InitGame() = 0;
-            virtual std::string GetGameSetup() = 0;
-            virtual std::string GetGameState() = 0;
+            virtual std::string GetGameSetup(int player) = 0;
+            virtual std::string GetGameState(int player) = 0;
             virtual void PlayTurn() = 0;
             virtual GameResult ComputeScore() = 0;
             virtual bool ShouldPlay() = 0;
+            virtual bool CanPlayThisTurn(int player) = 0;
             virtual std::chrono::milliseconds GetNextTurnTimeLimit(int player) = 0;
             virtual std::chrono::milliseconds GetSetupTimeLimit(int player) = 0;
             virtual std::chrono::milliseconds GetCleanupTimeLimit(int player) = 0;

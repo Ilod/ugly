@@ -47,25 +47,26 @@ namespace ugly.CodeGenerator.cxx
         {
         protected:
             void InitGame() override;
-            std::string GetGameSetup() override { return serializer.Serialize(gameSetup); }
-            std::string GetGameState() override { return serializer.Serialize(gameState); }
+            std::string GetGameSetup(int player) override { return serializer.SerializeSetup(gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
+            std::string GetGameState(int player) override { return serializer.SerializeState(gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
             void PlayTurn() override;
             ugly::server::GameResult ComputeScore() override;
             bool ShouldPlay() override;
+            bool CanPlayThisTurn(int player) override;
             std::chrono::milliseconds GetNextTurnTimeLimit(int player) override;
             std::chrono::milliseconds GetSetupTimeLimit(int player) override;
             std::chrono::milliseconds GetCleanupTimeLimit(int player) override;
         private:
             ");
             
-            #line 27 "D:\ugly\CodeGenerator\cxx\CxxServerHeader.tt"
+            #line 28 "D:\ugly\CodeGenerator\cxx\CxxServerHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
             
             #line default
             #line hidden
             this.Write(" gameSetup;\r\n            ");
             
-            #line 28 "D:\ugly\CodeGenerator\cxx\CxxServerHeader.tt"
+            #line 29 "D:\ugly\CodeGenerator\cxx\CxxServerHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default
