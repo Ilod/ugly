@@ -9,12 +9,11 @@ namespace ugly
 
         GameResult GameBase::Play()
         {
+            InitGame();
             for (int i = 0; i < players.size(); ++i)
                 players[i]->Create();
             for (int i = 0; i < players.size(); ++i)
-            {
                 players[i]->Run(GetGameSetup(i), GetSetupTimeLimit(i), endOfTurnMarker);
-            }
             while (ShouldPlay())
             {
                 for (int i = 0; i < players.size(); ++i)

@@ -15,7 +15,14 @@ namespace ugly
     {
         void <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer) #>::InitGame()
         {
-
+            int players = GetPlayerCount();
+            gameSetup.player.resize(players);
+            gameState.player.resize(players);
+            for (int i = 0; i < players; ++i)
+            {
+                gameSetup.player[i].id = i;
+                gameState.player[i].id = i;
+            }
         }
 
         void <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer) #>::PlayTurn()

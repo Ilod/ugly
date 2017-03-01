@@ -21,7 +21,7 @@ namespace ugly
                 result.result = state;
                 return result;
             }
-            std::chrono::high_resolution_clock::duration elapsed;
+            std::chrono::high_resolution_clock::duration elapsed{ 0 };
             Start();
             std::chrono::high_resolution_clock::time_point startTime = std::chrono::high_resolution_clock::now();
             while (elapsed < timeout || IgnoreTimeout())

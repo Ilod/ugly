@@ -44,16 +44,28 @@ namespace ugly.CodeGenerator.cxx
             
             #line default
             #line hidden
-            this.Write("::InitGame()\r\n        {\r\n\r\n        }\r\n\r\n        void ");
+            this.Write(@"::InitGame()
+        {
+            int players = GetPlayerCount();
+            gameSetup.player.resize(players);
+            gameState.player.resize(players);
+            for (int i = 0; i < players; ++i)
+            {
+                gameSetup.player[i].id = i;
+                gameState.player[i].id = i;
+            }
+        }
+
+        void ");
             
-            #line 21 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
+            #line 28 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer)));
             
             #line default
             #line hidden
             this.Write("::PlayTurn()\r\n        {\r\n\r\n        }\r\n\r\n        ugly::server::GameResult ");
             
-            #line 26 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
+            #line 33 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer)));
             
             #line default
@@ -61,7 +73,7 @@ namespace ugly.CodeGenerator.cxx
             this.Write("::ComputeScore()\r\n        {\r\n            return ugly::server::GameResult();\r\n    " +
                     "    }\r\n\r\n        bool ");
             
-            #line 31 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
+            #line 38 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer)));
             
             #line default
@@ -69,7 +81,7 @@ namespace ugly.CodeGenerator.cxx
             this.Write("::ShouldPlay()\r\n        {\r\n            return ++turn <= 50;\r\n        }\r\n\r\n       " +
                     " bool ");
             
-            #line 36 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
+            #line 43 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer)));
             
             #line default
@@ -77,7 +89,7 @@ namespace ugly.CodeGenerator.cxx
             this.Write("::CanPlayThisTurn(int player)\r\n        {\r\n            return true;\r\n        }\r\n\r\n" +
                     "        std::chrono::milliseconds ");
             
-            #line 41 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
+            #line 48 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer)));
             
             #line default
@@ -85,7 +97,7 @@ namespace ugly.CodeGenerator.cxx
             this.Write("::GetNextTurnTimeLimit(int player)\r\n        {\r\n            return std::chrono::mi" +
                     "lliseconds(100);\r\n        }\r\n\r\n        std::chrono::milliseconds ");
             
-            #line 46 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
+            #line 53 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer)));
             
             #line default
@@ -93,7 +105,7 @@ namespace ugly.CodeGenerator.cxx
             this.Write("::GetSetupTimeLimit(int player)\r\n        {\r\n            return std::chrono::milli" +
                     "seconds(500);\r\n        }\r\n\r\n        std::chrono::milliseconds ");
             
-            #line 51 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
+            #line 58 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer)));
             
             #line default
@@ -114,7 +126,7 @@ namespace ugly.CodeGenerator.cxx
             {
                 return ugly::loader::make_unique<");
             
-            #line 65 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
+            #line 72 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer)));
             
             #line default
@@ -140,7 +152,7 @@ void ugly_GameServerEntryPoint(void* registry, void* library)
     std::shared_ptr<ugly::loader::LibraryHandler> libraryPtr = *((std::shared_ptr<ugly::loader::LibraryHandler>*)library);
     static_cast<ugly::server::GameServerRegistry*>(registry)->RegisterEntryPoint(ugly::loader::make_unique<ugly::");
             
-            #line 84 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
+            #line 91 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace)));
             
             #line default
