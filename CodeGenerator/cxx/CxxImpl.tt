@@ -11,6 +11,8 @@
 
 namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
 {
+    GameClient::~GameClient() {}
+
     namespace
     {
         template<class T> T ReadNext(const char*& buf)
