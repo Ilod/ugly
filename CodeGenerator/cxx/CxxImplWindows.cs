@@ -55,11 +55,6 @@ namespace ugly.CodeGenerator.cxx
             return false;
         if (!SetHandleInformation(clientOut, HANDLE_FLAG_INHERIT, 0))
             return false;
-        
-        if (_dup2(_open_osfhandle((intptr_t)clientIn , _O_RDONLY), _fileno(stdin )) != 0)
-            return false;
-        if (_dup2(_open_osfhandle((intptr_t)clientOut, _O_WRONLY), _fileno(stdout)) != 0)
-            return false;
 
         STARTUPINFOA si;
         ZeroMemory(&si, sizeof(si));
@@ -71,6 +66,11 @@ namespace ugly.CodeGenerator.cxx
         ZeroMemory(&pi, sizeof(pi));
         
         if (!CreateProcessA(NULL, const_cast<char*>(commandLine.c_str()), NULL, NULL, TRUE, NULL, NULL, NULL, &si, &pi))
+            return false;
+        
+        if (_dup2(_open_osfhandle((intptr_t)clientIn , _O_RDONLY), _fileno(stdin )) != 0)
+            return false;
+        if (_dup2(_open_osfhandle((intptr_t)clientOut, _O_WRONLY), _fileno(stdout)) != 0)
             return false;
 
         return true;
