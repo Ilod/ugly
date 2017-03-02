@@ -16,7 +16,7 @@ namespace ugly
             bool TryStop() override { return true; }
             bool TryKill() override { return true; }
             bool IgnoreTimeout() const override { return true; }
-            std::string ReadLine(std::chrono::high_resolution_clock::duration timeout) override;
+            bool ReadLine(std::string& line, std::chrono::high_resolution_clock::duration timeout) override;
             bool TryWrite(const std::string& data) override;
             const std::string& GetFullCommandLine() const override { return empty; }
         private:

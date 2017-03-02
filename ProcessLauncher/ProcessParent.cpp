@@ -13,11 +13,10 @@ namespace ugly
             return true;
         }
 
-        std::string ProcessParent::ReadLine(std::chrono::high_resolution_clock::duration timeout)
+        bool ProcessParent::ReadLine(std::string& line, std::chrono::high_resolution_clock::duration timeout)
         {
-            std::string line;
             std::getline(std::cin, line);
-            return line;
+            return !(line.empty() && std::cin.eof());
         }
 
         bool ProcessParent::TryWrite(const std::string& data)

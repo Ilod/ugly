@@ -24,9 +24,11 @@ namespace ugly
             std::chrono::high_resolution_clock::duration elapsed{ 0 };
             Start();
             std::chrono::high_resolution_clock::time_point startTime = std::chrono::high_resolution_clock::now();
-            while (elapsed < timeout || (IgnoreTimeout() && state == ProcessState::Running))
+            while (elapsed < timeout || IgnoreTimeout())
             {
-                std::string line = ReadLine(timeout - elapsed);
+                std::string line;
+                if (!ReadLine(line, timeout - elapsed))
+                    break;
                 elapsed = std::chrono::high_resolution_clock::now() - startTime;
                 if (line.empty())
                     continue;
@@ -41,6 +43,7 @@ namespace ugly
                 }
                 result.data.push_back(ProcessData(std::move(line), elapsed));
             }
+            elapsed = std::chrono::high_resolution_clock::now() - startTime;
             result.result = (state == ProcessState::Crash ? ProcessState::Crash : ProcessState::Timeout);
             result.executionDuration = timeout;
             Kill();
