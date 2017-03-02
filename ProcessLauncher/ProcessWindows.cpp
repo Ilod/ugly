@@ -67,11 +67,10 @@ namespace ugly
             si.cb = sizeof(si);
             si.hStdInput = processStdInPipe.getReadHandle();
             si.hStdOutput = processStdOutPipe.getWriteHandle();
-            si.hStdError = processStdOutPipe.getWriteHandle();
             si.dwFlags |= STARTF_USESTDHANDLES;
             PROCESS_INFORMATION pi;
             ZeroMemory(&pi, sizeof(pi));
-            if (!CreateProcessA(GetExecutable().c_str(), const_cast<char*>(GetArguments().c_str()), NULL, NULL, FALSE, DEBUG_ONLY_THIS_PROCESS, NULL, NULL, &si, &pi))
+            if (!CreateProcessA(NULL, const_cast<char*>(GetFullCommandLine().c_str()), NULL, NULL, TRUE, DEBUG_ONLY_THIS_PROCESS, NULL, NULL, &si, &pi))
             {
                 DWORD a = GetLastError();
                 return false;

@@ -130,12 +130,14 @@
     <ClCompile Include="Process.cpp" />
     <ClCompile Include="ProcessFactory.cpp" />
     <ClCompile Include="ProcessNative.cpp" />
+    <ClCompile Include="ProcessParent.cpp" />
     <ClCompile Include="ProcessWindows.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Process.h" />
     <ClInclude Include="ProcessFactory.h" />
     <ClInclude Include="ProcessNative.h" />
+    <ClInclude Include="ProcessParent.h" />
     <ClInclude Include="ProcessPlatform.h" />
     <ClInclude Include="ProcessWindows.h" />
     <ClInclude Include="Util.h" />

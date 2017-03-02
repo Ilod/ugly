@@ -13,7 +13,6 @@ namespace ugly
             ServerArgs args;
             commandLine.ConsumeOption(args.gameDll, { "--game", "-game" }, true);
             commandLine.ConsumeOption(args.client, { "--player", "-player" });
-            commandLine.ConsumeOption(args.process, { "--process", "-process" });
             return args;
         }
 
@@ -57,17 +56,11 @@ namespace ugly
                 }
                 game->AddPlayer(std::move(clientProcess));
             }
-            for (std::uint32_t process : args.process)
-            {
-                loader::unique_ptr<process::IProcess> clientProcess = process::ProcessFactory::AttachProcess(process);
-                if (!clientProcess)
-                {
-                    std::cerr << "Unable to attach to process " << process << std::endl;
-                    return 5;
-                }
-                game->AddPlayer(std::move(clientProcess));
-            }
-            game->Play();
+            ugly::server::GameResult results = game->Play();
+            for (const ugly::server::PlayerResult& player : results.players)
+                std::cout << player.rank << ' ' << player.score << ' ';
+            std::cout << std::endl;
+
             return 0;
         }
     }

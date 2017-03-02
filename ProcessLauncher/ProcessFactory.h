@@ -14,13 +14,14 @@ namespace ugly
             {
                 Unknown,
                 Native,
+                Parent,
             };
 
             static loader::unique_ptr<IProcess> CreateProcess(const std::string& process);
-            static loader::unique_ptr<IProcess> CreateProcess(const std::string& type, const std::string& executable);
-            static loader::unique_ptr<IProcess> CreateProcess(Type type, const std::string& executable);
-            static loader::unique_ptr<IProcess> AttachProcess(std::uint32_t id);
+            static loader::unique_ptr<IProcess> CreateProcess(const std::string& type, const std::string& executable, const std::string& arguments = "");
+            static loader::unique_ptr<IProcess> CreateProcess(Type type, const std::string& executable, const std::string& arguments = "");
             static Type ParseType(const std::string& type);
+            static Type GuessTypeByFileName(const std::string& path);
         };
     }
 }

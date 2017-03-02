@@ -13,7 +13,6 @@ namespace ugly
         {
             std::string gameDll;
             std::vector<std::string> client;
-            std::vector<std::uint32_t> process;
 
             static ServerArgs Parse(util::CommandLine& commandLine);
         };

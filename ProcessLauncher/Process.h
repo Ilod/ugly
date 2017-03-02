@@ -69,8 +69,7 @@ namespace ugly
 
             ProcessStepResult Run(const std::string& input, std::chrono::high_resolution_clock::duration timeout, const std::string& endStepMarker, ProcessResultStreamer* streamer = nullptr) override;
         protected:
-            virtual const std::string& GetExecutable() const = 0;
-            virtual const std::string& GetArguments() const = 0;
+            virtual const std::string& GetFullCommandLine() const = 0;
             virtual std::string ReadLine(std::chrono::high_resolution_clock::duration timeout) = 0;
             virtual bool TryWrite(const std::string& data) = 0;
             virtual bool TryCreate() = 0;

@@ -8,13 +8,11 @@ namespace ugly
         class ProcessNative : public ProcessPlatform
         {
         public:
-            ProcessNative(const std::string& path);
+            ProcessNative(const std::string& path, const std::string& arguments);
 
-            const std::string& GetExecutable() const override { return executablePath; }
-            const std::string& GetArguments() const override { return empty; }
+            const std::string& GetFullCommandLine() const override { return commandLine; }
         private:
-            const std::string& executablePath;
-            static std::string empty;
+            const std::string& commandLine;
         };
     }
 }
