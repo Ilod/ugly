@@ -6,7 +6,7 @@ namespace ugly
 {
     template<typename T> constexpr const bool is_enum_flag = false;
 
-    template<typename T = typename std::enable_if<is_enum_flag<T>, T>::type>
+    template<typename T, typename = typename std::enable_if<is_enum_flag<T>>::type>
     class auto_bool
     {
     private:
