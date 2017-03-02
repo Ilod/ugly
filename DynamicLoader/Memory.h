@@ -9,8 +9,8 @@ namespace ugly
     {
         template<typename T> class unique_ptr;
         template<typename T> class shared_ptr;
-        template<typename T, typename... Args> unique_ptr<T> make_unique(std::shared_ptr<LibraryHandler> library, Args&&... args);
-        template<typename T, typename... Args> shared_ptr<T> make_shared(std::shared_ptr<LibraryHandler> library, Args&&... args);
+        template<typename T, typename... Args> unique_ptr<T> make_unique(const std::shared_ptr<LibraryHandler>& library, Args&&... args);
+        template<typename T, typename... Args> shared_ptr<T> make_shared(const std::shared_ptr<LibraryHandler>& library, Args&&... args);
 
         template<typename T> class unique_ptr
         {
@@ -104,7 +104,7 @@ namespace ugly
                 return *object;
             }
         private:
-            unique_ptr(T* obj, void(*del)(void*), std::shared_ptr<LibraryHandler> lib)
+            unique_ptr(T* obj, void(*del)(void*), const std::shared_ptr<LibraryHandler>& lib)
                 : object(obj)
                 , deleter(del)
                 , library(lib)
@@ -125,8 +125,8 @@ namespace ugly
             }
 
             template<typename R> friend class unique_ptr;
-            template<typename R, typename... Args> friend unique_ptr<R> make_unique(std::shared_ptr<LibraryHandler> library, Args&&... args);
-            template<typename R, typename... Args> friend shared_ptr<R> make_shared(std::shared_ptr<LibraryHandler> library, Args&&... args);
+            template<typename R, typename... Args> friend unique_ptr<R> make_unique(const std::shared_ptr<LibraryHandler>& library, Args&&... args);
+            template<typename R, typename... Args> friend shared_ptr<R> make_shared(const std::shared_ptr<LibraryHandler>& library, Args&&... args);
             friend class shared_ptr<T>;
         };
 
@@ -204,12 +204,12 @@ namespace ugly
             template<typename R> friend class shared_ptr;
         };
 
-        template<typename T, typename... Args> unique_ptr<T> make_unique(std::shared_ptr<LibraryHandler> library, Args&&... args)
+        template<typename T, typename... Args> unique_ptr<T> make_unique(const std::shared_ptr<LibraryHandler>& library, Args&&... args)
         {
             return unique_ptr<T>(unique_ptr<T>::Create(std::forward<Args>(args)...), &unique_ptr<T>::Delete, library);
         }
 
-        template<typename T, typename... Args> shared_ptr<T> make_shared(std::shared_ptr<LibraryHandler> library, Args&&... args)
+        template<typename T, typename... Args> shared_ptr<T> make_shared(const std::shared_ptr<LibraryHandler>& library, Args&&... args)
         {
             return shared_ptr<T>(make_unique<T>(library, std::forward<Args>(args)...));
         }
