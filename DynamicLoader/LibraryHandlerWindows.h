@@ -1,5 +1,8 @@
 #pragma once
 #include <memory>
+
+struct IUnknown;
+
 #include <Windows.h>
 #include <string>
 
@@ -10,12 +13,14 @@ namespace ugly
         class LibraryHandlerWindows
         {
         public:
+            typedef void(*FunctionPtr)();
+
             LibraryHandlerWindows(const std::string& library);
             LibraryHandlerWindows(const LibraryHandlerWindows&) = delete;
             LibraryHandlerWindows& operator=(const LibraryHandlerWindows&) = delete;
             ~LibraryHandlerWindows();
             bool IsValid() const { return handle != NULL; }
-            void* LoadFunction(const std::string& functionName);
+            FunctionPtr LoadFunction(const std::string& functionName);
         private:
             HMODULE handle;
         };

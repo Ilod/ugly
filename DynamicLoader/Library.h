@@ -19,7 +19,8 @@ namespace ugly
             }
             operator bool() const;
         private:
-            void* LoadRawFunction(const std::string& function);
+            typedef void(*FunctionPtr)();
+            FunctionPtr LoadRawFunction(const std::string& function);
             std::shared_ptr<LibraryHandler> handler;
             friend class Registry;
         };

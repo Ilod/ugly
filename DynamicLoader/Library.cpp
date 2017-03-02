@@ -14,7 +14,7 @@ namespace ugly
             return handler && handler->IsValid();
         }
         
-        void* Library::LoadRawFunction(const std::string& function)
+        Library::FunctionPtr Library::LoadRawFunction(const std::string& function)
         {
             if (!handler)
                 return nullptr;

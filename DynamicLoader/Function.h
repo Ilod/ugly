@@ -10,15 +10,10 @@ namespace ugly
         template<typename R, typename... Args> class Function
         {
         public:
-            typedef R(*functionType)(Args...);
+            typedef R(*FunctionPtr)(Args...);
+            typedef void(*FunctionRawPtr)();
+
             Function() {}
-            Function(const std::string& library, const std::string& functionName)
-                : handler(std::make_shared<LibraryHandler>(library))
-                , function(nullptr)
-            {
-                if (handler)
-                    function = (functionType)handler->LoadFunction(functionName);
-            }
             operator bool() const
             {
                 return function != nullptr;
@@ -37,11 +32,11 @@ namespace ugly
             }
         private:
             friend class Library;
-            Function(std::shared_ptr<LibraryHandler> handler, void* function)
+            Function(std::shared_ptr<LibraryHandler> handler, FunctionRawPtr function)
                 : handler(handler)
-                , function((functionType)function)
+                , function(reinterpret_cast<FunctionPtr>(function))
             {}
-            functionType function;
+            FunctionPtr function;
             std::shared_ptr<LibraryHandler> handler;
         };
     }

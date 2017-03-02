@@ -15,11 +15,11 @@ namespace ugly
                 FreeLibrary(handle);
         }
 
-        void* LibraryHandlerWindows::LoadFunction(const std::string& function)
+        LibraryHandlerWindows::FunctionPtr LibraryHandlerWindows::LoadFunction(const std::string& function)
         {
             if (handle == NULL)
                 return nullptr;
-            return GetProcAddress(handle, function.c_str());
+            return reinterpret_cast<FunctionPtr>(GetProcAddress(handle, function.c_str()));
         }
     }
 }
