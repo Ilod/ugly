@@ -102,8 +102,12 @@ namespace ugly
             OVERLAPPED overlapped;
             ZeroMemory(&overlapped, sizeof(overlapped));
             ReadFile(processStdOutPipe.getReadHandle(), &buffer, sizeof(buffer), &read, &overlapped);
-            DWORD time = (DWORD)(timeout.count() * 1000 * std::chrono::high_resolution_clock::period::num / std::chrono::high_resolution_clock::period::den);
-            if (!GetOverlappedResultEx(processStdOutPipe.getReadHandle(), &overlapped, &read, (DWORD)(timeout.count() * 1000 * std::chrono::high_resolution_clock::period::num / std::chrono::high_resolution_clock::period::den), FALSE))
+            if (WaitForSingleObject(processStdOutPipe.getReadHandle(), (DWORD)(timeout.count() * 1000 * std::chrono::high_resolution_clock::period::num / std::chrono::high_resolution_clock::period::den)) != WAIT_OBJECT_0)
+            {
+                CancelIoEx(processStdOutPipe.getReadHandle(), &overlapped);
+                return "";
+            }
+            if (!GetOverlappedResult(processStdOutPipe.getReadHandle(), &overlapped, &read, FALSE))
             {
                 CancelIoEx(processStdOutPipe.getReadHandle(), &overlapped);
                 return "";
