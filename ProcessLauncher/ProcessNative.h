@@ -12,7 +12,7 @@ namespace ugly
 
             const std::string& GetFullCommandLine() const override { return commandLine; }
         private:
-            const std::string& commandLine;
+            std::string commandLine;
         };
     }
 }
