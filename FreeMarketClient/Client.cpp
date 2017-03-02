@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstdint>
 #include <cctype>
+#include <sstream>
 
 namespace FreeMarket
 {
@@ -23,6 +24,7 @@ namespace FreeMarket
             {
                 data *= 10;
                 data += ((*buf) - '0');
+                ++buf;
             }
             if (*buf)
                 ++buf;
@@ -179,6 +181,8 @@ namespace FreeMarket
         std::getline(std::cin, line);
         const char* buf = line.c_str();
         int playerId = ReadNext<int>(buf);
+        std::getline(std::cin, line);
+        buf = line.c_str();
         GameConfig data;
         Deserialize(data, buf);
         client.InitGame(data, data.player[playerId]);
@@ -186,7 +190,7 @@ namespace FreeMarket
         {
             printf("EOT\n");
             std::getline(std::cin, line);
-            if (line == "EOT")
+            if (line.compare(0, 3, "EOT") == 0)
                 break;
             buf = line.c_str();
             Game turn;
@@ -194,5 +198,35 @@ namespace FreeMarket
             client.PlayTurn(turn, turn.player[playerId]);
         }
         client.Cleanup();
+        printf("EOT\n");
+    }
+
+    std::vector<std::pair<int, int>> GameServer::PlayLocalServer(GameClient& client, const std::string& serverPath, const std::vector<std::string>& otherPlayers, const std::string& game, const std::string& serverArgs)
+    {
+        std::stringstream commandLine;
+        commandLine << '"' << serverPath << "\" -game \"" << game << "\" -player parent;";
+        for (const std::string& player : otherPlayers)
+            commandLine << " -player \"" << player << '"';
+        if (!serverArgs.empty())
+            commandLine << ' ' << serverArgs;
+        return PlayLocalServerCommandLine(client, commandLine.str());
+    }
+
+    std::vector<std::pair<int, int>> GameServer::PlayLocalServerCommandLine(GameClient& client, const std::string& commandLine)
+    {
+        if (!StartLocalServer(commandLine))
+            return {};
+        Play(client);
+        std::string line;
+        std::getline(std::cin, line);
+        const char* buf = line.c_str();
+        std::vector<std::pair<int, int>> results;
+        for (;;)
+        {
+            int rank = ReadNext<int>(buf);
+            if (rank == 0)
+                return results;
+            results.push_back({rank, ReadNext<int>(buf)});
+        }
     }
 }

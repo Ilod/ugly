@@ -16,5 +16,9 @@ namespace FreeMarket
     {
     public:
         static void Play(GameClient& client);
+        static std::vector<std::pair<int, int>> PlayLocalServer(GameClient& client, const std::string& serverPath, const std::vector<std::string>& otherPlayers = {}, const std::string& game = "FreeMarket", const std::string& serverArgs = "");
+        static std::vector<std::pair<int, int>> PlayLocalServerCommandLine(GameClient& client, const std::string& commandLine);
+    private:
+        static bool StartLocalServer(const std::string& commandLine);
     };
 }

@@ -21,6 +21,7 @@ namespace ugly.CodeGenerator.cxx
             Directory.CreateDirectory(path);
             Generator.WriteFile(Path.Combine(path, "Client.h"), new CxxInterface().TransformText());
             Generator.WriteFile(Path.Combine(path, "Client.cpp"), new CxxImpl().TransformText());
+            Generator.WriteFile(Path.Combine(path, "ClientWindows.cpp"), new CxxImplWindows().TransformText());
             foreach (GameFile file in gameDef.Files)
             {
                 CurrentFile = file;

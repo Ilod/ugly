@@ -1,4 +1,4 @@
-#include "../CodeGenerator/bin/Debug/cxx/Client.h"
+#include "Client.h"
 
 namespace FreeMarket
 {
@@ -10,8 +10,11 @@ namespace FreeMarket
     };
 }
 
-int main()
+int main(int argn, char** argv)
 {
     FreeMarket::MyClient client;
-    FreeMarket::GameServer::Play(client);
+    if (argn > 1)
+        FreeMarket::GameServer::PlayLocalServer(client, "D:\\ugly\\x64\\Debug\\Server.exe");
+    else
+        FreeMarket::GameServer::Play(client);
 }

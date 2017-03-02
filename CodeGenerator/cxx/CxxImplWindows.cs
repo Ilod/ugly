@@ -18,9 +18,9 @@ namespace ugly.CodeGenerator.cxx
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
+    #line 1 "D:\ugly\CodeGenerator\cxx\CxxImplWindows.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public partial class CxxInterface : CxxInterfaceBase
+    public partial class CxxImplWindows : CxxImplWindowsBase
     {
 #line hidden
         /// <summary>
@@ -28,117 +28,55 @@ namespace ugly.CodeGenerator.cxx
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("#pragma once");
+            this.Write("#include \"Client.h\"\r\n#include <Windows.h>\r\n#include <io.h>\r\n#include <fcntl.h>\r\n\r" +
+                    "\nnamespace ");
             
-            #line 6 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-
-foreach (GameFile file in CxxHelper.Definition.Files)
+            #line 11 "D:\ugly\CodeGenerator\cxx\CxxImplWindows.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace)));
+            
+            #line default
+            #line hidden
+            this.Write(@"
 {
-    
-            
-            #line default
-            #line hidden
-            this.Write("\r\n#include \"");
-            
-            #line 11 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(file.Name)));
-            
-            #line default
-            #line hidden
-            this.Write(".h\"");
-            
-            #line 11 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-
-}
-
-            
-            #line default
-            #line hidden
-            this.Write("\r\nnamespace ");
-            
-            #line 15 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace)));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n{\r\n    class GameClient\r\n    {\r\n    public:\r\n        virtual ~GameClient();\r\n  " +
-                    "      virtual void InitGame(");
-            
-            #line 21 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
-            
-            #line default
-            #line hidden
-            this.Write("& ");
-            
-            #line 21 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
-            
-            #line default
-            #line hidden
-            this.Write(", ");
-            
-            #line 21 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup)));
-            
-            #line default
-            #line hidden
-            this.Write("& ");
-            
-            #line 21 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup)));
-            
-            #line default
-            #line hidden
-            this.Write(") = 0;\r\n        virtual void PlayTurn(");
-            
-            #line 22 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
-            
-            #line default
-            #line hidden
-            this.Write("& ");
-            
-            #line 22 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.GameState)));
-            
-            #line default
-            #line hidden
-            this.Write(", ");
-            
-            #line 22 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState)));
-            
-            #line default
-            #line hidden
-            this.Write("& ");
-            
-            #line 22 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.PlayerState)));
-            
-            #line default
-            #line hidden
-            this.Write(@") = 0;
-        virtual void Cleanup() {};
-    };
-
-    class GameServer
+    bool GameServer::StartLocalServer(const std::string& commandLine)
     {
-    public:
-        static void Play(GameClient& client);
-        static std::vector<std::pair<int, int>> PlayLocalServer(GameClient& client, const std::string& serverPath, const std::vector<std::string>& otherPlayers = {}, const std::string& game = """);
-            
-            #line 30 "D:\ugly\CodeGenerator\cxx\CxxInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace)));
-            
-            #line default
-            #line hidden
-            this.Write(@""", const std::string& serverArgs = """");
-        static std::vector<std::pair<int, int>> PlayLocalServerCommandLine(GameClient& client, const std::string& commandLine);
-    private:
-        static bool StartLocalServer(const std::string& commandLine);
-    };
-}");
+        HANDLE clientIn, clientOut, serverIn, serverOut;
+        SECURITY_ATTRIBUTES sa;
+        ZeroMemory(&sa, sizeof(sa));
+        sa.nLength = sizeof(sa);
+        sa.bInheritHandle = TRUE;
+        sa.lpSecurityDescriptor = NULL;
+
+        if (!CreatePipe(&clientIn, &serverOut, &sa, 16384))
+            return false;
+        if (!CreatePipe(&serverIn, &clientOut, &sa, 16384))
+            return false;
+        if (!SetHandleInformation(clientIn , HANDLE_FLAG_INHERIT, 0))
+            return false;
+        if (!SetHandleInformation(clientOut, HANDLE_FLAG_INHERIT, 0))
+            return false;
+        
+        if (_dup2(_open_osfhandle((intptr_t)clientIn , _O_RDONLY), _fileno(stdin )) != 0)
+            return false;
+        if (_dup2(_open_osfhandle((intptr_t)clientOut, _O_WRONLY), _fileno(stdout)) != 0)
+            return false;
+
+        STARTUPINFOA si;
+        ZeroMemory(&si, sizeof(si));
+        si.cb = sizeof(si);
+        si.hStdInput = serverIn;
+        si.hStdOutput = serverOut;
+        si.dwFlags |= STARTF_USESTDHANDLES;
+        PROCESS_INFORMATION pi;
+        ZeroMemory(&pi, sizeof(pi));
+        
+        if (!CreateProcessA(NULL, const_cast<char*>(commandLine.c_str()), NULL, NULL, TRUE, NULL, NULL, NULL, &si, &pi))
+            return false;
+
+        return true;
+    }
+}
+");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -150,7 +88,7 @@ foreach (GameFile file in CxxHelper.Definition.Files)
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public class CxxInterfaceBase
+    public class CxxImplWindowsBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

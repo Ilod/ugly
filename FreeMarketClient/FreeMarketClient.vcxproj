@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="Auction.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="ClientWindows.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>

@@ -79,6 +79,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CxxImpl.tt</DependentUpon>
     </Compile>
+    <Compile Include="cxx\CxxImplWindows.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CxxImplWindows.tt</DependentUpon>
+    </Compile>
     <Compile Include="cxx\CxxInterface.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -136,6 +141,10 @@
     <Content Include="cxx\CxxImpl.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CxxImpl.cs</LastGenOutput>
+    </Content>
+    <Content Include="cxx\CxxImplWindows.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CxxImplWindows.cs</LastGenOutput>
     </Content>
     <Content Include="cxx\CxxInterface.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
