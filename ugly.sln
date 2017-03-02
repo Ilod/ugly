@@ -22,6 +22,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FreeMarketServer", "FreeMar
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FreeMarketClient", "FreeMarketClient\FreeMarketClient.vcxproj", "{68755A80-53AF-4852-9E05-C94155CC3897}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeMarketClientCs", "FreeMarketClientCs\FreeMarketClientCs.csproj", "{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +116,18 @@ Global
 		{68755A80-53AF-4852-9E05-C94155CC3897}.Release|x64.Build.0 = Release|x64
 		{68755A80-53AF-4852-9E05-C94155CC3897}.Release|x86.ActiveCfg = Release|Win32
 		{68755A80-53AF-4852-9E05-C94155CC3897}.Release|x86.Build.0 = Release|Win32
+		{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}.Debug|x64.Build.0 = Debug|Any CPU
+		{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}.Debug|x86.Build.0 = Debug|Any CPU
+		{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}.Release|x64.ActiveCfg = Release|Any CPU
+		{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}.Release|x64.Build.0 = Release|Any CPU
+		{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}.Release|x86.ActiveCfg = Release|Any CPU
+		{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
