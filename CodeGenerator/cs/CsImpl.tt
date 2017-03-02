@@ -14,7 +14,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
         {
             Console.WriteLine("EOT");
             string line = Console.ReadLine();
-            if (line == "EOT")
+            if (line.StartsWith("EOT"))
                 return null;
             Parser parser = new Parser(line);
             <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #> turn = new <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #>();
@@ -27,6 +27,8 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
             string line = Console.ReadLine();
             Parser parser = new Parser(line);
             int playerId = parser.ReadNextInt();
+            line = Console.ReadLine();
+            parser = new Parser(line);
             <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup) #> data = new <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup) #>();
             parser.Deserialize(data);
             return Tuple.Create(data, data.Player[playerId]);

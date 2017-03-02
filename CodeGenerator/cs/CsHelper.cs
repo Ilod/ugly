@@ -17,6 +17,7 @@ namespace ugly.CodeGenerator.cs
             Directory.CreateDirectory(path);
             Generator.WriteFile(Path.Combine(path, "Client.cs"), new CsInterface().TransformText());
             Generator.WriteFile(Path.Combine(path, "ClientPrivate.cs"), new CsImpl().TransformText());
+            Generator.WriteFile(Path.Combine(path, "ClientPrivateWindows.cs"), new CsImplWindows().TransformText());
             foreach (GameFile file in gameDef.Files)
             {
                 CurrentFile = file;

@@ -18,9 +18,9 @@ namespace ugly.CodeGenerator.cs
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
+    #line 1 "D:\ugly\CodeGenerator\cs\CsImplWindows.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public partial class CsInterface : CsInterfaceBase
+    public partial class CsImplWindows : CsImplWindowsBase
     {
 #line hidden
         /// <summary>
@@ -28,128 +28,33 @@ namespace ugly.CodeGenerator.cs
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\r\nusing System.IO;\r\nusing System.Collections.Generic;\r\nusing System." +
-                    "Linq;\r\n\r\nnamespace ");
+            this.Write("using System;\r\nusing System.Diagnostics;\r\n\r\nnamespace ");
             
-            #line 11 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
+            #line 9 "D:\ugly\CodeGenerator\cs\CsImplWindows.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace)));
             
             #line default
             #line hidden
-            this.Write("\r\n{\r\n    public interface GameClient\r\n    {\r\n        void InitGame(");
-            
-            #line 15 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup)));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 15 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CsHelper.Definition.Config.GameSetup)));
-            
-            #line default
-            #line hidden
-            this.Write(", ");
-            
-            #line 15 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.PlayerSetup)));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 15 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CsHelper.Definition.Config.PlayerSetup)));
-            
-            #line default
-            #line hidden
-            this.Write(");\r\n        void PlayTurn(");
-            
-            #line 16 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.GameState)));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 16 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CsHelper.Definition.Config.GameState)));
-            
-            #line default
-            #line hidden
-            this.Write(", ");
-            
-            #line 16 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.PlayerState)));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 16 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(CsHelper.Definition.Config.PlayerState)));
-            
-            #line default
-            #line hidden
-            this.Write(");\r\n        void Cleanup();\r\n    }\r\n\r\n    public static partial class GameServer\r" +
-                    "\n    {\r\n        public static void Play(GameClient client)\r\n        {\r\n         " +
-                    "   Tuple<");
-            
-            #line 24 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup)));
-            
-            #line default
-            #line hidden
-            this.Write(", ");
-            
-            #line 24 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.PlayerSetup)));
-            
-            #line default
-            #line hidden
-            this.Write("> setup = ReadSetup();\r\n            int playerId = setup.Item2.Id;\r\n            c" +
-                    "lient.InitGame(setup.Item1, setup.Item2);\r\n            ");
-            
-            #line 27 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.GameState)));
-            
-            #line default
-            #line hidden
-            this.Write(@" turn = null;
-            while ((turn = ReadTurn()) != null)
-            {
-                client.PlayTurn(turn, turn.Player[playerId]);
-            }
-            client.Cleanup();
-            Console.WriteLine(""EOT"");
-        }
-        
-        public static IList<Tuple<int, int>> PlayLocalServer(GameClient client, string serverPath, IList<string> otherPlayers = null, string game = """);
-            
-            #line 36 "D:\ugly\CodeGenerator\cs\CsInterface.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace)));
-            
-            #line default
-            #line hidden
-            this.Write(@""", string serverArgs = """")
+            this.Write(@"
+{
+    public static partial class GameServer
+    {
+        private static bool StartLocalServer(string serverPath, string commandLine)
         {
-            return PlayLocalServerCommandLine(client, serverPath, string.Format(""-game \""{0}\"" {1} {2}"", game, string.Join("" "", (otherPlayers ?? Enumerable.Empty<string>()).Select(player => string.Format(""-player \""{0}\"""", player))), serverArgs));
-        }
-
-        public static IList<Tuple<int, int>> PlayLocalServerCommandLine(GameClient client, string serverPath, string commandLine)
-        {
-            List<Tuple<int, int>> results = new List<Tuple<int, int>>();
-            if (!StartLocalServer(serverPath, commandLine))
-                return results;
-            Play(client);
-            string[] tokens = Console.ReadLine().Split(new char[] { ' ' });
-            for (int i = 0; i < tokens.Length / 2; ++i)
-                results.Add(Tuple.Create(int.Parse(tokens[i*2]), int.Parse(tokens[i*2+1])));
-            return results;
+            ProcessStartInfo startInfo = new ProcessStartInfo(serverPath, commandLine);
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardInput = true;
+            Process process = Process.Start(startInfo);
+            if (process == null)
+                return false;
+            Console.SetOut(process.StandardInput);
+            Console.SetIn(process.StandardOutput);
+            return true;
         }
     }
-}");
+}
+");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -161,7 +66,7 @@ namespace ugly.CodeGenerator.cs
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public class CsInterfaceBase
+    public class CsImplWindowsBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

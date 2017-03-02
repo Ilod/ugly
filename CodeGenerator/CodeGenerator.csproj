@@ -58,6 +58,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CsImpl.tt</DependentUpon>
     </Compile>
+    <Compile Include="cs\CsImplWindows.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CsImplWindows.tt</DependentUpon>
+    </Compile>
     <Compile Include="cs\CsInterface.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -125,6 +130,10 @@
     <Content Include="cs\CsImpl.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CsImpl.cs</LastGenOutput>
+    </Content>
+    <Content Include="cs\CsImplWindows.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CsImplWindows.cs</LastGenOutput>
     </Content>
     <Content Include="cs\CsInterface.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
