@@ -41,7 +41,7 @@ namespace ugly
             CommandLineResult ConsumeOption(bool& value, const std::vector<std::string>& options, const std::vector<std::string>& negativeOptions, bool mandatory = false)
             {
                 std::vector<bool> val;
-                CommandLineResult res = ConsumeOption(value, options, negativeOptions, mandatory);
+                CommandLineResult res = ConsumeOption(val, options, negativeOptions, mandatory);
                 if (!val.empty())
                     value = val.back();
                 else if (res != CommandLineResult::NotFound)
@@ -89,7 +89,7 @@ namespace ugly
             template<typename T> static bool TryParseUInt(T& value, const std::string& str);
             template<typename T> static typename std::enable_if_t<std::is_enum_v<T>> TryParse(T& value, const std::string& str)
             {
-                std::underlying_type_t val;
+                std::underlying_type_t<T> val;
                 bool b = TryParse(val);
                 value = static_cast<T>(val);
                 return b;
