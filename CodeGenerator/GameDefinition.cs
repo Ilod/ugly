@@ -33,13 +33,9 @@ namespace ugly.CodeGenerator
                     }
                     foreach (ClassMember m in c.Member)
                     {
-                        if (m.Id)
-                        {
-                            c.IdMember = m;
-                            break;
-                        }
                         if (m.Condition != null)
                             conditions.Add(new KeyValuePair<string, string>(m.Type, m.Condition.Function));
+                        c.MemberMap[m.Name] = m;
                     }
                 }
                 foreach (GameEnum e in file.Enum)
@@ -120,16 +116,98 @@ namespace ugly.CodeGenerator
         public List<ClassMember> Member = new List<ClassMember>();
         public List<ClassMethod> Method = new List<ClassMethod>();
         public SortedSet<string> ConditionMethod = new SortedSet<string>();
-        public ClassMember IdMember = null;
+        public GameClassIdConfig Id = null;
+        public List<IndexMapping> IndexMapping = new List<IndexMapping>();
+        public bool HasId { get { return Id != null && Id.Member.Any(); } }
+        [NonSerialized]
+        public Dictionary<string, ClassMember> MemberMap = new Dictionary<string, ClassMember>();
+    }
+
+    public class GameClassIdConfig
+    {
+        public List<string> Member = new List<string>();
+        public bool Index = false;
+        public IndexMapping Source;
+    }
+
+    public enum IndexSource
+    {
+        Unknown,
+        Data,
+        GameSetup,
+        GameState,
+        Index,
+    }
+
+    public enum ClassMemberIndexType
+    {
+        None,
+        RefId,
+        MappedFromStrong,
+        Strong,
     }
 
     public class ClassMember
     {
         public string Name;
         public string Type;
-        public bool Id = false;
         public int Array = 0;
+        public ClassMemberIndexType Index = ClassMemberIndexType.None;
         public Condition Condition;
+
+        public bool IsWeak { get { return Index == ClassMemberIndexType.RefId || Index == ClassMemberIndexType.MappedFromStrong; } }
+    }
+
+    public class IndexMapping
+    {
+        public IndexSource Source = IndexSource.Unknown;
+        public List<IndexMappingMember> Member = new List<IndexMappingMember>();
+
+        public string FormatMapping(Case memberCase, string dataVariable, string gameSetupVariable, string gameStateVariable, string memberAccess = ".", string startIndex = "[", string endIndex = "]")
+        {
+            StringBuilder str = new StringBuilder();
+            FormatMapping(memberCase, dataVariable, gameSetupVariable, gameStateVariable, memberAccess, startIndex, endIndex, str);
+            return str.ToString();
+        }
+
+        public void FormatMapping(Case memberCase, string dataVariable, string gameSetupVariable, string gameStateVariable, string memberAccess, string startIndex, string endIndex, StringBuilder str)
+        {
+            switch (Source)
+            {
+                case IndexSource.Data:
+                    str.Append(dataVariable);
+                    break;
+                case IndexSource.GameSetup:
+                    str.Append(gameSetupVariable);
+                    break;
+                case IndexSource.GameState:
+                    str.Append(gameStateVariable);
+                    break;
+                default:
+                    throw new Exception("Unknown source");
+            }
+            foreach (IndexMappingMember member in Member)
+            {
+                str.Append(memberAccess);
+                member.FormatMapping(memberCase, dataVariable, gameSetupVariable, gameStateVariable, memberAccess, startIndex, endIndex, str);
+            }
+        }
+    }
+
+    public class IndexMappingMember
+    {
+        public string Name;
+        public IndexMapping Index = null;
+        public void FormatMapping(Case memberCase, string dataVariable, string gameSetupVariable, string gameStateVariable, string memberAccess, string startIndex, string endIndex, StringBuilder str)
+        {
+            str.Append(memberCase.Convert(Name));
+            if (Index != null)
+            {
+                str.Append(startIndex);
+                Index.FormatMapping(memberCase, dataVariable, gameSetupVariable, gameStateVariable, memberAccess, startIndex, endIndex, str);
+                str.Append(endIndex);
+            }
+        }
     }
 
     public class ClassMethod

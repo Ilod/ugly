@@ -25,7 +25,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
             int playerId = setup.Item2.Id;
             client.InitGame(setup.Item1, setup.Item2);
             <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #> turn = null;
-            while ((turn = ReadTurn()) != null)
+            while ((turn = ReadTurn(setup.Item1)) != null)
             {
                 client.PlayTurn(turn, turn.Player[playerId]);
             }

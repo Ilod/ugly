@@ -68,6 +68,10 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             {
                 #><#= Case.CamelCase.Convert(m.Type) #><#
             }
+            if (m.IsWeak)
+            {
+                #>*<#
+            }
             for (int i = 0; i < m.Array; ++i)
             {
                 #>><#

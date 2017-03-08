@@ -29,11 +29,15 @@ namespace ugly
             public:<#
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
-    if (c.IdMember != null)
+    if (c.HasId && !c.Id.Index)
     {
+        if (c.Id.Member.Count != 1)
+        {
+            throw new Exception("Only arity 1 for non-indexed id is supported");
+        }
         #>
 
-                std::map<<#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.IdMember.Type)) #>, <#= Case.CamelCase.Convert(c.Name) #>*> <#= Case.LowerCamelCase.Convert(c.Name) #>;<#        
+                std::map<<#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[c.Id.Member[0]].Type)) #>, <#= Case.CamelCase.Convert(c.Name) #>*> <#= Case.LowerCamelCase.Convert(c.Name) #>;<#
     }
 }
 #>

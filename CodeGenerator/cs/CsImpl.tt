@@ -10,7 +10,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
 {
     public static partial class GameServer
     {
-        private static <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #> ReadTurn()
+        private static <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #> ReadTurn(<#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup) #> gameSetup)
         {
             Console.WriteLine("EOT");
             string line = Console.ReadLine();
@@ -18,7 +18,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                 return null;
             Parser parser = new Parser(line);
             <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #> turn = new <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #>();
-            parser.Deserialize(turn);
+            parser.Deserialize(turn, gameSetup, turn);
             return turn;
         }
         
@@ -30,7 +30,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
             line = Console.ReadLine();
             parser = new Parser(line);
             <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup) #> data = new <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup) #>();
-            parser.Deserialize(data);
+            parser.Deserialize(data, data, null);
             return Tuple.Create(data, data.Player[playerId]);
         }
 
@@ -123,11 +123,15 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
             #>
 
 
-            public void Deserialize(<#= Case.CamelCase.Convert(c.Name) #> data)
+            public void Deserialize(<#= Case.CamelCase.Convert(c.Name) #> data, <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameSetup) #> gameSetup, <#= Case.CamelCase.Convert(CsHelper.Definition.Config.GameState) #> gameState)
             {<#
 
             foreach (ClassMember m in c.Member)
             {
+                if ((c.HasId && c.Id.Index && c.Id.Member.Contains(m.Name)) || (m.Index == ClassMemberIndexType.MappedFromStrong))
+                {
+                    continue;
+                }
                 #>
 
                 {<#
@@ -139,13 +143,37 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                     {
                         #>
 
-                    data.<#= Case.CamelCase.Convert(m.Name) #> = ReadNext<#=  Case.CamelCase.Convert(CsHelper.GetBasicTypeName(type)) #>();<#
+                    data.<#= Case.CamelCase.Convert(m.Name) #> = ReadNext<#= Case.CamelCase.Convert(CsHelper.GetBasicTypeName(type)) #>();<#
                     }
                     else if (type == BasicType.Class)
                     {
-                        #>
+                        if (m.Index == ClassMemberIndexType.RefId)
+                        {
+                            GameClass realType = CsHelper.Definition.Class[m.Type];
+                            for (int i = 0; i <= realType.Id.Member.Count; ++i)
+                            {
+                                #>
 
-                    Deserialize(data.<#= Case.CamelCase.Convert(m.Name) #>);<#
+                    int classIdx<#= i #> = ReadNext<int>();<#
+                            }
+                            #>
+                            
+                    if (classIdx0 != -1)
+                    {
+                        data.<#= Case.CamelCase.Convert(m.Name) #> = <#= realType.Id.Source.FormatMapping(Case.CamelCase, null, "gameSetup", "gameState") #>[classIdx0<#
+                            for (int i = 1; i <= c.Id.Member.Count; ++i)
+                            {
+                                #>, classIdx<#= i #><#
+                            }
+                            #>];
+                    }<#
+                        }
+                        else if (!m.IsWeak)
+                        {
+                            #>
+
+                    Deserialize(data.<#= Case.CamelCase.Convert(m.Name) #>, gameSetup, gameState);<#
+                        }
                     }
                     else // Enum
                     {
@@ -154,7 +182,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                     data.<#= Case.CamelCase.Convert(m.Name) #> = (<#=  Case.CamelCase.Convert(m.Type) #>)ReadNextInt();<#
                     }
                 }
-                else
+                else if (!m.IsWeak)
                 {
                     for (int i = 0; i < m.Array; ++i)
                     {
@@ -195,8 +223,37 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                     {#>
 
                     <#= Case.CamelCase.Convert(m.Type) #> element = new <#= Case.CamelCase.Convert(m.Type) #>();
-                    Deserialize(element);<#
-                    }#>
+                    Deserialize(element, gameSetup, gameState);<#
+                        GameClass mType = CsHelper.Definition.Class[m.Type];
+                        if (m.Index == ClassMemberIndexType.Strong && mType.HasId && mType.Id.Index)
+                        {
+                            for (int i = 0; i < mType.Id.Member.Count; ++i)
+                            {
+                                #>
+
+                    element.<#= Case.CamelCase.Convert(mType.Id.Member[i]) #> = idx<#= i #>;<#
+                            }
+                            foreach (IndexMapping mapping in mType.IndexMapping)
+                            {
+                                #>
+
+                    <#= mapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState") #><#
+                                if (m.Array == 0)
+                                {
+                                    #> = element;<#
+                                }
+                                else if (m.Array == 1)
+                                {
+                                    #>.Add(element);<#
+                                }
+                                else
+                                {
+                                    throw new Exception("Unsupported arity > 1 for mapping");
+                                }
+                            }
+                        }
+                    }
+                        #>
 
                     data.<#= Case.CamelCase.Convert(m.Name) #>[idx0<#
                     for (int i = 1; i < m.Array; ++i)

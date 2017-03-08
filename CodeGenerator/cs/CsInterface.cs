@@ -117,7 +117,7 @@ namespace ugly.CodeGenerator.cs
             #line default
             #line hidden
             this.Write(@" turn = null;
-            while ((turn = ReadTurn()) != null)
+            while ((turn = ReadTurn(setup.Item1)) != null)
             {
                 client.PlayTurn(turn, turn.Player[playerId]);
             }

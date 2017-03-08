@@ -102,22 +102,33 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             {
                 BasicType type = CxxHelper.Definition.GetBasicType(a.Type);
                 if (type == BasicType.Class)
-                    type = CxxHelper.Definition.GetBasicType(CxxHelper.Definition.Class[a.Type].IdMember.Type);
-                #> %<#= CxxHelper.GetBasicTypePrinter(type) #><#
+                {
+                    foreach (string memberName in CxxHelper.Definition.Class[a.Type].Id.Member)
+                    {
+                        #> %<#= CxxHelper.GetBasicTypePrinter(CxxHelper.Definition.GetBasicType(CxxHelper.Definition.Class[a.Type].MemberMap[memberName].Type)) #><#
+                    }
+                }
+                else
+                {
+                    #> %<#= CxxHelper.GetBasicTypePrinter(type) #><#
+                }
             }
             #>\n"<#
             foreach (MethodParam a in m.Param)
             {
                 BasicType type = CxxHelper.Definition.GetBasicType(a.Type);
                 if (type == BasicType.Class)
-                {                
-                    BasicType realType = CxxHelper.Definition.GetBasicType(CxxHelper.Definition.Class[a.Type].IdMember.Type);
-                    #>, <#
-                    if (realType == BasicType.Enum)
+                {
+                    foreach (string memberName in CxxHelper.Definition.Class[a.Type].Id.Member)
                     {
-                        #>(int)<#
+                        BasicType realType = CxxHelper.Definition.GetBasicType(CxxHelper.Definition.Class[a.Type].MemberMap[memberName].Type);
+                        #>, <#
+                        if (realType == BasicType.Enum)
+                        {
+                            #>(int)<#
+                        }
+                        #><#= Case.LowerCamelCase.Convert(a.Name) #>.<#= Case.LowerCamelCase.Convert(memberName) #><#
                     }
-                    #><#= Case.LowerCamelCase.Convert(a.Name) #>.<#= Case.LowerCamelCase.Convert(CxxHelper.Definition.Class[a.Type].IdMember.Name) #><#
                 }
                 else if (type == BasicType.Enum)
                 {

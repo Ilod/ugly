@@ -38,6 +38,10 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
 
         public <#
             BasicType type = CsHelper.Definition.GetBasicType(m.Type);
+            if (m.Array == 1 && m.IsWeak)
+            {
+                #>List<<#
+            }
             if (type.IsBasic())
             {
                 #><#= CsHelper.GetBasicTypeName(type) #><#
@@ -46,7 +50,11 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
             {
                 #><#= Case.CamelCase.Convert(m.Type) #><#
             }
-            if (m.Array != 0)
+            if (m.Array == 1 && m.IsWeak)
+            {
+                #>><#
+            }
+            else if (m.Array != 0)
             {
                 #>[<#
                 for (int i = 1; i < m.Array; ++i)
@@ -55,7 +63,16 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                 }
                 #>]<#
             }
-            #> <#= Case.CamelCase.Convert(m.Name) #>;<#
+            #> <#= Case.CamelCase.Convert(m.Name) #><#
+            if (m.Array == 0 && type == BasicType.Class && !m.IsWeak)
+            {
+                #> = new <#= Case.CamelCase.Convert(m.Type) #>()<#
+            }
+            else if (m.Array == 1 && m.IsWeak)
+            {
+                #> = new List<<#= Case.CamelCase.Convert(m.Type) #>>()<#
+            }
+            #>;<#
         }
         #>
 
@@ -86,29 +103,53 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
             #>)
         {
             Console.WriteLine("<#= m.MethodId #><#
-            for (int idxParam = 0; idxParam < m.Param.Count; ++idxParam)
+            for (int idxParam = 0, paramCount = m.Param.Sum(a => {
+                BasicType type = CsHelper.Definition.GetBasicType(a.Type);
+                if (type != BasicType.Class)
+                    return 1;
+                if (!CsHelper.Definition.Class[a.Type].HasId)
+                    return 1;
+                return CsHelper.Definition.Class[a.Type].Id.Member.Count;
+            }); idxParam < paramCount; ++idxParam)
             {
                 #> {<#= idxParam #>}<#
             }
             #>"<#
             foreach (MethodParam a in m.Param)
             {
-                #>, <#
                 BasicType type = CsHelper.Definition.GetBasicType(a.Type);
                 switch (type)
                 {
                     case BasicType.Bool:
-                        #><#= Case.LowerCamelCase.Convert(a.Name) #> ? 1 : 0<#
+                        #>, <#= Case.LowerCamelCase.Convert(a.Name) #> ? 1 : 0<#
                         break;
                     case BasicType.Char:
                     case BasicType.Enum:
-                        #>(int)<#= Case.LowerCamelCase.Convert(a.Name) #><#
+                        #>, (int)<#= Case.LowerCamelCase.Convert(a.Name) #><#
                         break;
                     case BasicType.Class:
-                        #><#= Case.LowerCamelCase.Convert(a.Name) #>.<#= Case.CamelCase.Convert(CsHelper.Definition.Class[a.Type].IdMember.Name) #><#
+                        foreach (string memberId in CsHelper.Definition.Class[a.Type].Id.Member)
+                        {
+                            #>, (<#= Case.LowerCamelCase.Convert(a.Name) #> != null) ? <#
+                            BasicType realType = CsHelper.Definition.GetBasicType(CsHelper.Definition.Class[a.Type].MemberMap[memberId].Type);
+                            switch (realType)
+                            {
+                                case BasicType.Bool:
+                                    #>(<#= Case.LowerCamelCase.Convert(a.Name) #>.<#= Case.CamelCase.Convert(memberId) #> ? 1 : 0)<#
+                                    break;
+                                case BasicType.Char:
+                                case BasicType.Enum:
+                                    #>((int)<#= Case.LowerCamelCase.Convert(a.Name) #>.<#= Case.CamelCase.Convert(memberId) #>)<#
+                                    break;
+                                default:
+                                    #>(<#= Case.LowerCamelCase.Convert(a.Name) #>.<#= Case.CamelCase.Convert(memberId) #>)<#
+                                    break;
+                            }
+                            #> : -1<#
+                        }
                         break;
                     default:
-                        #><#= Case.LowerCamelCase.Convert(a.Name) #><#
+                        #>, <#= Case.LowerCamelCase.Convert(a.Name) #><#
                         break;
                 }
             }

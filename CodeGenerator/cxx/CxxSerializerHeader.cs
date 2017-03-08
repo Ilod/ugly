@@ -139,37 +139,41 @@ foreach (GameFile file in CxxHelper.Definition.Files)
 
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
-    if (c.IdMember != null)
+    if (c.HasId && !c.Id.Index)
     {
+        if (c.Id.Member.Count != 1)
+        {
+            throw new Exception("Only arity 1 for non-indexed id is supported");
+        }
         
             
             #line default
             #line hidden
             this.Write("\r\n                std::map<");
             
-            #line 36 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.IdMember.Type))));
+            #line 40 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[c.Id.Member[0]].Type))));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 36 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
+            #line 40 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(c.Name)));
             
             #line default
             #line hidden
             this.Write("*> ");
             
-            #line 36 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
+            #line 40 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(c.Name)));
             
             #line default
             #line hidden
             this.Write(";");
             
-            #line 36 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
-        
+            #line 40 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
+
     }
 }
 
