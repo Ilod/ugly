@@ -1283,62 +1283,95 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line 197 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                         }
-                        foreach (IndexMapping mapping in mType.IndexMapping)
+                    }
+                    foreach (IndexMapping mapping in mType.IndexMapping)
+                    {
+                        List<IndexMapping> indexMapping = mapping.Member.SelectMany(mappingMember => mappingMember.Index).ToList();
+                        if (indexMapping.Any())
                         {
                             
             
             #line default
             #line hidden
+            this.Write("\r\n        if (");
+            
+            #line 207 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(" && ", indexMapping.Select(idxMapping => string.Format("{0} >= 0", idxMapping.FormatMapping(Case.LowerCamelCase, string.Format("array{0}", m.Array), "(*gameSetup)", "(*gameState)"))))));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {");
+            
+            #line 208 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+
+                            this.PushIndent("    ");
+                        }
+                        
+            
+            #line default
+            #line hidden
             this.Write("\r\n        ");
             
-            #line 203 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 213 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mapping.FormatMapping(Case.LowerCamelCase, string.Format("array{0}", m.Array), "(*gameSetup)", "(*gameState)")));
             
             #line default
             #line hidden
             
-            #line 203 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 213 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
-                            if (m.Array == 0)
-                            {
-                                
+                        ClassMember mapped = mapping.GetMember(CxxHelper.Definition);
+                        if (mapped.Array == 0)
+                        {
+                            
             
             #line default
             #line hidden
             this.Write(" = &array");
             
-            #line 206 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 217 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.Array));
             
             #line default
             #line hidden
             this.Write(";");
             
-            #line 206 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 217 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
-                            }
-                            else if (m.Array == 1)
-                            {
-                                
+                        }
+                        else if (mapped.Array == 1)
+                        {
+                            
             
             #line default
             #line hidden
             this.Write(".push_back(&array");
             
-            #line 210 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 221 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.Array));
             
             #line default
             #line hidden
             this.Write(");");
             
-            #line 210 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 221 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
-                            }
-                            else
-                            {
-                                throw new Exception("Unsupported arity > 1 for mapping");
-                            }
+                        }
+                        else
+                        {
+                            throw new Exception("Unsupported arity > 1 for mapping");
+                        }
+                        if (indexMapping.Any())
+                        {
+                            this.PopIndent();
+                            
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        }");
+            
+            #line 232 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+
                         }
                     }
                 }
@@ -1351,7 +1384,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        Deserialize(member, buf, gameSetup, gameState");
             
-            #line 224 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 241 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                 if (CxxHelper.Server)
                 {
@@ -1361,7 +1394,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write(", idSetup, idState");
             
-            #line 227 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 244 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                 }
                 
@@ -1370,7 +1403,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write(");");
             
-            #line 229 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 246 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
             }
             for (int i = 0; i < m.Array; ++i)
@@ -1382,7 +1415,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        }");
             
-            #line 236 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 253 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
             }
         }
@@ -1392,7 +1425,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n    }");
             
-            #line 241 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 258 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
     }
     
@@ -1401,7 +1434,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n}");
             
-            #line 245 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 262 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
         
 }

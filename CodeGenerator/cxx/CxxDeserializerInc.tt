@@ -196,23 +196,40 @@ template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const c
 
         array<#= m.Array #>.<#= Case.LowerCamelCase.Convert(mType.Id.Member[i]) #> = idx<#= i #>;<#
                         }
-                        foreach (IndexMapping mapping in mType.IndexMapping)
+                    }
+                    foreach (IndexMapping mapping in mType.IndexMapping)
+                    {
+                        List<IndexMapping> indexMapping = mapping.Member.SelectMany(mappingMember => mappingMember.Index).ToList();
+                        if (indexMapping.Any())
                         {
                             #>
 
+        if (<#= string.Join(" && ", indexMapping.Select(idxMapping => string.Format("{0} >= 0", idxMapping.FormatMapping(Case.LowerCamelCase, string.Format("array{0}", m.Array), "(*gameSetup)", "(*gameState)")))) #>)
+        {<#
+                            this.PushIndent("    ");
+                        }
+                        #>
+
         <#= mapping.FormatMapping(Case.LowerCamelCase, string.Format("array{0}", m.Array), "(*gameSetup)", "(*gameState)") #><#
-                            if (m.Array == 0)
-                            {
-                                #> = &array<#= m.Array #>;<#
-                            }
-                            else if (m.Array == 1)
-                            {
-                                #>.push_back(&array<#= m.Array #>);<#
-                            }
-                            else
-                            {
-                                throw new Exception("Unsupported arity > 1 for mapping");
-                            }
+                        ClassMember mapped = mapping.GetMember(CxxHelper.Definition);
+                        if (mapped.Array == 0)
+                        {
+                            #> = &array<#= m.Array #>;<#
+                        }
+                        else if (mapped.Array == 1)
+                        {
+                            #>.push_back(&array<#= m.Array #>);<#
+                        }
+                        else
+                        {
+                            throw new Exception("Unsupported arity > 1 for mapping");
+                        }
+                        if (indexMapping.Any())
+                        {
+                            this.PopIndent();
+                            #>
+
+        }<#
                         }
                     }
                 }
