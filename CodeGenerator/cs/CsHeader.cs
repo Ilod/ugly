@@ -363,14 +363,7 @@ namespace ugly.CodeGenerator.cs
             
             #line 105 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
-            for (int idxParam = 0, paramCount = m.Param.Sum(a => {
-                BasicType type = CsHelper.Definition.GetBasicType(a.Type);
-                if (type != BasicType.Class)
-                    return 1;
-                if (!CsHelper.Definition.Class[a.Type].HasId)
-                    return 1;
-                return CsHelper.Definition.Class[a.Type].Id.Member.Count;
-            }); idxParam < paramCount; ++idxParam)
+            for (int idxParam = 0, paramCount = m.Param.Sum(a => CsHelper.GetSerializedMemberCount(a.Type)); idxParam < paramCount; ++idxParam)
             {
                 
             
@@ -378,14 +371,14 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(" {");
             
-            #line 115 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 108 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(idxParam));
             
             #line default
             #line hidden
             this.Write("}");
             
-            #line 115 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 108 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             }
             
@@ -394,169 +387,24 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\"");
             
-            #line 117 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 110 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             foreach (MethodParam a in m.Param)
             {
-                BasicType type = CsHelper.Definition.GetBasicType(a.Type);
-                switch (type)
-                {
-                    case BasicType.Bool:
-                        
+                
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 124 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
+            #line 113 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CsHelper.GetSerializedMemberString("", a.Type, Case.LowerCamelCase.Convert(a.Name))));
             
             #line default
             #line hidden
-            this.Write(" ? 1 : 0");
             
-            #line 124 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 113 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
-                        break;
-                    case BasicType.Char:
-                    case BasicType.Enum:
-                        
-            
-            #line default
-            #line hidden
-            this.Write(", (int)");
-            
-            #line 128 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
-            
-            #line default
-            #line hidden
-            
-            #line 128 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-
-                        break;
-                    case BasicType.Class:
-                        foreach (string memberId in CsHelper.Definition.Class[a.Type].Id.Member)
-                        {
-                            
-            
-            #line default
-            #line hidden
-            this.Write(", (");
-            
-            #line 133 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
-            
-            #line default
-            #line hidden
-            this.Write(" != null) ? ");
-            
-            #line 133 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-
-                            BasicType realType = CsHelper.Definition.GetBasicType(CsHelper.Definition.Class[a.Type].MemberMap[memberId].Type);
-                            switch (realType)
-                            {
-                                case BasicType.Bool:
-                                    
-            
-            #line default
-            #line hidden
-            this.Write("(");
-            
-            #line 138 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
-            
-            #line default
-            #line hidden
-            this.Write(".");
-            
-            #line 138 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(memberId)));
-            
-            #line default
-            #line hidden
-            this.Write(" ? 1 : 0)");
-            
-            #line 138 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-
-                                    break;
-                                case BasicType.Char:
-                                case BasicType.Enum:
-                                    
-            
-            #line default
-            #line hidden
-            this.Write("((int)");
-            
-            #line 142 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
-            
-            #line default
-            #line hidden
-            this.Write(".");
-            
-            #line 142 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(memberId)));
-            
-            #line default
-            #line hidden
-            this.Write(")");
-            
-            #line 142 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-
-                                    break;
-                                default:
-                                    
-            
-            #line default
-            #line hidden
-            this.Write("(");
-            
-            #line 145 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
-            
-            #line default
-            #line hidden
-            this.Write(".");
-            
-            #line 145 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(memberId)));
-            
-            #line default
-            #line hidden
-            this.Write(")");
-            
-            #line 145 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-
-                                    break;
-                            }
-                            
-            
-            #line default
-            #line hidden
-            this.Write(" : -1");
-            
-            #line 148 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-
-                        }
-                        break;
-                    default:
-                        
-            
-            #line default
-            #line hidden
-            this.Write(", ");
-            
-            #line 152 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
-            
-            #line default
-            #line hidden
-            
-            #line 152 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
-
-                        break;
-                }
             }
                 
             
@@ -564,7 +412,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(");\r\n        }");
             
-            #line 157 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 116 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
         }
         
@@ -573,7 +421,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n    }");
             
-            #line 161 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 120 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
     }
     

@@ -82,9 +82,9 @@ namespace ugly.CodeGenerator.cxx
             }
         }
 
-        public static string GetBasicTypePrinter(BasicType type)
+        public static string GetSerializedFormatString(string type)
         {
-            switch (type)
+            switch (Definition.GetBasicType(type))
             {
                 case BasicType.Bool:
                 case BasicType.Char:
@@ -92,17 +92,46 @@ namespace ugly.CodeGenerator.cxx
                 case BasicType.I8:
                 case BasicType.I16:
                 case BasicType.I32:
-                    return "d";
+                    return "%d";
                 case BasicType.U8:
                 case BasicType.U16:
                 case BasicType.U32:
-                    return "u";
+                    return "%u";
                 case BasicType.U64:
-                    return "llu";
+                    return "%llu";
                 case BasicType.I64:
-                    return "lld";
+                    return "%lld";
+                case BasicType.Class:
+                    if (Definition.Class[type].HasId)
+                    {
+                        return string.Join(" ", Definition.Class[type].Id.Member.Select(m => GetSerializedFormatString(Definition.Class[type].MemberMap[m].Type)));
+                    }
+                    else
+                    {
+                        return string.Join(" ", Definition.Class[type].Member.Select(m => GetSerializedFormatString(m.Type)));
+                    }
                 default:
-                    throw new NotImplementedException();
+                    throw new Exception("Unknown type");
+            }
+        }
+
+        public static string GetSerializedMemberString(string parentName, string type, string name)
+        {
+            switch (Definition.GetBasicType(type))
+            {
+                case BasicType.Enum:
+                    return string.Format("(int){0}{1}", parentName, name);
+                case BasicType.Class:
+                    if (Definition.Class[type].HasId)
+                    {
+                        return string.Join(", ", Definition.Class[type].Id.Member.Select(m => string.Format("({0}{1} != nullptr) ? ({2}) : -1", parentName, name, GetSerializedMemberString(string.Format("{0}{1}->", parentName, name), Definition.Class[type].MemberMap[m].Type, Case.LowerCamelCase.Convert(m)))));
+                    }
+                    else
+                    {
+                        return string.Join(", ", Definition.Class[type].Member.Select(m => GetSerializedMemberString(string.Format("{0}{1}.", parentName, name), m.Type, Case.CamelCase.Convert(m.Name))));
+                    }
+                default:
+                    return string.Format("{0}{1}", parentName, name);
             }
         }
     }

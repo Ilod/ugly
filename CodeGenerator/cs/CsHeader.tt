@@ -103,55 +103,14 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
             #>)
         {
             Console.WriteLine("<#= m.MethodId #><#
-            for (int idxParam = 0, paramCount = m.Param.Sum(a => {
-                BasicType type = CsHelper.Definition.GetBasicType(a.Type);
-                if (type != BasicType.Class)
-                    return 1;
-                if (!CsHelper.Definition.Class[a.Type].HasId)
-                    return 1;
-                return CsHelper.Definition.Class[a.Type].Id.Member.Count;
-            }); idxParam < paramCount; ++idxParam)
+            for (int idxParam = 0, paramCount = m.Param.Sum(a => CsHelper.GetSerializedMemberCount(a.Type)); idxParam < paramCount; ++idxParam)
             {
                 #> {<#= idxParam #>}<#
             }
             #>"<#
             foreach (MethodParam a in m.Param)
             {
-                BasicType type = CsHelper.Definition.GetBasicType(a.Type);
-                switch (type)
-                {
-                    case BasicType.Bool:
-                        #>, <#= Case.LowerCamelCase.Convert(a.Name) #> ? 1 : 0<#
-                        break;
-                    case BasicType.Char:
-                    case BasicType.Enum:
-                        #>, (int)<#= Case.LowerCamelCase.Convert(a.Name) #><#
-                        break;
-                    case BasicType.Class:
-                        foreach (string memberId in CsHelper.Definition.Class[a.Type].Id.Member)
-                        {
-                            #>, (<#= Case.LowerCamelCase.Convert(a.Name) #> != null) ? <#
-                            BasicType realType = CsHelper.Definition.GetBasicType(CsHelper.Definition.Class[a.Type].MemberMap[memberId].Type);
-                            switch (realType)
-                            {
-                                case BasicType.Bool:
-                                    #>(<#= Case.LowerCamelCase.Convert(a.Name) #>.<#= Case.CamelCase.Convert(memberId) #> ? 1 : 0)<#
-                                    break;
-                                case BasicType.Char:
-                                case BasicType.Enum:
-                                    #>((int)<#= Case.LowerCamelCase.Convert(a.Name) #>.<#= Case.CamelCase.Convert(memberId) #>)<#
-                                    break;
-                                default:
-                                    #>(<#= Case.LowerCamelCase.Convert(a.Name) #>.<#= Case.CamelCase.Convert(memberId) #>)<#
-                                    break;
-                            }
-                            #> : -1<#
-                        }
-                        break;
-                    default:
-                        #>, <#= Case.LowerCamelCase.Convert(a.Name) #><#
-                        break;
-                }
+                #>, <#= CsHelper.GetSerializedMemberString("", a.Type, Case.LowerCamelCase.Convert(a.Name)) #><#
             }
                 #>);
         }<#

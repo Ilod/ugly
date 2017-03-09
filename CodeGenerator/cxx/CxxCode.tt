@@ -100,18 +100,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
         std::printf("<#= m.MethodId #><#
             foreach (MethodParam a in m.Param)
             {
-                BasicType type = CxxHelper.Definition.GetBasicType(a.Type);
-                if (type == BasicType.Class)
-                {
-                    foreach (string memberName in CxxHelper.Definition.Class[a.Type].Id.Member)
-                    {
-                        #> %<#= CxxHelper.GetBasicTypePrinter(CxxHelper.Definition.GetBasicType(CxxHelper.Definition.Class[a.Type].MemberMap[memberName].Type)) #><#
-                    }
-                }
-                else
-                {
-                    #> %<#= CxxHelper.GetBasicTypePrinter(type) #><#
-                }
+                #> <#= CxxHelper.GetSerializedFormatString(a.Type) #><#
             }
             #>\n"<#
             foreach (MethodParam a in m.Param)

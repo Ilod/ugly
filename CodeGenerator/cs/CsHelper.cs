@@ -25,6 +25,38 @@ namespace ugly.CodeGenerator.cs
             }
         }
 
+        public static int GetSerializedMemberCount(string type)
+        {
+            if (Definition.GetBasicType(type) != BasicType.Class)
+                return 1;
+            if (Definition.Class[type].HasId)
+                return Definition.Class[type].Id.Member.Count;
+            return Definition.Class[type].Member.Sum(m => GetSerializedMemberCount(m.Type));
+        }
+
+        public static string GetSerializedMemberString(string parentName, string type, string name)
+        {
+            switch (Definition.GetBasicType(type))
+            {
+                case BasicType.Bool:
+                    return string.Format("{0}{1} ? 1 : 0", parentName, name);
+                case BasicType.Char:
+                case BasicType.Enum:
+                    return string.Format("(int){0}{1}", parentName, name);
+                case BasicType.Class:
+                    if (Definition.Class[type].HasId)
+                    {
+                        return string.Join(", ", Definition.Class[type].Id.Member.Select(m => string.Format("({0}{1} != null) ? ({2}) : -1", parentName, name, GetSerializedMemberString(string.Format("{0}{1}.", parentName, name), Definition.Class[type].MemberMap[m].Type, Case.CamelCase.Convert(m)))));
+                    }
+                    else
+                    {
+                        return string.Join(", ", Definition.Class[type].Member.Select(m => GetSerializedMemberString(string.Format("{0}{1}.", parentName, name), m.Type, Case.CamelCase.Convert(m.Name))));
+                    }
+                default:
+                    return string.Format("{0}{1}", parentName, name);
+            }
+        }
+
         public static string GetBasicTypeName(BasicType type)
         {
             switch (type)
