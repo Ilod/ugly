@@ -6,8 +6,8 @@
 #include "Game.h"
 #include <map>
 #include <string>
-#include "../GameServer/GameServerEntryPoint.h"
-#include "../DynamicLoader/Memory.h"
+#include "GameServer/GameServerEntryPoint.h"
+#include "DynamicLoader/Memory.h"
 
 namespace ugly
 {

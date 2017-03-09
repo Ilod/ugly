@@ -35,7 +35,14 @@ namespace ugly.CodeGenerator.cxx
             
             #line default
             #line hidden
-            this.Write(".h\"\r\n#include \"Client.h\"\r\n#include <cstdio>");
+            this.Write(".h\"\r\n#include \"");
+            
+            #line 7 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.Server ? "Serializer" : "Client"));
+            
+            #line default
+            #line hidden
+            this.Write(".h\"\r\n#include <cstdio>");
             
             #line 8 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 

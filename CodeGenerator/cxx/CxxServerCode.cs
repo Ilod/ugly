@@ -28,9 +28,9 @@ namespace ugly.CodeGenerator.cxx
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("#include \"Game.h\"\r\n#include <map>\r\n#include <string>\r\n#include \"../GameServer/Gam" +
-                    "eServerEntryPoint.h\"\r\n#include \"../DynamicLoader/Memory.h\"\r\n\r\nnamespace ugly\r\n{\r" +
-                    "\n    namespace ");
+            this.Write("#include \"Game.h\"\r\n#include <map>\r\n#include <string>\r\n#include \"GameServer/GameSe" +
+                    "rverEntryPoint.h\"\r\n#include \"DynamicLoader/Memory.h\"\r\n\r\nnamespace ugly\r\n{\r\n    n" +
+                    "amespace ");
             
             #line 14 "D:\ugly\CodeGenerator\cxx\CxxServerCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace)));

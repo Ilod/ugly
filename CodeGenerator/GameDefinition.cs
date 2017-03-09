@@ -53,6 +53,13 @@ namespace ugly.CodeGenerator
             {
                 m.MethodId = Method.Count;
                 Method.Add(m);
+                foreach (MethodParam a in m.Param)
+                {
+                    if (Class.ContainsKey(a.Type))
+                    {
+                        Class[a.Type].IsInMethodParam = true;
+                    }
+                }
             }
         }
 
@@ -128,6 +135,8 @@ namespace ugly.CodeGenerator
         public Dictionary<string, ClassMember> MemberMap = new Dictionary<string, ClassMember>();
         [NonSerialized]
         public GameFile File;
+        [NonSerialized]
+        public bool IsInMethodParam = false;
     }
 
     public class GameClassIdConfig

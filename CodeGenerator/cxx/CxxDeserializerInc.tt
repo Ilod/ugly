@@ -23,7 +23,7 @@
 template<class T> void Deserialize(T& data, const char*& buf, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>* gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>* gameState<#
     if (CxxHelper.Server)
     {
-        #>, Serializer::IdMap* idSetup, , Serializer::IdMap* idState<# 
+        #>, Serializer::IdMap* idSetup, Serializer::IdMap* idState<# 
     }
     #>)
 {
@@ -32,24 +32,28 @@ template<class T> void Deserialize(T& data, const char*& buf, <#= Case.CamelCase
 
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
+    if (CxxHelper.Server && !c.IsInMethodParam)
+        continue;
     #>
     
 template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const char*& buf, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>* gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>* gameState<#
     if (CxxHelper.Server)
     {
-        #>, Serializer::IdMap* idSetup, , Serializer::IdMap* idState<# 
+        #>, Serializer::IdMap* idSetup, Serializer::IdMap* idState<# 
     }
     #>);<#
 }
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
+    if (CxxHelper.Server && !c.IsInMethodParam)
+        continue;
     #>
 
 
 template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const char*& buf, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>* gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>* gameState<#
     if (CxxHelper.Server)
     {
-        #>, Serializer::IdMap* idSetup, , Serializer::IdMap* idState<# 
+        #>, Serializer::IdMap* idSetup, Serializer::IdMap* idState<# 
     }
     #>)
 {<#

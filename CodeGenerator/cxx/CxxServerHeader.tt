@@ -5,7 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 #pragma once
 #include "Serializer.h"
-#include "../GameServer/Game.h"
+#include "GameServer/Game.h"
 
 namespace ugly
 {

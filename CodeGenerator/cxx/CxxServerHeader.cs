@@ -28,8 +28,8 @@ namespace ugly.CodeGenerator.cxx
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("#pragma once\r\n#include \"Serializer.h\"\r\n#include \"../GameServer/Game.h\"\r\n\r\nnamespa" +
-                    "ce ugly\r\n{\r\n    namespace ");
+            this.Write("#pragma once\r\n#include \"Serializer.h\"\r\n#include \"GameServer/Game.h\"\r\n\r\nnamespace " +
+                    "ugly\r\n{\r\n    namespace ");
             
             #line 12 "D:\ugly\CodeGenerator\cxx\CxxServerHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace)));
