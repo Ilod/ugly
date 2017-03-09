@@ -6,12 +6,58 @@
 #pragma once
 #include <vector>
 #include <cstdint><#
-foreach (string d in CxxHelper.CurrentFile.Dependency)
-{
-#>
 
-#include "<#= Case.CamelCase.Convert(d) #>.h"<#
+ISet<string> weak = new SortedSet<string>();
+ISet<string> strong = new SortedSet<string>();
+foreach (GameClass c in CxxHelper.CurrentFile.Class)
+{
+    foreach (ClassMember m in c.Member)
+    {
+        BasicType type = CxxHelper.Definition.GetBasicType(m.Type);
+        if (type.IsBasic())
+            continue;
+        if (type == BasicType.Class)
+        {
+            if (m.IsWeak)
+            {
+                weak.Add(m.Type);
+            }
+            else
+            {
+                strong.Add(CxxHelper.Definition.Class[m.Type].File.Name);
+            }
+        }
+        else if (type == BasicType.Enum)
+        {
+            strong.Add(CxxHelper.Definition.Enum[m.Type].File.Name);
+        }
+    }
+    foreach (ClassMethod m in c.Method)
+    {
+        foreach (MethodParam a in m.Param)
+        {
+            BasicType type = CxxHelper.Definition.GetBasicType(a.Type);
+            if (type.IsBasic())
+                continue;
+            if (type == BasicType.Class)
+            {
+                weak.Add(a.Type);
+            }
+            else if (type == BasicType.Enum)
+            {
+                strong.Add(CxxHelper.Definition.Enum[a.Type].File.Name);
+            }
+        }
+    }
 }
+strong.Remove(CxxHelper.CurrentFile.Name);
+foreach (string file in strong)
+{
+    #>
+
+#include "<#= Case.CamelCase.Convert(file) #>.h"<#
+}
+
 if (CxxHelper.Server)
 {
     #>
@@ -25,6 +71,19 @@ namespace ugly
 
 namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
 {<#
+    foreach (string s in weak)
+    {
+        string file = CxxHelper.Definition.Class[s].File.Name;
+        if (file == CxxHelper.CurrentFile.Name)
+            continue;
+        if (strong.Contains(file))
+            continue;
+        #>
+
+    struct <#= Case.CamelCase.Convert(s) #>;<#
+    }
+
+
     foreach (GameEnum e in CxxHelper.CurrentFile.Enum)
     {
     #>

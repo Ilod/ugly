@@ -25,6 +25,7 @@ namespace ugly.CodeGenerator
                 foreach (GameClass c in file.Class)
                 {
                     Class[c.Name] = c;
+                    c.File = file;
                     foreach (ClassMethod m in c.Method)
                     {
                         if (!methods.ContainsKey(m.ApiVersion))
@@ -39,7 +40,10 @@ namespace ugly.CodeGenerator
                     }
                 }
                 foreach (GameEnum e in file.Enum)
+                {
                     Enum[e.Name] = e;
+                    e.File = file;
+                }
             }
             foreach (KeyValuePair<string, string> condition in conditions)
             {
@@ -101,13 +105,14 @@ namespace ugly.CodeGenerator
         public string Name;
         public List<GameClass> Class = new List<GameClass>();
         public List<GameEnum> Enum = new List<GameEnum>();
-        public List<string> Dependency = new List<string>();
     }
 
     public class GameEnum
     {
         public string Name;
         public Dictionary<string, int> Value = new Dictionary<string, int>();
+        [NonSerialized]
+        public GameFile File;
     }
 
     public class GameClass
@@ -121,6 +126,8 @@ namespace ugly.CodeGenerator
         public bool HasId { get { return Id != null && Id.Member.Any(); } }
         [NonSerialized]
         public Dictionary<string, ClassMember> MemberMap = new Dictionary<string, ClassMember>();
+        [NonSerialized]
+        public GameFile File;
     }
 
     public class GameClassIdConfig

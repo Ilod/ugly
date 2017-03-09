@@ -4,6 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 #include "<#= Case.CamelCase.Convert(CxxHelper.CurrentFile.Name) #>.h"
+#include "Client.h"
 #include <cstdio><#
 if (CxxHelper.Server)
 {
