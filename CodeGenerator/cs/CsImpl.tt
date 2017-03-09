@@ -238,6 +238,15 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                             }
                             foreach (IndexMapping mapping in mType.IndexMapping)
                             {
+                                List<IndexMapping> indexMapping = mapping.Member.SelectMany(mappingMember => mappingMember.Index).ToList();
+                                if (indexMapping.Any())
+                                {
+                                    #>
+
+                    if (<#= string.Join(" && ", indexMapping.Select(idxMapping => string.Format("{0} >= 0", idxMapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ")))) #>)
+                    {<#
+                                    this.PushIndent("    ");
+                                }
                                 #>
 
                     <#= mapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ") #><#
@@ -253,6 +262,13 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                                 else
                                 {
                                     throw new Exception("Unsupported arity > 1 for mapping");
+                                }
+                                if (indexMapping.Any())
+                                {
+                                    this.PopIndent();
+                                    #>
+
+                    }<#
                                 }
                             }
                         }
