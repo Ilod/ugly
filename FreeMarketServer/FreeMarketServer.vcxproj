@@ -92,6 +92,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;FREEMARKETSERVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -105,6 +106,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;FREEMARKETSERVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -120,6 +122,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;FREEMARKETSERVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -137,6 +140,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;FREEMARKETSERVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -146,21 +150,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Auction.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Interface.cpp" />
-    <ClCompile Include="Serializer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Auction.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Interface.h" />
-    <ClInclude Include="Serializer.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\GameServer\GameServer.vcxproj">
       <Project>{86413759-bff5-4aa3-8ff5-1d1fa87aac4b}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\FreeMarket\generated\server\Building.h" />
+    <ClInclude Include="..\FreeMarket\generated\server\Game.h" />
+    <ClInclude Include="..\FreeMarket\generated\server\Interface.h" />
+    <ClInclude Include="..\FreeMarket\generated\server\Map.h" />
+    <ClInclude Include="..\FreeMarket\generated\server\Serializer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\FreeMarket\generated\server\Building.cpp" />
+    <ClCompile Include="..\FreeMarket\generated\server\Game.cpp" />
+    <ClCompile Include="..\FreeMarket\generated\server\Interface.cpp" />
+    <ClCompile Include="..\FreeMarket\generated\server\Map.cpp" />
+    <ClCompile Include="..\FreeMarket\generated\server\Serializer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

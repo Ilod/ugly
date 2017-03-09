@@ -13,33 +13,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="generated">
+      <UniqueIdentifier>{fd185f02-8cd9-4a83-9758-91d36fb08095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="generated headers">
+      <UniqueIdentifier>{9e010679-1ff4-467d-a4f5-877e8056e14d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Auction.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\FreeMarket\generated\cxx\Building.cpp">
+      <Filter>generated</Filter>
     </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\FreeMarket\generated\cxx\Client.cpp">
+      <Filter>generated</Filter>
     </ClCompile>
-    <ClCompile Include="Interface.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\FreeMarket\generated\cxx\ClientWindows.cpp">
+      <Filter>generated</Filter>
     </ClCompile>
-    <ClCompile Include="ClientWindows.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\FreeMarket\generated\cxx\Interface.cpp">
+      <Filter>generated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FreeMarket\generated\cxx\Map.cpp">
+      <Filter>generated</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Auction.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\FreeMarket\generated\cxx\Map.h">
+      <Filter>generated headers</Filter>
     </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\FreeMarket\generated\cxx\Interface.h">
+      <Filter>generated headers</Filter>
     </ClInclude>
-    <ClInclude Include="Interface.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\FreeMarket\generated\cxx\Client.h">
+      <Filter>generated headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FreeMarket\generated\cxx\Building.h">
+      <Filter>generated headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

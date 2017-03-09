@@ -1,4 +1,4 @@
-#include "Client.h"
+#include "../FreeMarket/generated/cxx/Client.h"
 
 namespace FreeMarket
 {
@@ -6,7 +6,7 @@ namespace FreeMarket
     {
     public:
         void InitGame(GameConfig& gameConfig, PlayerConfig& playerConfig) {}
-        void PlayTurn(Game& game, Player& player) {}
+        void PlayTurn(GameState& game, PlayerState& player) {}
     };
 }
 

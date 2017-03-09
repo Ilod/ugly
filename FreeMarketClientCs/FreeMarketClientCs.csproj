@@ -43,11 +43,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auction.cs" />
-    <Compile Include="Client.cs" />
-    <Compile Include="ClientPrivate.cs" />
-    <Compile Include="ClientPrivateWindows.cs" />
-    <Compile Include="Interface.cs" />
+    <Compile Include="..\FreeMarket\generated\cs\Building.cs">
+      <Link>generated\Building.cs</Link>
+    </Compile>
+    <Compile Include="..\FreeMarket\generated\cs\Client.cs">
+      <Link>generated\Client.cs</Link>
+    </Compile>
+    <Compile Include="..\FreeMarket\generated\cs\ClientPrivate.cs">
+      <Link>generated\ClientPrivate.cs</Link>
+    </Compile>
+    <Compile Include="..\FreeMarket\generated\cs\ClientPrivateWindows.cs">
+      <Link>generated\ClientPrivateWindows.cs</Link>
+    </Compile>
+    <Compile Include="..\FreeMarket\generated\cs\Interface.cs">
+      <Link>generated\Interface.cs</Link>
+    </Compile>
+    <Compile Include="..\FreeMarket\generated\cs\Map.cs">
+      <Link>generated\Map.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -142,16 +142,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Auction.cpp" />
-    <ClCompile Include="Client.cpp" />
-    <ClCompile Include="ClientWindows.cpp" />
-    <ClCompile Include="Interface.cpp" />
+    <ClCompile Include="..\FreeMarket\generated\cxx\Building.cpp" />
+    <ClCompile Include="..\FreeMarket\generated\cxx\Client.cpp" />
+    <ClCompile Include="..\FreeMarket\generated\cxx\ClientWindows.cpp" />
+    <ClCompile Include="..\FreeMarket\generated\cxx\Interface.cpp" />
+    <ClCompile Include="..\FreeMarket\generated\cxx\Map.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Auction.h" />
-    <ClInclude Include="Client.h" />
-    <ClInclude Include="Interface.h" />
+    <ClInclude Include="..\FreeMarket\generated\cxx\Building.h" />
+    <ClInclude Include="..\FreeMarket\generated\cxx\Client.h" />
+    <ClInclude Include="..\FreeMarket\generated\cxx\Interface.h" />
+    <ClInclude Include="..\FreeMarket\generated\cxx\Map.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
