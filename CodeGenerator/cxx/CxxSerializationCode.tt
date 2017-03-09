@@ -19,7 +19,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
     {
         #>
 
-                <#= Case.LowerCamelCase.Convert(c.Name) #>.clear();<#
+            <#= Case.LowerCamelCase.Convert(c.Name) #>.clear();<#
     }
 }
 #>
@@ -154,9 +154,6 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
 
                     }<#
                     }
-                    #>
-
-                    }<#
                 }
                 else
                 {
@@ -194,8 +191,11 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             }<#
 }
 
-this.PushIndent("        ");
-#><#@ include file="CxxDeserializerInc.tt" #><#
+this.PushIndent("            ");
+#>
+
+
+<#@ include file="CxxDeserializerInc.tt" #><#
 this.PopIndent();
 #>
 

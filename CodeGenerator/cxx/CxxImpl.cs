@@ -226,7 +226,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line 65 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
 
-        if (m.IsWeak && c.Id.Index)
+        if (m.IsWeak && CxxHelper.Definition.Class[m.Type].Id.Index)
         {
             GameClass realType = CxxHelper.Definition.Class[m.Type];
             for (int i = 0; i < realType.Id.Member.Count; ++i)
