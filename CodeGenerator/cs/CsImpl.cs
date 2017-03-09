@@ -216,7 +216,7 @@ namespace ugly.CodeGenerator.cs
                         if (m.Index == ClassMemberIndexType.RefId)
                         {
                             GameClass realType = CsHelper.Definition.Class[m.Type];
-                            for (int i = 0; i <= realType.Id.Member.Count; ++i)
+                            for (int i = 0; i < realType.Id.Member.Count; ++i)
                             {
                                 
             
@@ -257,7 +257,7 @@ namespace ugly.CodeGenerator.cs
             
             #line 163 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
-                            for (int i = 1; i <= c.Id.Member.Count; ++i)
+                            for (int i = 1; i < c.Id.Member.Count; ++i)
                             {
                                 
             
@@ -503,32 +503,35 @@ namespace ugly.CodeGenerator.cs
             #line 226 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                         GameClass mType = CsHelper.Definition.Class[m.Type];
-                        if (m.Index == ClassMemberIndexType.Strong && mType.HasId && mType.Id.Index)
+                        if (m.Index == ClassMemberIndexType.Strong && mType.HasId)
                         {
-                            for (int i = 0; i < mType.Id.Member.Count; ++i)
+                            if (mType.Id.Index)
                             {
-                                
+                                for (int i = 0; i < mType.Id.Member.Count; ++i)
+                                {
+                                    
             
             #line default
             #line hidden
             this.Write("\r\n                    element.");
             
-            #line 234 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 236 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(mType.Id.Member[i])));
             
             #line default
             #line hidden
             this.Write(" = idx");
             
-            #line 234 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 236 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write(";");
             
-            #line 234 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 236 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
+                                }
                             }
                             foreach (IndexMapping mapping in mType.IndexMapping)
                             {
@@ -538,15 +541,16 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n                    ");
             
-            #line 240 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 243 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ")));
             
             #line default
             #line hidden
             
-            #line 240 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 243 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
-                                if (m.Array == 0)
+                                ClassMember mapped = mapping.GetMember(CsHelper.Definition);
+                                if (mapped.Array == 0)
                                 {
                                     
             
@@ -554,10 +558,10 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(" = element;");
             
-            #line 243 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 247 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                                 }
-                                else if (m.Array == 1)
+                                else if (mapped.Array == 1)
                                 {
                                     
             
@@ -565,7 +569,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(".Add(element);");
             
-            #line 247 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 251 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                                 }
                                 else
@@ -581,14 +585,14 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n                    data.");
             
-            #line 258 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 262 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Name)));
             
             #line default
             #line hidden
             this.Write("[idx0");
             
-            #line 258 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 262 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                     for (int i = 1; i < m.Array; ++i)
                     {
@@ -598,13 +602,13 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(", idx");
             
-            #line 261 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 265 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             
-            #line 261 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 265 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                     }
                     
@@ -613,7 +617,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("] = ");
             
-            #line 263 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 267 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                     if (type == BasicType.Class)
                     {
@@ -623,7 +627,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("element");
             
-            #line 266 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 270 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                     }
                     else
@@ -634,14 +638,14 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("ReadNext");
             
-            #line 270 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 274 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.GetBasicTypeName(type))));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 270 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 274 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                     }
                     
@@ -650,7 +654,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(";");
             
-            #line 272 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 276 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                 
                     for (int i = 0; i < m.Array; ++i)
@@ -662,7 +666,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n                    }");
             
-            #line 279 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 283 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                     }
                 }
@@ -672,7 +676,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n                }");
             
-            #line 284 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 288 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
 
             }         
@@ -682,7 +686,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("           \r\n            }");
             
-            #line 289 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 293 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
         }
         

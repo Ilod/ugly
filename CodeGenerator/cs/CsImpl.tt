@@ -150,7 +150,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                         if (m.Index == ClassMemberIndexType.RefId)
                         {
                             GameClass realType = CsHelper.Definition.Class[m.Type];
-                            for (int i = 0; i <= realType.Id.Member.Count; ++i)
+                            for (int i = 0; i < realType.Id.Member.Count; ++i)
                             {
                                 #>
 
@@ -161,7 +161,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                     if (classIdx0 != -1)
                     {
                         data.<#= Case.CamelCase.Convert(m.Name) #> = <#= realType.Id.Source.FormatMapping(Case.CamelCase, null, "gameSetup", "gameState", ", ") #>[classIdx0<#
-                            for (int i = 1; i <= c.Id.Member.Count; ++i)
+                            for (int i = 1; i < c.Id.Member.Count; ++i)
                             {
                                 #>, classIdx<#= i #><#
                             }
@@ -225,24 +225,28 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                     <#= Case.CamelCase.Convert(m.Type) #> element = new <#= Case.CamelCase.Convert(m.Type) #>();
                     Deserialize(element, gameSetup, gameState);<#
                         GameClass mType = CsHelper.Definition.Class[m.Type];
-                        if (m.Index == ClassMemberIndexType.Strong && mType.HasId && mType.Id.Index)
+                        if (m.Index == ClassMemberIndexType.Strong && mType.HasId)
                         {
-                            for (int i = 0; i < mType.Id.Member.Count; ++i)
+                            if (mType.Id.Index)
                             {
-                                #>
+                                for (int i = 0; i < mType.Id.Member.Count; ++i)
+                                {
+                                    #>
 
                     element.<#= Case.CamelCase.Convert(mType.Id.Member[i]) #> = idx<#= i #>;<#
+                                }
                             }
                             foreach (IndexMapping mapping in mType.IndexMapping)
                             {
                                 #>
 
                     <#= mapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ") #><#
-                                if (m.Array == 0)
+                                ClassMember mapped = mapping.GetMember(CsHelper.Definition);
+                                if (mapped.Array == 0)
                                 {
                                     #> = element;<#
                                 }
-                                else if (m.Array == 1)
+                                else if (mapped.Array == 1)
                                 {
                                     #>.Add(element);<#
                                 }

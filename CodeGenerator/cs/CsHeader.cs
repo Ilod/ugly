@@ -62,7 +62,7 @@ namespace ugly.CodeGenerator.cs
             
             #line default
             #line hidden
-            this.Write("        \r\n        ");
+            this.Write("\r\n        ");
             
             #line 21 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(kvp.Key)));

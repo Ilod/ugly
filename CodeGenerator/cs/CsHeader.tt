@@ -17,7 +17,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
         foreach (KeyValuePair<string, int> kvp in e.Value)
         {
         #>
-        
+
         <#= Case.CamelCase.Convert(kvp.Key) #> = <#= kvp.Value #>,<#
         }
         #>

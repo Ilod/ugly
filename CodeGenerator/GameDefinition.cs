@@ -182,6 +182,32 @@ namespace ugly.CodeGenerator
             }
             return string.Join(memberAccess, Enumerable.Repeat(source, 1).Concat(Member.Select(m => m.FormatMapping(memberCase, dataVariable, gameSetupVariable, gameStateVariable, indexSeparator, memberAccess, startIndex, endIndex))));
         }
+
+        public ClassMember GetMember(GameDefinition definition, string data = null)
+        {
+            GameClass currentClass = null;
+            switch (Source)
+            {
+                case IndexSource.Data:
+                    currentClass = definition.Class[data];
+                    break;
+                case IndexSource.GameSetup:
+                    currentClass = definition.Class[definition.Config.GameSetup];
+                    break;
+                case IndexSource.GameState:
+                    currentClass = definition.Class[definition.Config.GameState];
+                    break;
+                default:
+                    throw new Exception("Unknown source");
+            }
+            ClassMember member = null;
+            foreach (string memberName in Member.Select(m => m.Name))
+            {
+                member = currentClass.MemberMap[memberName];
+                currentClass = (definition.GetBasicType(member.Type) == BasicType.Class) ? definition.Class[member.Type] : null;
+            }
+            return member;
+        }
     }
 
     public class IndexMappingMember
