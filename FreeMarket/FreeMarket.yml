@@ -1,0 +1,171 @@
+Config:
+    Namespace: free_market
+    GameSetup: game_config
+    PlayerSetup: player_config
+    GameState: game_state
+    PlayerState: player_state
+    GameServer: game_server
+Files:
+  - Name:   interface
+    Class:
+      - Name:   player_config
+        Member:
+          - Name:   id
+            Type:   int32
+          - Name:   team
+            Type:   int32
+        Id:
+            Member:
+              - id
+            Index:  true
+            Source:
+                Source: GameSetup
+                Member:
+                  - Name:   player
+      - Name:   game_config
+        Member:
+          - Name:   turns
+            Type:   int32
+          - Name:   turn_time_limit
+            Type:   int32
+          - Name:   setup_time_limit
+            Type:   int32
+          - Name:   building
+            Type:   building_type
+            Array:  1
+            Index:  Strong
+          - Name:   player
+            Type:   player_config
+            Array:  1
+            Index:  Strong
+      - Name:   player_state
+        Member:
+          - Name:   id
+            Type:   int32
+          - Name:   team
+            Type:   int32
+          - Name:   money
+            Type:   int32
+          - Name:   building
+            Type:   building
+            Array:  1
+            Index:  MappedFromStrong
+        Id:
+            Member:
+              - id
+            Index:  true
+            Source:
+                Source: GameState
+                Member:
+                  - Name:   player
+      - Name:   game_state
+        Member:
+          - Name:   turn
+            Type:   int32
+          - Name:   map
+            Type:   cell
+            Array:  2
+            Index:  Strong
+          - Name:   building
+            Type:   building
+            Array:  1
+            Index:  Strong
+          - Name:   player
+            Type:   player_state
+            Array:  1
+            Index:  Strong
+  - Name:   map
+    Class:
+      - Name:   cell
+        Member:
+          - Name:   x
+            Type:   int32
+          - Name:   y
+            Type:   int32
+          - Name:   owner
+            Type:   int32
+          - Name:   ownership
+            Type:   ownership
+          - Name:   type
+            Type:   cell_type
+          - Name:   building
+            Type:   building
+            Index:  MappedFromStrong
+        Id:
+            Member:
+              - x
+              - y
+            Index:  true
+            Source:
+                Source: GameState
+                Member:
+                  - Name:   map
+    Enum:
+      - Name:   ownership
+        Value:
+            none:       0
+            preempt:    1
+            own:        2
+      - Name:   cell_type
+        Value:
+            road:       0
+            house:      1
+            park:       2
+            building:   3
+            ruins:      4
+            work:       5
+  - Name:   building
+    Class:
+      - Name:   building_type
+        Member:
+          - Name:   id
+            Type:   int32
+        Id:
+            Member:
+              - id
+            Index:  true
+            Source:
+                Source: GameSetup
+                Member:
+                  - Name:   building
+      - Name:   building
+        Member:
+          - Name:   id
+            Type:   int32
+          - Name:   type
+            Type:   building_type
+            Index:  RefId
+          - Name:   x
+            Type:   int32
+          - Name:   y
+            Type:   int32
+          - Name:   owner
+            Type:   int32
+        Id:
+            Member:
+              - id
+            Source:
+                Source: GameState
+                Member:
+                  - Name:   building
+        IndexMapping:
+          - Source: GameState
+            Member:
+              - Name:   map
+                Index:
+                  - Source: Data
+                    Member:
+                      - Name:   x
+                  - Source: Data
+                    Member:
+                      - Name:   y
+              - Name:   building
+          - Source: GameState
+            Member:
+              - Name:   player
+                Index:
+                  - Source: Data
+                    Member:
+                      - Name:   owner
+              - Name:   building
+                    
