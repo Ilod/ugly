@@ -4,6 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 using System;
+using System.Collections.Generic;
 
 namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
 {<#

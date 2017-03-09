@@ -28,16 +28,16 @@ namespace ugly.CodeGenerator.cs
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\r\n\r\nnamespace ");
+            this.Write("using System;\r\nusing System.Collections.Generic;\r\n\r\nnamespace ");
             
-            #line 8 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 9 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace)));
             
             #line default
             #line hidden
             this.Write("\r\n{");
             
-            #line 9 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 10 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
     foreach (GameEnum e in CsHelper.CurrentFile.Enum)
     {
@@ -47,14 +47,14 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n    \r\n    public enum ");
             
-            #line 15 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 16 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(e.Name)));
             
             #line default
             #line hidden
             this.Write("\r\n    {");
             
-            #line 16 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 17 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
         foreach (KeyValuePair<string, int> kvp in e.Value)
         {
@@ -64,21 +64,21 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n        ");
             
-            #line 21 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 22 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(kvp.Key)));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 21 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 22 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Value));
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 21 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 22 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
         }
         
@@ -87,7 +87,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n    }");
             
-            #line 25 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 26 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
     }
     
@@ -99,14 +99,14 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n\r\n    public class ");
             
-            #line 33 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 34 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(c.Name)));
             
             #line default
             #line hidden
             this.Write("\r\n    {");
             
-            #line 34 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 35 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
         foreach (ClassMember m in c.Member)
         {
@@ -116,7 +116,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n        public ");
             
-            #line 39 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 40 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             BasicType type = CsHelper.Definition.GetBasicType(m.Type);
             if (m.Array == 1 && m.IsWeak)
@@ -127,7 +127,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("List<");
             
-            #line 43 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 44 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             }
             if (type.IsBasic())
@@ -137,13 +137,13 @@ namespace ugly.CodeGenerator.cs
             #line default
             #line hidden
             
-            #line 47 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 48 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CsHelper.GetBasicTypeName(type)));
             
             #line default
             #line hidden
             
-            #line 47 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 48 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             }
             else
@@ -153,13 +153,13 @@ namespace ugly.CodeGenerator.cs
             #line default
             #line hidden
             
-            #line 51 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 52 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Type)));
             
             #line default
             #line hidden
             
-            #line 51 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 52 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             }
             if (m.Array == 1 && m.IsWeak)
@@ -170,7 +170,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(">");
             
-            #line 55 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 56 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             }
             else if (m.Array != 0)
@@ -181,7 +181,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("[");
             
-            #line 59 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 60 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
                 for (int i = 1; i < m.Array; ++i)
                 {
@@ -191,7 +191,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(",");
             
-            #line 62 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 63 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
                 }
                 
@@ -200,7 +200,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("]");
             
-            #line 64 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 65 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             }
             
@@ -209,13 +209,13 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(" ");
             
-            #line 66 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 67 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Name)));
             
             #line default
             #line hidden
             
-            #line 66 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 67 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             if (m.Array == 0 && type == BasicType.Class && !m.IsWeak)
             {
@@ -225,14 +225,14 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(" = new ");
             
-            #line 69 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 70 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Type)));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 69 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 70 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             }
             else if (m.Array == 1 && m.IsWeak)
@@ -243,14 +243,14 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(" = new List<");
             
-            #line 73 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 74 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Type)));
             
             #line default
             #line hidden
             this.Write(">()");
             
-            #line 73 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 74 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             }
             
@@ -259,7 +259,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(";");
             
-            #line 75 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 76 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
         }
         
@@ -268,7 +268,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n        ");
             
-            #line 79 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 80 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
         foreach (ClassMethod m in c.Method)
         {
@@ -278,14 +278,14 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n        public void ");
             
-            #line 84 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 85 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Name)));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 84 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 85 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             for (int idxParam = 0; idxParam < m.Param.Count; ++idxParam)
             {
@@ -299,7 +299,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(", ");
             
-            #line 91 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 92 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
                 }
                 if (type.IsBasic())
@@ -309,13 +309,13 @@ namespace ugly.CodeGenerator.cs
             #line default
             #line hidden
             
-            #line 95 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 96 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CsHelper.GetBasicTypeName(type)));
             
             #line default
             #line hidden
             
-            #line 95 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 96 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
                 }
                 else
@@ -325,13 +325,13 @@ namespace ugly.CodeGenerator.cs
             #line default
             #line hidden
             
-            #line 99 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 100 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(a.Type)));
             
             #line default
             #line hidden
             
-            #line 99 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 100 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
                 }
                 
@@ -340,13 +340,13 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(" ");
             
-            #line 101 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 102 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             
-            #line 101 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 102 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             }
             
@@ -355,13 +355,13 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(")\r\n        {\r\n            Console.WriteLine(\"");
             
-            #line 105 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 106 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.MethodId));
             
             #line default
             #line hidden
             
-            #line 105 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 106 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             for (int idxParam = 0, paramCount = m.Param.Sum(a => CsHelper.GetSerializedMemberCount(a.Type)); idxParam < paramCount; ++idxParam)
             {
@@ -371,14 +371,14 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(" {");
             
-            #line 108 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 109 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(idxParam));
             
             #line default
             #line hidden
             this.Write("}");
             
-            #line 108 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 109 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             }
             
@@ -387,7 +387,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\"");
             
-            #line 110 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 111 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             foreach (MethodParam a in m.Param)
             {
@@ -397,13 +397,13 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(", ");
             
-            #line 113 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 114 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CsHelper.GetSerializedMemberString("", a.Type, Case.LowerCamelCase.Convert(a.Name))));
             
             #line default
             #line hidden
             
-            #line 113 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 114 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
             }
                 
@@ -412,7 +412,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(");\r\n        }");
             
-            #line 116 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 117 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
         }
         
@@ -421,7 +421,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n    }");
             
-            #line 120 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            #line 121 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
     }
     

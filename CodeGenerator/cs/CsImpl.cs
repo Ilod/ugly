@@ -229,7 +229,7 @@ namespace ugly.CodeGenerator.cs
             
             #line default
             #line hidden
-            this.Write(" = ReadNext<int>();");
+            this.Write(" = ReadNextInt();");
             
             #line 157 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 

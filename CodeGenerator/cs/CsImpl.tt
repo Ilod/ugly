@@ -154,7 +154,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                             {
                                 #>
 
-                    int classIdx<#= i #> = ReadNext<int>();<#
+                    int classIdx<#= i #> = ReadNextInt();<#
                             }
                             #>
                             
