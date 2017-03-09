@@ -249,7 +249,7 @@ namespace ugly.CodeGenerator.cs
             this.Write(" = ");
             
             #line 163 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(realType.Id.Source.FormatMapping(Case.CamelCase, null, "gameSetup", "gameState")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(realType.Id.Source.FormatMapping(Case.CamelCase, null, "gameSetup", "gameState", ", ")));
             
             #line default
             #line hidden
@@ -539,7 +539,7 @@ namespace ugly.CodeGenerator.cs
             this.Write("\r\n                    ");
             
             #line 240 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(mapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(mapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ")));
             
             #line default
             #line hidden

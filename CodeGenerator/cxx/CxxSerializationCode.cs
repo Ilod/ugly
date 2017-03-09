@@ -800,7 +800,21 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             
             #line default
             #line hidden
-            this.Write(":\r\n                {");
+            this.Write(": // ");
+            
+            #line 254 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(c.Name)));
+            
+            #line default
+            #line hidden
+            this.Write("::");
+            
+            #line 254 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Name)));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n                {");
             
             #line 255 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 

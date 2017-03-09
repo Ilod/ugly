@@ -251,7 +251,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             {
                 #>
 
-                case <#= m.MethodId #>:
+                case <#= m.MethodId #>: // <#= Case.CamelCase.Convert(c.Name) #>::<#= Case.CamelCase.Convert(m.Name) #>
                 {<#
                 if (c.Id.Index)
                 {

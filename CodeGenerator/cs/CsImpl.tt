@@ -160,7 +160,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                             
                     if (classIdx0 != -1)
                     {
-                        data.<#= Case.CamelCase.Convert(m.Name) #> = <#= realType.Id.Source.FormatMapping(Case.CamelCase, null, "gameSetup", "gameState") #>[classIdx0<#
+                        data.<#= Case.CamelCase.Convert(m.Name) #> = <#= realType.Id.Source.FormatMapping(Case.CamelCase, null, "gameSetup", "gameState", ", ") #>[classIdx0<#
                             for (int i = 1; i <= c.Id.Member.Count; ++i)
                             {
                                 #>, classIdx<#= i #><#
@@ -237,7 +237,7 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                             {
                                 #>
 
-                    <#= mapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState") #><#
+                    <#= mapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ") #><#
                                 if (m.Array == 0)
                                 {
                                     #> = element;<#

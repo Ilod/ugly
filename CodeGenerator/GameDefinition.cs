@@ -163,50 +163,37 @@ namespace ugly.CodeGenerator
         public IndexSource Source = IndexSource.Unknown;
         public List<IndexMappingMember> Member = new List<IndexMappingMember>();
 
-        public string FormatMapping(Case memberCase, string dataVariable, string gameSetupVariable, string gameStateVariable, string memberAccess = ".", string startIndex = "[", string endIndex = "]")
+        public string FormatMapping(Case memberCase, string dataVariable, string gameSetupVariable, string gameStateVariable, string indexSeparator = "][", string memberAccess = ".", string startIndex = "[", string endIndex = "]")
         {
-            StringBuilder str = new StringBuilder();
-            FormatMapping(memberCase, dataVariable, gameSetupVariable, gameStateVariable, memberAccess, startIndex, endIndex, str);
-            return str.ToString();
-        }
-
-        public void FormatMapping(Case memberCase, string dataVariable, string gameSetupVariable, string gameStateVariable, string memberAccess, string startIndex, string endIndex, StringBuilder str)
-        {
+            string source;
             switch (Source)
             {
                 case IndexSource.Data:
-                    str.Append(dataVariable);
+                    source = dataVariable;
                     break;
                 case IndexSource.GameSetup:
-                    str.Append(gameSetupVariable);
+                    source = gameSetupVariable;
                     break;
                 case IndexSource.GameState:
-                    str.Append(gameStateVariable);
+                    source = gameStateVariable;
                     break;
                 default:
                     throw new Exception("Unknown source");
             }
-            foreach (IndexMappingMember member in Member)
-            {
-                str.Append(memberAccess);
-                member.FormatMapping(memberCase, dataVariable, gameSetupVariable, gameStateVariable, memberAccess, startIndex, endIndex, str);
-            }
+            return string.Join(memberAccess, Enumerable.Repeat(source, 1).Concat(Member.Select(m => m.FormatMapping(memberCase, dataVariable, gameSetupVariable, gameStateVariable, indexSeparator, memberAccess, startIndex, endIndex))));
         }
     }
 
     public class IndexMappingMember
     {
         public string Name;
-        public IndexMapping Index = null;
-        public void FormatMapping(Case memberCase, string dataVariable, string gameSetupVariable, string gameStateVariable, string memberAccess, string startIndex, string endIndex, StringBuilder str)
+        public List<IndexMapping> Index = new List<IndexMapping>();
+        public string FormatMapping(Case memberCase, string dataVariable, string gameSetupVariable, string gameStateVariable, string indexSeparator, string memberAccess, string startIndex, string endIndex)
         {
-            str.Append(memberCase.Convert(Name));
-            if (Index != null)
-            {
-                str.Append(startIndex);
-                Index.FormatMapping(memberCase, dataVariable, gameSetupVariable, gameStateVariable, memberAccess, startIndex, endIndex, str);
-                str.Append(endIndex);
-            }
+            string name = memberCase.Convert(Name);
+            if (!Index.Any())
+                return name;
+            return string.Format("{0}{1}{3}{2}", name, startIndex, endIndex, string.Join(indexSeparator, Index.Select(idx => idx.FormatMapping(memberCase, dataVariable, gameSetupVariable, gameStateVariable, indexSeparator, memberAccess, startIndex, endIndex))));
         }
     }
 
