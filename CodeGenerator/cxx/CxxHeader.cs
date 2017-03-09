@@ -397,7 +397,13 @@ if (CxxHelper.Server)
             
             #line default
             #line hidden
-            this.Write("& playerState, ");
+            this.Write("& playerState");
+            
+            #line 162 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(m.Param.Any() ? ", " : ""));
+            
+            #line default
+            #line hidden
             
             #line 162 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 

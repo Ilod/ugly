@@ -16,8 +16,13 @@ namespace FreeMarket
         public int Turns;
         public int TurnTimeLimit;
         public int SetupTimeLimit;
+        public int MapSizeX;
+        public int MapSizeY;
+        public int StartMoney;
         public BuildingType[] Building;
         public PlayerConfig[] Player;
+        public Auction[] Auction;
+        public Auction[] EndedAuction;
         
     }
 

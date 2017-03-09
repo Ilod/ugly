@@ -249,7 +249,7 @@ namespace ugly.CodeGenerator.cs
             this.Write(" = ");
             
             #line 163 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(realType.Id.Source.FormatMapping(Case.CamelCase, null, "gameSetup", "gameState", ", ")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(realType.Id.Source.FormatMapping(Case.CamelCase, null, "gameSetup", "gameState", ", ", ".")));
             
             #line default
             #line hidden
@@ -257,7 +257,7 @@ namespace ugly.CodeGenerator.cs
             
             #line 163 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
-                            for (int i = 1; i < c.Id.Member.Count; ++i)
+                            for (int i = 1; i < realType.Id.Member.Count; ++i)
                             {
                                 
             
@@ -545,7 +545,7 @@ namespace ugly.CodeGenerator.cs
             this.Write("\r\n                    if (");
             
             #line 246 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(" && ", indexMapping.Select(idxMapping => string.Format("{0} >= 0", idxMapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", "))))));
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(" && ", indexMapping.Select(idxMapping => string.Format("{0} >= 0", idxMapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ", "."))))));
             
             #line default
             #line hidden
@@ -562,7 +562,7 @@ namespace ugly.CodeGenerator.cs
             this.Write("\r\n                    ");
             
             #line 252 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(mapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(mapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ", ".")));
             
             #line default
             #line hidden

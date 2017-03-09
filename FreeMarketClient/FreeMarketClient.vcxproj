@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\FreeMarket\generated\cxx\Auction.cpp" />
     <ClCompile Include="..\FreeMarket\generated\cxx\Building.cpp" />
     <ClCompile Include="..\FreeMarket\generated\cxx\Client.cpp" />
     <ClCompile Include="..\FreeMarket\generated\cxx\ClientWindows.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\FreeMarket\generated\cxx\Auction.h" />
     <ClInclude Include="..\FreeMarket\generated\cxx\Building.h" />
     <ClInclude Include="..\FreeMarket\generated\cxx\Client.h" />
     <ClInclude Include="..\FreeMarket\generated\cxx\Interface.h" />

@@ -10,11 +10,19 @@ namespace ugly
             : id()
         { }
             
+        BuildingCard::BuildingCard()
+            : id()
+            , building()
+        { }
+            
+        bool BuildingCard::Build(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const Cell& position)
+        {
+            return false;
+        }
         Building::Building()
             : id()
             , type()
-            , x()
-            , y()
+            , position()
             , owner()
         { }
             

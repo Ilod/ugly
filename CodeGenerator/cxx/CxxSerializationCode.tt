@@ -238,18 +238,12 @@ this.PopIndent();
                 {<#
                 if (c.Id.Index)
                 {
-                    #>
-
-                    <#= Case.CamelCase.Convert(c.Name) #> argThisTmp;<#
-                    foreach (string mId in c.Id.Member)
+                    foreach (string deserializeStr in CxxHelper.GetDeserializeIndexedClass(c, "argThis", "gameSetup", "gameState", false))
                     {
                         #>
 
-                    argThisTmp.<#= Case.LowerCamelCase.Convert(mId) #> = ReadNext<<#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[mId].Type)) #>>(buf);<#
+                    <#= deserializeStr #><#
                     }
-                    #>
-                    
-                    <#= Case.CamelCase.Convert(c.Name) #>& argThis = <#= c.Id.Source.FormatMapping(Case.LowerCamelCase, "argThisTmp", "gameSetup", "gameState") #>;<#
                 }
                 else
                 {
@@ -280,18 +274,12 @@ this.PopIndent();
                         }
                         else if (aType.Id.Index)
                         {
-                            #>
-
-                    <#= Case.CamelCase.Convert(a.Type) #> <#= Case.LowerCamelCase.Convert(a.Name) #>_tmp;<#
-                            foreach (string mId in aType.Id.Member)
+                            foreach (string deserializeStr in CxxHelper.GetDeserializeIndexedClass(aType, Case.LowerCamelCase.Convert(a.Name), "gameSetup", "gameState", false))
                             {
                                 #>
 
-                    <#= Case.LowerCamelCase.Convert(a.Name) #>_tmp.<#= Case.LowerCamelCase.Convert(mId) #> = ReadNext<<#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[mId].Type)) #>>(buf);<#
+                            <#= deserializeStr #><#
                             }
-                            #>
-                    
-                    <#= Case.CamelCase.Convert(a.Type) #>& <#= Case.LowerCamelCase.Convert(a.Name) #> = <#= c.Id.Source.FormatMapping(Case.LowerCamelCase, string.Format("{0}_tmp", Case.LowerCamelCase.Convert(a.Name)), "gameSetup", "gameState") #>;<#
                         }
                         else
                         {

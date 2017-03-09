@@ -12,8 +12,13 @@ namespace FreeMarket
         : turns()
         , turnTimeLimit()
         , setupTimeLimit()
+        , mapSizeX()
+        , mapSizeY()
+        , startMoney()
         , building()
         , player()
+        , auction()
+        , endedAuction()
     { }
         
     PlayerState::PlayerState()

@@ -33,9 +33,11 @@ namespace ugly
             Ownership ownership;
             CellType type;
             Building* building;
+            std::int32_t price;
     
             Cell();
             
+            bool Buy(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState);
         };
     }
 }

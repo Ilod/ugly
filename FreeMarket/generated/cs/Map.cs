@@ -29,6 +29,11 @@ namespace FreeMarket
         public Ownership Ownership;
         public CellType Type;
         public Building Building;
+        public int Price;
         
+        public void Buy()
+        {
+            Console.WriteLine("0");
+        }
     }
 }

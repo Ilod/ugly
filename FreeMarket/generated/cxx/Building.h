@@ -3,6 +3,7 @@
 #include <cstdint>
 namespace FreeMarket
 {
+    struct Cell;
 
     struct BuildingType
     {
@@ -12,12 +13,21 @@ namespace FreeMarket
         
     };
 
+    struct BuildingCard
+    {
+        std::int32_t id;
+        BuildingType* building;
+
+        BuildingCard();
+        
+        void Build(const Cell& position);
+    };
+
     struct Building
     {
         std::int32_t id;
         BuildingType* type;
-        std::int32_t x;
-        std::int32_t y;
+        Cell* position;
         std::int32_t owner;
 
         Building();

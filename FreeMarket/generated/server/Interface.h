@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include "Auction.h"
 #include "Building.h"
 #include "Map.h"
 
@@ -23,8 +24,13 @@ namespace ugly
             std::int32_t turns;
             std::int32_t turnTimeLimit;
             std::int32_t setupTimeLimit;
+            std::int32_t mapSizeX;
+            std::int32_t mapSizeY;
+            std::int32_t startMoney;
             std::vector<BuildingType> building;
             std::vector<PlayerConfig> player;
+            std::vector<Auction> auction;
+            std::vector<Auction> endedAuction;
     
             GameConfig();
             

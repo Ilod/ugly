@@ -30,12 +30,26 @@ Files:
             Type:   int32
           - Name:   setup_time_limit
             Type:   int32
+          - Name:   map_size_x
+            Type:   int32
+          - Name:   map_size_y
+            Type:   int32
+          - Name:   start_money
+            Type:   int32
           - Name:   building
             Type:   building_type
             Array:  1
             Index:  Strong
           - Name:   player
             Type:   player_config
+            Array:  1
+            Index:  Strong
+          - Name:   auction
+            Type:   auction
+            Array:  1
+            Index:  Strong
+          - Name:   ended_auction
+            Type:   auction
             Array:  1
             Index:  Strong
       - Name:   player_state
@@ -91,6 +105,8 @@ Files:
           - Name:   building
             Type:   building
             Index:  MappedFromStrong
+          - Name:   price
+            Type:   int32
         Id:
             Member:
               - x
@@ -100,6 +116,8 @@ Files:
                 Source: GameState
                 Member:
                   - Name:   map
+        Method:
+          - Name:   buy
     Enum:
       - Name:   ownership
         Value:
@@ -128,6 +146,21 @@ Files:
                 Source: GameSetup
                 Member:
                   - Name:   building
+      - Name:   building_card
+        Member:
+          - Name:   id
+            Type:   int32
+          - Name:   building
+            Type:   building_type
+            Index:  RefId
+        Id:
+            Member:
+              - id
+        Method:
+          - Name:   build
+            Param:
+              - Name:   position
+                Type:   cell
       - Name:   building
         Member:
           - Name:   id
@@ -135,10 +168,9 @@ Files:
           - Name:   type
             Type:   building_type
             Index:  RefId
-          - Name:   x
-            Type:   int32
-          - Name:   y
-            Type:   int32
+          - Name:   position
+            Type:   cell
+            Index:  RefId
           - Name:   owner
             Type:   int32
         Id:
@@ -155,9 +187,13 @@ Files:
                 Index:
                   - Source: Data
                     Member:
+                      - Name:   position
+                        Weak:   true
                       - Name:   x
                   - Source: Data
                     Member:
+                      - Name:   position
+                        Weak:   true
                       - Name:   y
               - Name:   building
           - Source: GameState
@@ -168,4 +204,34 @@ Files:
                     Member:
                       - Name:   owner
               - Name:   building
-                    
+  - Name:   auction
+    Class:
+      - Name:   auction
+        Member:
+          - Name:   id
+            Type:   int32
+          - Name:   type
+            Type:   auction_type
+          - Name:   price
+            Type:   int32
+          - Name:   seller
+            Type:   int32
+          - Name:   buyer
+            Type:   int32
+          - Name:   turn
+            Type:   int32
+          - Name:   building
+            Type:   building_type
+            Index:  RefId
+        Id:
+            Member:
+              - id
+        Method:
+          - Name:   bid
+            Param:
+              - Name:   money
+                Type:   int32
+    Enum:
+      - Name:   auction_type
+        Value:
+            building:   0

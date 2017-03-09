@@ -3,6 +3,7 @@
 #include "Interface.h"
 #include "Map.h"
 #include "Building.h"
+#include "Auction.h"
 namespace ugly
 {
     namespace FreeMarket
@@ -17,7 +18,9 @@ namespace ugly
             class IdMap
             {
             public:
+                std::map<std::int32_t, BuildingCard*> buildingCard;
                 std::map<std::int32_t, Building*> building;
+                std::map<std::int32_t, Auction*> auction;
                 void Clear();
             };
         private:

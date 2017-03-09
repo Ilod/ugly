@@ -721,7 +721,7 @@ template<class T> void Deserialize(T& data, const char*& buf, ");
 
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
-    if (CxxHelper.Server && !c.IsInMethodParam)
+    if (CxxHelper.Server && (c.HasId || !c.IsInMethodParam))
         continue;
     
             
@@ -774,7 +774,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
 }
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
-    if (CxxHelper.Server && !c.IsInMethodParam)
+    if (CxxHelper.Server && (c.HasId || !c.IsInMethodParam))
         continue;
     
             
@@ -849,161 +849,23 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
         if (m.IsWeak && CxxHelper.Definition.Class[m.Type].Id.Index)
         {
             GameClass realType = CxxHelper.Definition.Class[m.Type];
-            for (int i = 0; i < realType.Id.Member.Count; ++i)
+            foreach (string deserializeStr in CxxHelper.GetDeserializeIndexedClass(realType, "member", "(*gameSetup)", "(*gameState)", true))
             {
                 
             
             #line default
             #line hidden
-            this.Write("\r\n        int classIdx");
+            this.Write("\r\n        ");
             
             #line 78 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(i));
+            this.Write(this.ToStringHelper.ToStringWithCulture(deserializeStr));
             
             #line default
             #line hidden
-            this.Write(" = ReadNext<int>(buf);");
             
             #line 78 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
             }
-            if (CxxHelper.Server)
-            {
-                
-            
-            #line default
-            #line hidden
-            this.Write("\r\n        if (classIdx0 >= 0");
-            
-            #line 84 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-
-                for (int i = 1; i < realType.Id.Member.Count; ++i)
-                {
-                    
-            
-            #line default
-            #line hidden
-            this.Write(" && classIdx");
-            
-            #line 87 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(i));
-            
-            #line default
-            #line hidden
-            this.Write(" >= 0");
-            
-            #line 87 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-
-                }
-                for (int i = 0; i < realType.Id.Member.Count; ++i)
-                {
-                    
-            
-            #line default
-            #line hidden
-            this.Write(" && ");
-            
-            #line 91 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(realType.Id.Source.FormatMapping(Case.LowerCamelCase, null, "(*gameSetup)", "(*gameState)")));
-            
-            #line default
-            #line hidden
-            
-            #line 91 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-
-                    for (int j = 0; j < i; ++j)
-                    {
-                        
-            
-            #line default
-            #line hidden
-            this.Write("[classIdx");
-            
-            #line 94 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(j));
-            
-            #line default
-            #line hidden
-            this.Write("]");
-            
-            #line 94 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-
-                    }
-                    
-            
-            #line default
-            #line hidden
-            this.Write(".size() > classIdx");
-            
-            #line 96 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(i));
-            
-            #line default
-            #line hidden
-            
-            #line 96 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-
-                }
-                
-            
-            #line default
-            #line hidden
-            this.Write(")");
-            
-            #line 98 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-
-            }
-            else
-            {
-                
-            
-            #line default
-            #line hidden
-            this.Write("                            \r\n        if (classIdx0 != -1)");
-            
-            #line 104 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-
-            }
-            
-            
-            #line default
-            #line hidden
-            this.Write("\r\n        {\r\n            member = &");
-            
-            #line 109 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(realType.Id.Source.FormatMapping(Case.LowerCamelCase, null, "(*gameSetup)", "(*gameState)")));
-            
-            #line default
-            #line hidden
-            
-            #line 109 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-
-            for (int i = 0; i < c.Id.Member.Count; ++i)
-            {
-                
-            
-            #line default
-            #line hidden
-            this.Write("[classIdx");
-            
-            #line 112 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(i));
-            
-            #line default
-            #line hidden
-            this.Write("]");
-            
-            #line 112 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-
-            }
-            
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n        }");
-            
-            #line 115 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
-
         }
         else if (m.IsWeak && !c.Id.Index && CxxHelper.Server)
         {
@@ -1015,14 +877,14 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
                     "ullptr;\r\n            if (idState != nullptr)\r\n            {\r\n                aut" +
                     "o classIt = idState->");
             
-            #line 125 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 89 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(m.Type)));
             
             #line default
             #line hidden
             this.Write(".find(classIdx);\r\n                if (classIt != idState->");
             
-            #line 126 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 90 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(m.Type)));
             
             #line default
@@ -1031,14 +893,14 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
                     "          }\r\n            }\r\n            if (member == nullptr && idSetup != null" +
                     "ptr)\r\n            {\r\n                auto classIt = idSetup->");
             
-            #line 133 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 97 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(m.Type)));
             
             #line default
             #line hidden
             this.Write(".find(classIdx);\r\n                if (classIt != idSetup->");
             
-            #line 134 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 98 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(m.Type)));
             
             #line default
@@ -1046,7 +908,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             this.Write(".end())\r\n                {\r\n                    member = classIt->second;\r\n      " +
                     "          }\r\n            }\r\n        }");
             
-            #line 139 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 103 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
         }
         else
@@ -1059,14 +921,14 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        int size");
             
-            #line 147 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 111 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write(" = ReadNext<int>(buf);");
             
-            #line 147 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 111 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
             }
             if (m.Array != 0)
@@ -1077,7 +939,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        auto& array0 = member;\r\n        array0.resize(size0);");
             
-            #line 154 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 118 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
             }
             for (int i = 1; i < m.Array; ++i)
@@ -1088,70 +950,70 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        for (int idx");
             
-            #line 160 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 124 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i - 1));
             
             #line default
             #line hidden
             this.Write(" = 0; idx");
             
-            #line 160 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 124 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i - 1));
             
             #line default
             #line hidden
             this.Write(" < size");
             
-            #line 160 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 124 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i - 1));
             
             #line default
             #line hidden
             this.Write("; ++idx");
             
-            #line 160 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 124 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i - 1));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            auto& array");
             
-            #line 162 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 126 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write(" = array");
             
-            #line 162 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 126 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i - 1));
             
             #line default
             #line hidden
             this.Write("[idx");
             
-            #line 162 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 126 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i - 1));
             
             #line default
             #line hidden
             this.Write("];\r\n            array");
             
-            #line 163 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 127 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write(".resize(size");
             
-            #line 163 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 127 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write(");");
             
-            #line 163 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 127 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                 this.PushIndent("    ");
             }
@@ -1164,7 +1026,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        }");
             
-            #line 171 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 135 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
             }
             for (int i = 0; i < m.Array; ++i)
@@ -1175,56 +1037,56 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        for (int idx");
             
-            #line 177 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 141 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write(" = 0; idx");
             
-            #line 177 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 141 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write(" < size");
             
-            #line 177 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 141 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write("; ++idx");
             
-            #line 177 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 141 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            auto& array");
             
-            #line 179 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 143 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i + 1));
             
             #line default
             #line hidden
             this.Write(" = array");
             
-            #line 179 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 143 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write("[idx");
             
-            #line 179 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 143 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write("];");
             
-            #line 179 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 143 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                 this.PushIndent("    ");
             }
@@ -1236,14 +1098,14 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        Deserialize(array");
             
-            #line 186 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 150 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.Array));
             
             #line default
             #line hidden
             this.Write(", buf, gameSetup, gameState");
             
-            #line 186 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 150 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                 if (CxxHelper.Server)
                 {
@@ -1253,7 +1115,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write(", idSetup, idState");
             
-            #line 189 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 153 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                 }
                 
@@ -1262,7 +1124,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write(");");
             
-            #line 191 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 155 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                 if (m.Index == ClassMemberIndexType.Strong)
                 {
@@ -1277,28 +1139,28 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        array");
             
-            #line 201 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 165 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.Array));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 201 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 165 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(mType.Id.Member[i])));
             
             #line default
             #line hidden
             this.Write(" = idx");
             
-            #line 201 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 165 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write(";");
             
-            #line 201 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 165 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                         }
                     }
@@ -1313,14 +1175,14 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        if (");
             
-            #line 211 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 175 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(" && ", indexMapping.Select(idxMapping => string.Format("{0} >= 0", idxMapping.FormatMapping(Case.LowerCamelCase, string.Format("array{0}", m.Array), "(*gameSetup)", "(*gameState)"))))));
             
             #line default
             #line hidden
             this.Write(")\r\n        {");
             
-            #line 212 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 176 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                             this.PushIndent("    ");
                         }
@@ -1330,13 +1192,13 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        ");
             
-            #line 217 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 181 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mapping.FormatMapping(Case.LowerCamelCase, string.Format("array{0}", m.Array), "(*gameSetup)", "(*gameState)")));
             
             #line default
             #line hidden
             
-            #line 217 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 181 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                         ClassMember mapped = mapping.GetMember(CxxHelper.Definition);
                         if (mapped.Array == 0)
@@ -1347,14 +1209,14 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write(" = &array");
             
-            #line 221 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 185 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.Array));
             
             #line default
             #line hidden
             this.Write(";");
             
-            #line 221 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 185 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                         }
                         else if (mapped.Array == 1)
@@ -1365,14 +1227,14 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write(".push_back(&array");
             
-            #line 225 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 189 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.Array));
             
             #line default
             #line hidden
             this.Write(");");
             
-            #line 225 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 189 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                         }
                         else
@@ -1388,7 +1250,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        }");
             
-            #line 236 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 200 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                         }
                     }
@@ -1402,7 +1264,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        Deserialize(member, buf, gameSetup, gameState");
             
-            #line 245 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 209 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                 if (CxxHelper.Server)
                 {
@@ -1412,7 +1274,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write(", idSetup, idState");
             
-            #line 248 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 212 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
                 }
                 
@@ -1421,7 +1283,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write(");");
             
-            #line 250 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 214 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
             }
             for (int i = 0; i < m.Array; ++i)
@@ -1433,7 +1295,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n        }");
             
-            #line 257 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 221 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
             }
         }
@@ -1443,7 +1305,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n    }");
             
-            #line 262 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 226 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
     }
     
@@ -1452,7 +1314,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #line hidden
             this.Write("\r\n}");
             
-            #line 266 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            #line 230 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
         
 }
@@ -1600,68 +1462,23 @@ this.PopIndent();
 
                 if (c.Id.Index)
                 {
-                    
-            
-            #line default
-            #line hidden
-            this.Write("\r\n                    ");
-            
-            #line 243 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(c.Name)));
-            
-            #line default
-            #line hidden
-            this.Write(" argThisTmp;");
-            
-            #line 243 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-
-                    foreach (string mId in c.Id.Member)
+                    foreach (string deserializeStr in CxxHelper.GetDeserializeIndexedClass(c, "argThis", "gameSetup", "gameState", false))
                     {
                         
             
             #line default
             #line hidden
-            this.Write("\r\n                    argThisTmp.");
+            this.Write("\r\n                    ");
             
-            #line 248 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(mId)));
-            
-            #line default
-            #line hidden
-            this.Write(" = ReadNext<");
-            
-            #line 248 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[mId].Type))));
+            #line 245 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(deserializeStr));
             
             #line default
             #line hidden
-            this.Write(">(buf);");
             
-            #line 248 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 245 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 
                     }
-                    
-            
-            #line default
-            #line hidden
-            this.Write("                    \r\n                    ");
-            
-            #line 252 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(c.Name)));
-            
-            #line default
-            #line hidden
-            this.Write("& argThis = ");
-            
-            #line 252 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(c.Id.Source.FormatMapping(Case.LowerCamelCase, "argThisTmp", "gameSetup", "gameState")));
-            
-            #line default
-            #line hidden
-            this.Write(";");
-            
-            #line 252 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-
                 }
                 else
                 {
@@ -1671,42 +1488,42 @@ this.PopIndent();
             #line hidden
             this.Write("                    \r\n                    ");
             
-            #line 258 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 252 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[c.Id.Member[0]].Type))));
             
             #line default
             #line hidden
             this.Write(" argThisId = ReadNext<");
             
-            #line 258 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 252 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[c.Id.Member[0]].Type))));
             
             #line default
             #line hidden
             this.Write(">(buf);\r\n                    auto argThisIt = gameStateId.");
             
-            #line 259 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 253 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(c.Name)));
             
             #line default
             #line hidden
             this.Write(".find(argThisId);\r\n                    if (argThisIt == gameStateId.");
             
-            #line 260 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 254 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(c.Name)));
             
             #line default
             #line hidden
             this.Write(".end())\r\n                    {\r\n                        argThisIt = gameSetupId.");
             
-            #line 262 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 256 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(c.Name)));
             
             #line default
             #line hidden
             this.Write(".find(argThisId);\r\n                        if (argThisIt == gameSetupId.");
             
-            #line 263 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 257 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(c.Name)));
             
             #line default
@@ -1714,14 +1531,14 @@ this.PopIndent();
             this.Write(".end())\r\n                            return false;\r\n                    }\r\n      " +
                     "              ");
             
-            #line 266 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 260 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(c.Name)));
             
             #line default
             #line hidden
             this.Write("& argThis = *(argThisIt->second);");
             
-            #line 266 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 260 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 
                 }
                 foreach (MethodParam a in m.Param)
@@ -1738,115 +1555,49 @@ this.PopIndent();
             #line hidden
             this.Write("                            \r\n                    ");
             
-            #line 278 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 272 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(a.Type)));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 278 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 272 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write(";\r\n                    Deserialize(");
             
-            #line 279 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 273 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write(", &gameSetup, &gameState, &gameSetupId, &gameStateId);");
             
-            #line 279 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 273 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 
                         }
                         else if (aType.Id.Index)
                         {
-                            
-            
-            #line default
-            #line hidden
-            this.Write("\r\n                    ");
-            
-            #line 285 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(a.Type)));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 285 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
-            
-            #line default
-            #line hidden
-            this.Write("_tmp;");
-            
-            #line 285 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-
-                            foreach (string mId in aType.Id.Member)
+                            foreach (string deserializeStr in CxxHelper.GetDeserializeIndexedClass(aType, Case.LowerCamelCase.Convert(a.Name), "gameSetup", "gameState", false))
                             {
                                 
             
             #line default
             #line hidden
-            this.Write("\r\n                    ");
+            this.Write("\r\n                            ");
             
-            #line 290 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
-            
-            #line default
-            #line hidden
-            this.Write("_tmp.");
-            
-            #line 290 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(mId)));
+            #line 281 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(deserializeStr));
             
             #line default
             #line hidden
-            this.Write(" = ReadNext<");
             
-            #line 290 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[mId].Type))));
-            
-            #line default
-            #line hidden
-            this.Write(">(buf);");
-            
-            #line 290 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 281 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 
                             }
-                            
-            
-            #line default
-            #line hidden
-            this.Write("                    \r\n                    ");
-            
-            #line 294 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(a.Type)));
-            
-            #line default
-            #line hidden
-            this.Write("& ");
-            
-            #line 294 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
-            
-            #line default
-            #line hidden
-            this.Write(" = ");
-            
-            #line 294 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(c.Id.Source.FormatMapping(Case.LowerCamelCase, string.Format("{0}_tmp", Case.LowerCamelCase.Convert(a.Name)), "gameSetup", "gameState")));
-            
-            #line default
-            #line hidden
-            this.Write(";");
-            
-            #line 294 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
-
                         }
                         else
                         {
@@ -1856,91 +1607,91 @@ this.PopIndent();
             #line hidden
             this.Write("                    \r\n                    ");
             
-            #line 300 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 288 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(aType.MemberMap[aType.Id.Member[0]].Type))));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 300 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 288 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write("_id = ReadNext<");
             
-            #line 300 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 288 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(aType.MemberMap[aType.Id.Member[0]].Type))));
             
             #line default
             #line hidden
             this.Write(">(buf);\r\n                    auto ");
             
-            #line 301 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 289 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write("_it = gameStateId.");
             
-            #line 301 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 289 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Type)));
             
             #line default
             #line hidden
             this.Write(".find(");
             
-            #line 301 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 289 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write("_id);\r\n                    if (");
             
-            #line 302 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 290 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write("_it == gameStateId.");
             
-            #line 302 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 290 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Type)));
             
             #line default
             #line hidden
             this.Write(".end())\r\n                    {\r\n                        ");
             
-            #line 304 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 292 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write("_it = gameSetupId.");
             
-            #line 304 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 292 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Type)));
             
             #line default
             #line hidden
             this.Write(".find(");
             
-            #line 304 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 292 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write("_id);\r\n                        if (");
             
-            #line 305 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 293 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write("_it == gameSetupId.");
             
-            #line 305 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 293 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Type)));
             
             #line default
@@ -1948,28 +1699,28 @@ this.PopIndent();
             this.Write(".end())\r\n                            return false;\r\n                    }\r\n      " +
                     "              ");
             
-            #line 308 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 296 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(a.Type)));
             
             #line default
             #line hidden
             this.Write("& ");
             
-            #line 308 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 296 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write(" = *(");
             
-            #line 308 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 296 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write("_it->second);");
             
-            #line 308 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 296 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 
                         }
                     }
@@ -1981,28 +1732,28 @@ this.PopIndent();
             #line hidden
             this.Write("\r\n                    ");
             
-            #line 315 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 303 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(a.Type)));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 315 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 303 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write(" = ReadNext<");
             
-            #line 315 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 303 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(a.Type)));
             
             #line default
             #line hidden
             this.Write(">(buf);");
             
-            #line 315 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 303 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 
                     }
                     else
@@ -2013,28 +1764,28 @@ this.PopIndent();
             #line hidden
             this.Write("\r\n                    ");
             
-            #line 321 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 309 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(type)));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 321 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 309 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             this.Write(" = ReadNext<");
             
-            #line 321 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 309 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(type)));
             
             #line default
             #line hidden
             this.Write(">(buf);");
             
-            #line 321 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 309 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 
                     }
                 }
@@ -2044,7 +1795,7 @@ this.PopIndent();
             #line hidden
             this.Write("\r\n                    return argThis.");
             
-            #line 326 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 314 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Name)));
             
             #line default
@@ -2052,7 +1803,7 @@ this.PopIndent();
             this.Write("(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[curren" +
                     "tPlayerId]");
             
-            #line 326 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 314 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 
                 foreach (MethodParam a in m.Param)
                 {
@@ -2062,13 +1813,13 @@ this.PopIndent();
             #line hidden
             this.Write(", ");
             
-            #line 329 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 317 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             
-            #line 329 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 317 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 
                 }
                 
@@ -2077,7 +1828,7 @@ this.PopIndent();
             #line hidden
             this.Write(");\r\n                }");
             
-            #line 332 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            #line 320 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 
             }
         }

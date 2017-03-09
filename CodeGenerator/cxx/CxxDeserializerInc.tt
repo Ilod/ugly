@@ -32,7 +32,7 @@ template<class T> void Deserialize(T& data, const char*& buf, <#= Case.CamelCase
 
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
-    if (CxxHelper.Server && !c.IsInMethodParam)
+    if (CxxHelper.Server && (c.HasId || !c.IsInMethodParam))
         continue;
     #>
     
@@ -45,7 +45,7 @@ template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const c
 }
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
-    if (CxxHelper.Server && !c.IsInMethodParam)
+    if (CxxHelper.Server && (c.HasId || !c.IsInMethodParam))
         continue;
     #>
 
@@ -71,48 +71,12 @@ template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const c
         if (m.IsWeak && CxxHelper.Definition.Class[m.Type].Id.Index)
         {
             GameClass realType = CxxHelper.Definition.Class[m.Type];
-            for (int i = 0; i < realType.Id.Member.Count; ++i)
+            foreach (string deserializeStr in CxxHelper.GetDeserializeIndexedClass(realType, "member", "(*gameSetup)", "(*gameState)", true))
             {
                 #>
 
-        int classIdx<#= i #> = ReadNext<int>(buf);<#
+        <#= deserializeStr #><#
             }
-            if (CxxHelper.Server)
-            {
-                #>
-
-        if (classIdx0 >= 0<#
-                for (int i = 1; i < realType.Id.Member.Count; ++i)
-                {
-                    #> && classIdx<#= i #> >= 0<#
-                }
-                for (int i = 0; i < realType.Id.Member.Count; ++i)
-                {
-                    #> && <#= realType.Id.Source.FormatMapping(Case.LowerCamelCase, null, "(*gameSetup)", "(*gameState)") #><#
-                    for (int j = 0; j < i; ++j)
-                    {
-                        #>[classIdx<#= j #>]<#
-                    }
-                    #>.size() > classIdx<#= i #><#
-                }
-                #>)<#
-            }
-            else
-            {
-                #>
-                            
-        if (classIdx0 != -1)<#
-            }
-            #>
-
-        {
-            member = &<#= realType.Id.Source.FormatMapping(Case.LowerCamelCase, null, "(*gameSetup)", "(*gameState)") #><#
-            for (int i = 0; i < c.Id.Member.Count; ++i)
-            {
-                #>[classIdx<#= i #>]<#
-            }
-            #>;
-        }<#
         }
         else if (m.IsWeak && !c.Id.Index && CxxHelper.Server)
         {

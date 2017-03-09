@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\FreeMarket\generated\cs\Auction.cs">
+      <Link>generated\Auction.cs</Link>
+    </Compile>
     <Compile Include="..\FreeMarket\generated\cs\Building.cs">
       <Link>generated\Building.cs</Link>
     </Compile>

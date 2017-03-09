@@ -115,7 +115,64 @@ namespace ugly.CodeGenerator.cxx
             }
         }
 
-        public static string GetSerializedMemberString(string parentName, string type, string name)
+        public static List<string> GetDeserializeIndexedClass(GameClass type, string varName, string gameSetup, string gameState, bool getPointer)
+        {
+            List<string> ret = new List<string>();
+            for (int i = 0; i < type.Id.Member.Count; ++i)
+                ret.Add(string.Format("int {0}_idx{1} = ReadNext<int>(buf);", varName, i));
+            if (Server)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("{0}_idx0 >= 0", varName);
+                for (int i = 1; i < type.Id.Member.Count; ++i)
+                    sb.AppendFormat(" && {0}_idx{1} >= 0", varName, i);
+                StringBuilder subSb = new StringBuilder();
+                subSb.Append(" && ");
+                subSb.Append(type.Id.Source.FormatMapping(Case.LowerCamelCase, null, gameSetup, gameState));
+                for (int i = 0; i < type.Id.Member.Count; ++i)
+                {
+                    sb.AppendFormat("{0}.size() > {1}_idx{2}", subSb.ToString(), varName, i);
+                    subSb.AppendFormat("[{0}_idx{1}]", varName, i);
+                }
+                if (getPointer)
+                {
+                    ret.Add(string.Format("if ({0})", sb.ToString()));
+                }
+                else
+                {
+                    ret.Add(string.Format("if (!({0}))", sb.ToString()));
+                    ret.Add("    return false;");
+                }
+            }
+            else
+            {
+                ret.Add(string.Format("if ({0}_idx0 != -1)", varName));
+            }
+            if (getPointer)
+                ret.Add("{");
+            {
+                string indent = getPointer ? "    " : "";
+                StringBuilder sb = new StringBuilder();
+                if (getPointer)
+                {
+                    sb.AppendFormat("{2}{0} = &{1}", varName, type.Id.Source.FormatMapping(Case.LowerCamelCase, null, gameSetup, gameState), indent);
+                }
+                else
+                {
+                    sb.AppendFormat("{3}{0}& {1} = {2}", Case.CamelCase.Convert(type.Name), varName, type.Id.Source.FormatMapping(Case.LowerCamelCase, null, gameSetup, gameState), indent);
+                }
+                
+                for (int i = 0; i < type.Id.Member.Count; ++i)
+                    sb.AppendFormat("[{0}_idx{1}]", varName, i);
+                sb.Append(";");
+                ret.Add(sb.ToString());
+            }
+            if (getPointer)
+                ret.Add("}");
+            return ret;
+        }
+
+        public static string GetSerializedMemberString(string parentName, string type, string name, bool forcedPresence = true)
         {
             switch (Definition.GetBasicType(type))
             {
@@ -124,7 +181,14 @@ namespace ugly.CodeGenerator.cxx
                 case BasicType.Class:
                     if (Definition.Class[type].HasId)
                     {
-                        return string.Join(", ", Definition.Class[type].Id.Member.Select(m => string.Format("({0}{1} != nullptr) ? ({2}) : -1", parentName, name, GetSerializedMemberString(string.Format("{0}{1}->", parentName, name), Definition.Class[type].MemberMap[m].Type, Case.LowerCamelCase.Convert(m)))));
+                        if (forcedPresence)
+                        {
+                            return string.Join(", ", Definition.Class[type].Id.Member.Select(m => GetSerializedMemberString(string.Format("{0}{1}.", parentName, name), Definition.Class[type].MemberMap[m].Type, Case.LowerCamelCase.Convert(m), false)));
+                        }
+                        else
+                        {
+                            return string.Join(", ", Definition.Class[type].Id.Member.Select(m => string.Format("({0}{1} != nullptr) ? ({2}) : -1", parentName, name, GetSerializedMemberString(string.Format("{0}{1}->", parentName, name), Definition.Class[type].MemberMap[m].Type, Case.LowerCamelCase.Convert(m)))));
+                        }
                     }
                     else
                     {

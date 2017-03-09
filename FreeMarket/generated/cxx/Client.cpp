@@ -43,7 +43,9 @@ namespace FreeMarket
         template<> void Deserialize(GameState& data, const char*& buf, GameConfig* gameSetup, GameState* gameState);    
         template<> void Deserialize(Cell& data, const char*& buf, GameConfig* gameSetup, GameState* gameState);    
         template<> void Deserialize(BuildingType& data, const char*& buf, GameConfig* gameSetup, GameState* gameState);    
-        template<> void Deserialize(Building& data, const char*& buf, GameConfig* gameSetup, GameState* gameState);
+        template<> void Deserialize(BuildingCard& data, const char*& buf, GameConfig* gameSetup, GameState* gameState);    
+        template<> void Deserialize(Building& data, const char*& buf, GameConfig* gameSetup, GameState* gameState);    
+        template<> void Deserialize(Auction& data, const char*& buf, GameConfig* gameSetup, GameState* gameState);
         
         template<> void Deserialize(PlayerConfig& data, const char*& buf, GameConfig* gameSetup, GameState* gameState)
         {
@@ -68,6 +70,18 @@ namespace FreeMarket
                 Deserialize(member, buf, gameSetup, gameState);
             }
             {
+                auto& member = data.mapSizeX;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.mapSizeY;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.startMoney;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
                 auto& member = data.building;
                 int size0 = ReadNext<int>(buf);
                 auto& array0 = member;
@@ -89,6 +103,28 @@ namespace FreeMarket
                     auto& array1 = array0[idx0];
                     Deserialize(array1, buf, gameSetup, gameState);
                     array1.id = idx0;
+                }
+            }
+            {
+                auto& member = data.auction;
+                int size0 = ReadNext<int>(buf);
+                auto& array0 = member;
+                array0.resize(size0);
+                for (int idx0 = 0; idx0 < size0; ++idx0)
+                {
+                    auto& array1 = array0[idx0];
+                    Deserialize(array1, buf, gameSetup, gameState);
+                }
+            }
+            {
+                auto& member = data.endedAuction;
+                int size0 = ReadNext<int>(buf);
+                auto& array0 = member;
+                array0.resize(size0);
+                for (int idx0 = 0; idx0 < size0; ++idx0)
+                {
+                    auto& array1 = array0[idx0];
+                    Deserialize(array1, buf, gameSetup, gameState);
                 }
             }
         }
@@ -143,9 +179,9 @@ namespace FreeMarket
                 {
                     auto& array1 = array0[idx0];
                     Deserialize(array1, buf, gameSetup, gameState);
-                    if (array1.x >= 0 && array1.y >= 0)
+                    if (array1.position->x >= 0 && array1.position->y >= 0)
                     {
-                        (*gameState).map[array1.x][array1.y].building = &array1;
+                        (*gameState).map[array1.position->x][array1.position->y].building = &array1;
                     }
                     if (array1.owner >= 0)
                     {
@@ -181,10 +217,30 @@ namespace FreeMarket
                 auto& member = data.type;
                 Deserialize(member, buf, gameSetup, gameState);
             }
+            {
+                auto& member = data.price;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
         }
         
         template<> void Deserialize(BuildingType& data, const char*& buf, GameConfig* gameSetup, GameState* gameState)
         {
+        }
+        
+        template<> void Deserialize(BuildingCard& data, const char*& buf, GameConfig* gameSetup, GameState* gameState)
+        {
+            {
+                auto& member = data.id;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.building;
+                int member_idx0 = ReadNext<int>(buf);
+                if (member_idx0 != -1)
+                {
+                    member = &(*gameSetup).building[member_idx0];
+                }
+            }
         }
         
         template<> void Deserialize(Building& data, const char*& buf, GameConfig* gameSetup, GameState* gameState)
@@ -195,23 +251,60 @@ namespace FreeMarket
             }
             {
                 auto& member = data.type;
-                int classIdx0 = ReadNext<int>(buf);                            
-                if (classIdx0 != -1)
+                int member_idx0 = ReadNext<int>(buf);
+                if (member_idx0 != -1)
                 {
-                    member = &(*gameSetup).building[classIdx0];
+                    member = &(*gameSetup).building[member_idx0];
                 }
             }
             {
-                auto& member = data.x;
-                Deserialize(member, buf, gameSetup, gameState);
-            }
-            {
-                auto& member = data.y;
-                Deserialize(member, buf, gameSetup, gameState);
+                auto& member = data.position;
+                int member_idx0 = ReadNext<int>(buf);
+                int member_idx1 = ReadNext<int>(buf);
+                if (member_idx0 != -1)
+                {
+                    member = &(*gameState).map[member_idx0][member_idx1];
+                }
             }
             {
                 auto& member = data.owner;
                 Deserialize(member, buf, gameSetup, gameState);
+            }
+        }
+        
+        template<> void Deserialize(Auction& data, const char*& buf, GameConfig* gameSetup, GameState* gameState)
+        {
+            {
+                auto& member = data.id;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.type;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.price;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.seller;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.buyer;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.turn;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.building;
+                int member_idx0 = ReadNext<int>(buf);
+                if (member_idx0 != -1)
+                {
+                    member = &(*gameSetup).building[member_idx0];
+                }
             }
         }        
     }

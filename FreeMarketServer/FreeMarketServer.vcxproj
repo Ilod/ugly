@@ -155,6 +155,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\FreeMarket\generated\server\Auction.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Building.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Game.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Interface.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="..\FreeMarket\generated\server\Serializer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\FreeMarket\generated\server\Auction.cpp" />
     <ClCompile Include="..\FreeMarket\generated\server\Building.cpp" />
     <ClCompile Include="..\FreeMarket\generated\server\Game.cpp" />
     <ClCompile Include="..\FreeMarket\generated\server\Interface.cpp" />

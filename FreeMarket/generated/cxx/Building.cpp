@@ -7,11 +7,19 @@ namespace FreeMarket
         : id()
     { }
         
+    BuildingCard::BuildingCard()
+        : id()
+        , building()
+    { }
+        
+    void BuildingCard::Build(const Cell& position)
+    {
+        std::printf("1 %d %d\n", position.x, position.y);
+    }
     Building::Building()
         : id()
         , type()
-        , x()
-        , y()
+        , position()
         , owner()
     { }
         

@@ -160,8 +160,8 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                             
                     if (classIdx0 != -1)
                     {
-                        data.<#= Case.CamelCase.Convert(m.Name) #> = <#= realType.Id.Source.FormatMapping(Case.CamelCase, null, "gameSetup", "gameState", ", ") #>[classIdx0<#
-                            for (int i = 1; i < c.Id.Member.Count; ++i)
+                        data.<#= Case.CamelCase.Convert(m.Name) #> = <#= realType.Id.Source.FormatMapping(Case.CamelCase, null, "gameSetup", "gameState", ", ", ".") #>[classIdx0<#
+                            for (int i = 1; i < realType.Id.Member.Count; ++i)
                             {
                                 #>, classIdx<#= i #><#
                             }
@@ -243,13 +243,13 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                                 {
                                     #>
 
-                    if (<#= string.Join(" && ", indexMapping.Select(idxMapping => string.Format("{0} >= 0", idxMapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ")))) #>)
+                    if (<#= string.Join(" && ", indexMapping.Select(idxMapping => string.Format("{0} >= 0", idxMapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ", ".")))) #>)
                     {<#
                                     this.PushIndent("    ");
                                 }
                                 #>
 
-                    <#= mapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ") #><#
+                    <#= mapping.FormatMapping(Case.CamelCase, "element", "gameSetup", "gameState", ", ", ".") #><#
                                 ClassMember mapped = mapping.GetMember(CsHelper.Definition);
                                 if (mapped.Array == 0)
                                 {

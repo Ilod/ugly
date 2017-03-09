@@ -10,6 +10,11 @@ namespace FreeMarket
         , ownership()
         , type()
         , building()
+        , price()
     { }
         
+    void Cell::Buy()
+    {
+        std::printf("0\n");
+    }
 }
