@@ -143,6 +143,7 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CxxCode.cs</LastGenOutput>
     </Content>
+    <Content Include="cxx\CxxDeserializerInc.tt" />
     <Content Include="cxx\CxxHeader.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CxxHeader.cs</LastGenOutput>

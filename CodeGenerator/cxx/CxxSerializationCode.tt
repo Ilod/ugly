@@ -28,27 +28,6 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
 
         namespace
         {
-            template<class T> T ReadNext(const char*& buf)
-            {
-                std::uint64_t data = 0;
-                bool negative = false;
-                if (*buf == '-')
-                {
-                    negative = true;
-                    ++buf;
-                }
-                while (std::isdigit(*buf))
-                {
-                    data *= 10;
-                    data += ((*buf) - '0');
-                }
-                if (*buf)
-                    ++buf;
-                if (negative)
-                    return static_cast<T>(-static_cast<std::int64_t>(data));
-                return static_cast<T>(data);
-            }
-
             template<typename T> void SerializeInternal(T& data, std::stringstream& buffer, Serializer::IdMap& ids, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState);
             <#
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
@@ -195,7 +174,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
                 break;
             default:
                 #>
-                
+
                     buffer << data.<#= Case.LowerCamelCase.Convert(m.Name) #><#= arrayIdxSuffix #> << " ";<#
                 break;
         }
@@ -214,10 +193,14 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
 
             }<#
 }
+
+this.PushIndent("        ");
+#><#@ include file="CxxDeserializerInc.tt" #><#
+this.PopIndent();
 #>
 
         }
-
+        
         std::string Serializer::SerializeSetup(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState)
         {
             std::stringstream buffer;
@@ -288,7 +271,14 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
                     if (type == BasicType.Class)
                     {
                         GameClass aType = CxxHelper.Definition.Class[a.Type];
-                        if (aType.Id.Index)
+                        if (!aType.HasId)
+                        {
+                            #>
+                            
+                    <#= Case.CamelCase.Convert(a.Type) #> <#= Case.LowerCamelCase.Convert(a.Name) #>;
+                    Deserialize(<#= Case.LowerCamelCase.Convert(a.Name) #>, &gameSetup, &gameState, &gameSetupId, &gameStateId);<#
+                        }
+                        else if (aType.Id.Index)
                         {
                             #>
 

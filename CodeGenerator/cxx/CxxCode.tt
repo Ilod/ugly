@@ -105,28 +105,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             #>\n"<#
             foreach (MethodParam a in m.Param)
             {
-                BasicType type = CxxHelper.Definition.GetBasicType(a.Type);
-                if (type == BasicType.Class)
-                {
-                    foreach (string memberName in CxxHelper.Definition.Class[a.Type].Id.Member)
-                    {
-                        BasicType realType = CxxHelper.Definition.GetBasicType(CxxHelper.Definition.Class[a.Type].MemberMap[memberName].Type);
-                        #>, <#
-                        if (realType == BasicType.Enum)
-                        {
-                            #>(int)<#
-                        }
-                        #><#= Case.LowerCamelCase.Convert(a.Name) #>.<#= Case.LowerCamelCase.Convert(memberName) #><#
-                    }
-                }
-                else if (type == BasicType.Enum)
-                {
-                    #>, (int)<#= Case.LowerCamelCase.Convert(a.Name) #><#
-                }
-                else
-                {
-                    #>, <#= Case.LowerCamelCase.Convert(a.Name) #><#
-                }
+                #>, <#= CxxHelper.GetSerializedMemberString("", a.Type, Case.LowerCamelCase.Convert(a.Name)) #><#
             }
             #>);<#
             }#>
