@@ -71,7 +71,7 @@ template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const c
             {
                 #>
 
-        int classIdx<#= i #> = ReadNext<int>();<#
+        int classIdx<#= i #> = ReadNext<int>(buf);<#
             }
             if (CxxHelper.Server)
             {
@@ -153,7 +153,7 @@ template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const c
             {
                 #>
 
-        for (int idx<#= i - 1 #> = 0; i < size<#= i - 1 #>; ++i)
+        for (int idx<#= i - 1 #> = 0; idx<#= i - 1 #> < size<#= i - 1 #>; ++idx<#= i - 1 #>)
         {
             auto& array<#= i #> = array<#= i - 1 #>[idx<#= i - 1 #>];
             array<#= i #>.resize(size<#= i #>);<#

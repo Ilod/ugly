@@ -242,7 +242,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             
             #line default
             #line hidden
-            this.Write(" = ReadNext<int>();");
+            this.Write(" = ReadNext<int>(buf);");
             
             #line 74 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
 
@@ -473,14 +473,28 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             
             #line default
             #line hidden
-            this.Write(" = 0; i < size");
+            this.Write(" = 0; idx");
             
             #line 156 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i - 1));
             
             #line default
             #line hidden
-            this.Write("; ++i)\r\n        {\r\n            auto& array");
+            this.Write(" < size");
+            
+            #line 156 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(i - 1));
+            
+            #line default
+            #line hidden
+            this.Write("; ++idx");
+            
+            #line 156 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(i - 1));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n            auto& array");
             
             #line 158 "D:\ugly\CodeGenerator\cxx\CxxDeserializerInc.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
