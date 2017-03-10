@@ -141,6 +141,9 @@ namespace FreeMarket
                     data.StartMoney = ReadNextInt();
                 }
                 {
+                    data.ResourceCount = ReadNextInt();
+                }
+                {
                     int size0 = ReadNextInt();
                     data.Building = new BuildingType[size0];
                     for (int idx0 = 0; idx0 < size0; ++idx0)
@@ -160,26 +163,6 @@ namespace FreeMarket
                         Deserialize(element, gameSetup, gameState);
                         element.Id = idx0;
                         data.Player[idx0] = element;
-                    }
-                }
-                {
-                    int size0 = ReadNextInt();
-                    data.Auction = new Auction[size0];
-                    for (int idx0 = 0; idx0 < size0; ++idx0)
-                    {
-                        Auction element = new Auction();
-                        Deserialize(element, gameSetup, gameState);
-                        data.Auction[idx0] = element;
-                    }
-                }
-                {
-                    int size0 = ReadNextInt();
-                    data.EndedAuction = new Auction[size0];
-                    for (int idx0 = 0; idx0 < size0; ++idx0)
-                    {
-                        Auction element = new Auction();
-                        Deserialize(element, gameSetup, gameState);
-                        data.EndedAuction[idx0] = element;
                     }
                 }           
             }
@@ -217,6 +200,14 @@ namespace FreeMarket
                 }
                 {
                     int size0 = ReadNextInt();
+                    data.ResourcePrice = new int[size0];
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        data.ResourcePrice[idx0] = ReadNextInt();
+                    }
+                }
+                {
+                    int size0 = ReadNextInt();
                     data.Building = new Building[size0];
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
@@ -243,6 +234,26 @@ namespace FreeMarket
                         element.Id = idx0;
                         data.Player[idx0] = element;
                     }
+                }
+                {
+                    int size0 = ReadNextInt();
+                    data.Auction = new Auction[size0];
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        Auction element = new Auction();
+                        Deserialize(element, gameSetup, gameState);
+                        data.Auction[idx0] = element;
+                    }
+                }
+                {
+                    int size0 = ReadNextInt();
+                    data.EndedAuction = new Auction[size0];
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        Auction element = new Auction();
+                        Deserialize(element, gameSetup, gameState);
+                        data.EndedAuction[idx0] = element;
+                    }
                 }           
             }
 
@@ -263,19 +274,15 @@ namespace FreeMarket
             }
 
             public void Deserialize(BuildingType data, GameConfig gameSetup, GameState gameState)
-            {           
-            }
-
-            public void Deserialize(BuildingCard data, GameConfig gameSetup, GameState gameState)
             {
                 {
-                    data.Id = ReadNextInt();
-                }
-                {
-                    int classIdx0 = ReadNextInt();                            
-                    if (classIdx0 != -1)
+                    int size0 = ReadNextInt();
+                    data.Action = new Action[size0];
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
-                        data.Building = gameSetup.Building[classIdx0];
+                        Action element = new Action();
+                        Deserialize(element, gameSetup, gameState);
+                        data.Action[idx0] = element;
                     }
                 }           
             }
@@ -302,6 +309,47 @@ namespace FreeMarket
                 }
                 {
                     data.Owner = ReadNextInt();
+                }           
+            }
+
+            public void Deserialize(Power data, GameConfig gameSetup, GameState gameState)
+            {
+                {
+                    data.Type = (PowerType)ReadNextInt();
+                }
+                {
+                    data.Quantity = (ParameterType)ReadNextInt();
+                }
+                {
+                    data.QuantityForced = ReadNextInt();
+                }
+                {
+                    data.Resource = (ParameterType)ReadNextInt();
+                }
+                {
+                    data.ResourceForce = ReadNextInt();
+                }
+                {
+                    data.BuildingSource = (ParameterType)ReadNextInt();
+                }           
+            }
+
+            public void Deserialize(Action data, GameConfig gameSetup, GameState gameState)
+            {
+                {
+                    data.Id = ReadNextInt();
+                }
+                {
+                    Deserialize(data.Power, gameSetup, gameState);
+                }
+                {
+                    data.ActionPoint = ReadNextInt();
+                }
+                {
+                    data.Cooldown = ReadNextInt();
+                }
+                {
+                    data.TurnLimit = ReadNextInt();
                 }           
             }
 

@@ -24,10 +24,9 @@ namespace FreeMarket
         std::int32_t mapSizeX;
         std::int32_t mapSizeY;
         std::int32_t startMoney;
+        std::int32_t resourceCount;
         std::vector<BuildingType> building;
         std::vector<PlayerConfig> player;
-        std::vector<Auction> auction;
-        std::vector<Auction> endedAuction;
 
         GameConfig();
         
@@ -48,8 +47,11 @@ namespace FreeMarket
     {
         std::int32_t turn;
         std::vector<std::vector<Cell>> map;
+        std::vector<std::int32_t> resourcePrice;
         std::vector<Building> building;
         std::vector<PlayerState> player;
+        std::vector<Auction> auction;
+        std::vector<Auction> endedAuction;
 
         GameState();
         

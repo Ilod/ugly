@@ -36,20 +36,14 @@ Files:
             Type:   int32
           - Name:   start_money
             Type:   int32
+          - Name:   resource_count
+            Type:   int32
           - Name:   building
             Type:   building_type
             Array:  1
             Index:  Strong
           - Name:   player
             Type:   player_config
-            Array:  1
-            Index:  Strong
-          - Name:   auction
-            Type:   auction
-            Array:  1
-            Index:  Strong
-          - Name:   ended_auction
-            Type:   auction
             Array:  1
             Index:  Strong
       - Name:   player_state
@@ -80,12 +74,23 @@ Files:
             Type:   cell
             Array:  2
             Index:  Strong
+          - Name:   resource_price
+            Type:   int32
+            Array:  1
           - Name:   building
             Type:   building
             Array:  1
             Index:  Strong
           - Name:   player
             Type:   player_state
+            Array:  1
+            Index:  Strong
+          - Name:   auction
+            Type:   auction
+            Array:  1
+            Index:  Strong
+          - Name:   ended_auction
+            Type:   auction
             Array:  1
             Index:  Strong
   - Name:   map
@@ -138,6 +143,10 @@ Files:
         Member:
           - Name:   id
             Type:   int32
+          - Name:   action
+            Type:   action
+            Index:  Strong
+            Array:  1
         Id:
             Member:
               - id
@@ -180,6 +189,13 @@ Files:
                 Source: GameState
                 Member:
                   - Name:   building
+        Method:
+          - Name:   execute
+            Param:
+              - Name:   action
+                Type:   action
+              - Name:   param
+                Type:   power_parameter
         IndexMapping:
           - Source: GameState
             Member:
@@ -204,6 +220,59 @@ Files:
                     Member:
                       - Name:   owner
               - Name:   building
+  - Name:   power
+    Class:
+      - Name:   power_parameter
+        Member:
+          - Name:   quantity
+            Type:   int32
+          - Name:   resource
+            Type:   int32
+          - Name:   building_source
+            Type:   building
+            Index:  RefId
+      - Name:   power
+        Member:
+          - Name:   type
+            Type:   power_type
+          - Name:   quantity
+            Type:   parameter_type
+          - Name:   quantity_forced
+            Type:   int32
+          - Name:   resource
+            Type:   parameter_type
+          - Name:   resource_force
+            Type:   int32
+          - Name:   building_source
+            Type:   parameter_type
+      - Name:   action
+        Member:
+          - Name:   id
+            Type:   int32
+          - Name:   power
+            Type:   power
+          - Name:   action_point
+            Type:   int32
+          - Name:   cooldown
+            Type:   int32
+          - Name:   turn_limit
+            Type:   int32
+        Id:
+            Member:
+              - id
+    Enum:
+      - Name:   parameter_type
+        Value:
+            none:   0
+            choice: 1
+            forced: 2
+            random: 3       
+            self:   4
+            all:    5
+      - Name:   power_type
+        Value:
+            produce_resource:   0
+            sell_resource:      1
   - Name:   auction
     Class:
       - Name:   auction

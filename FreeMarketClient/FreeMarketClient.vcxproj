@@ -148,6 +148,7 @@
     <ClCompile Include="..\FreeMarket\generated\cxx\ClientWindows.cpp" />
     <ClCompile Include="..\FreeMarket\generated\cxx\Interface.cpp" />
     <ClCompile Include="..\FreeMarket\generated\cxx\Map.cpp" />
+    <ClCompile Include="..\FreeMarket\generated\cxx\Power.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +157,7 @@
     <ClInclude Include="..\FreeMarket\generated\cxx\Client.h" />
     <ClInclude Include="..\FreeMarket\generated\cxx\Interface.h" />
     <ClInclude Include="..\FreeMarket\generated\cxx\Map.h" />
+    <ClInclude Include="..\FreeMarket\generated\cxx\Power.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

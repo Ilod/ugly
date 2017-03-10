@@ -18,10 +18,9 @@ namespace ugly
             , mapSizeX()
             , mapSizeY()
             , startMoney()
+            , resourceCount()
             , building()
             , player()
-            , auction()
-            , endedAuction()
         { }
             
         PlayerState::PlayerState()
@@ -34,8 +33,11 @@ namespace ugly
         GameState::GameState()
             : turn()
             , map()
+            , resourcePrice()
             , building()
             , player()
+            , auction()
+            , endedAuction()
         { }
             
     }

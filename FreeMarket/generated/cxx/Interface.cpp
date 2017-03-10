@@ -15,10 +15,9 @@ namespace FreeMarket
         , mapSizeX()
         , mapSizeY()
         , startMoney()
+        , resourceCount()
         , building()
         , player()
-        , auction()
-        , endedAuction()
     { }
         
     PlayerState::PlayerState()
@@ -31,8 +30,11 @@ namespace FreeMarket
     GameState::GameState()
         : turn()
         , map()
+        , resourcePrice()
         , building()
         , player()
+        , auction()
+        , endedAuction()
     { }
         
 }

@@ -21,7 +21,7 @@ namespace FreeMarket
         
         public void Bid(int money)
         {
-            Console.WriteLine("2 {0}", money);
+            Console.WriteLine("3 {0}", money);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace ugly
         {
             buildingCard.clear();
             building.clear();
+            action.clear();
             auction.clear();
         }
 
@@ -25,6 +26,9 @@ namespace ugly
             template<> void SerializeInternal(BuildingType& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
             template<> void SerializeInternal(BuildingCard& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
             template<> void SerializeInternal(Building& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(PowerParameter& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(Power& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(Action& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
             template<> void SerializeInternal(Auction& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
 
             template<> void SerializeInternal(PlayerConfig& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
@@ -53,6 +57,63 @@ namespace ugly
                 }
                 {
                     buffer << data.startMoney << " ";
+                }
+                {
+                    buffer << data.resourceCount << " ";
+                }
+                {
+                    int size0 = (int)(data.building.size());
+                    buffer << size0 << " ";
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        SerializeInternal(data.building[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                    }
+                }
+                {
+                    int size0 = (int)(data.player.size());
+                    buffer << size0 << " ";
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        SerializeInternal(data.player[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                    }
+                }
+            }
+
+            template<> void SerializeInternal(PlayerState& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            {
+                {
+                    buffer << data.team << " ";
+                }
+                {
+                    buffer << data.money << " ";
+                }
+            }
+
+            template<> void SerializeInternal(GameState& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            {
+                {
+                    buffer << data.turn << " ";
+                }
+                {
+                    int size0 = (int)(data.map.size());
+                    buffer << size0 << " ";
+                    int size1 = (int)(size0 == 0 ? 0 : data.map[0].size());
+                    buffer << size1 << " ";
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        for (int idx1 = 0; idx1 < size1; ++idx1)
+                        {
+                            SerializeInternal(data.map[idx0][idx1], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                        }
+                    }
+                }
+                {
+                    int size0 = (int)(data.resourcePrice.size());
+                    buffer << size0 << " ";
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        buffer << data.resourcePrice[idx0] << " ";
+                    }
                 }
                 {
                     int size0 = (int)(data.building.size());
@@ -88,52 +149,6 @@ namespace ugly
                 }
             }
 
-            template<> void SerializeInternal(PlayerState& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
-            {
-                {
-                    buffer << data.team << " ";
-                }
-                {
-                    buffer << data.money << " ";
-                }
-            }
-
-            template<> void SerializeInternal(GameState& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
-            {
-                {
-                    buffer << data.turn << " ";
-                }
-                {
-                    int size0 = (int)(data.map.size());
-                    buffer << size0 << " ";
-                    int size1 = (int)(size0 == 0 ? 0 : data.map[0].size());
-                    buffer << size1 << " ";
-                    for (int idx0 = 0; idx0 < size0; ++idx0)
-                    {
-                        for (int idx1 = 0; idx1 < size1; ++idx1)
-                        {
-                            SerializeInternal(data.map[idx0][idx1], buffer, ids, gameSetup, playerSetup, gameState, playerState);
-                        }
-                    }
-                }
-                {
-                    int size0 = (int)(data.building.size());
-                    buffer << size0 << " ";
-                    for (int idx0 = 0; idx0 < size0; ++idx0)
-                    {
-                        SerializeInternal(data.building[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
-                    }
-                }
-                {
-                    int size0 = (int)(data.player.size());
-                    buffer << size0 << " ";
-                    for (int idx0 = 0; idx0 < size0; ++idx0)
-                    {
-                        SerializeInternal(data.player[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
-                    }
-                }
-            }
-
             template<> void SerializeInternal(Cell& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
                 {
@@ -152,6 +167,14 @@ namespace ugly
 
             template<> void SerializeInternal(BuildingType& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
+                {
+                    int size0 = (int)(data.action.size());
+                    buffer << size0 << " ";
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        SerializeInternal(data.action[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                    }
+                }
             }
 
             template<> void SerializeInternal(BuildingCard& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
@@ -208,6 +231,68 @@ namespace ugly
                 }
                 {
                     buffer << data.owner << " ";
+                }
+            }
+
+            template<> void SerializeInternal(PowerParameter& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            {
+                {
+                    buffer << data.quantity << " ";
+                }
+                {
+                    buffer << data.resource << " ";
+                }
+                {
+                    if (data.buildingSource == nullptr)
+                    {
+                        buffer << -1 << " ";
+                    }
+                    else
+                    {                
+                        buffer << data.buildingSource->id << " ";
+                    }
+                }
+            }
+
+            template<> void SerializeInternal(Power& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            {
+                {                
+                    buffer << (int)data.type << " ";
+                }
+                {                
+                    buffer << (int)data.quantity << " ";
+                }
+                {
+                    buffer << data.quantityForced << " ";
+                }
+                {                
+                    buffer << (int)data.resource << " ";
+                }
+                {
+                    buffer << data.resourceForce << " ";
+                }
+                {                
+                    buffer << (int)data.buildingSource << " ";
+                }
+            }
+
+            template<> void SerializeInternal(Action& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            {
+                ids.action[data.id] = &data;
+                {
+                    buffer << data.id << " ";
+                }
+                {
+                    SerializeInternal(data.power, buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                }
+                {
+                    buffer << data.actionPoint << " ";
+                }
+                {
+                    buffer << data.cooldown << " ";
+                }
+                {
+                    buffer << data.turnLimit << " ";
                 }
             }
 
@@ -269,6 +354,41 @@ namespace ugly
             template<class T> void Deserialize(T& data, const char*& buf, GameConfig* gameSetup, GameState* gameState, Serializer::IdMap* idSetup, Serializer::IdMap* idState)
             {
                 data = ReadNext<T>(buf);
+            }    
+            template<> void Deserialize(PowerParameter& data, const char*& buf, GameConfig* gameSetup, GameState* gameState, Serializer::IdMap* idSetup, Serializer::IdMap* idState);
+            
+            template<> void Deserialize(PowerParameter& data, const char*& buf, GameConfig* gameSetup, GameState* gameState, Serializer::IdMap* idSetup, Serializer::IdMap* idState)
+            {
+                {
+                    auto& member = data.quantity;
+                    Deserialize(member, buf, gameSetup, gameState, idSetup, idState);
+                }
+                {
+                    auto& member = data.resource;
+                    Deserialize(member, buf, gameSetup, gameState, idSetup, idState);
+                }
+                {
+                    auto& member = data.buildingSource;        {
+                        int classIdx = ReadNext<int>(buf);
+                        member = nullptr;
+                        if (idState != nullptr)
+                        {
+                            auto classIt = idState->building.find(classIdx);
+                            if (classIt != idState->building.end())
+                            {
+                                member = classIt->second;
+                            }
+                        }
+                        if (member == nullptr && idSetup != nullptr)
+                        {
+                            auto classIt = idSetup->building.find(classIdx);
+                            if (classIt != idSetup->building.end())
+                            {
+                                member = classIt->second;
+                            }
+                        }
+                    }
+                }
             }
         }
         
@@ -324,7 +444,31 @@ namespace ugly
                             Cell& position = gameState.map[position_idx0][position_idx1];
                     return argThis.Build(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], position);
                 }
-                case 2: // Auction::Bid
+                case 2: // Building::Execute
+                {                    
+                    std::int32_t argThisId = ReadNext<std::int32_t>(buf);
+                    auto argThisIt = gameStateId.building.find(argThisId);
+                    if (argThisIt == gameStateId.building.end())
+                    {
+                        argThisIt = gameSetupId.building.find(argThisId);
+                        if (argThisIt == gameSetupId.building.end())
+                            return false;
+                    }
+                    Building& argThis = *(argThisIt->second);                    
+                    std::int32_t action_id = ReadNext<std::int32_t>(buf);
+                    auto action_it = gameStateId.action.find(action_id);
+                    if (action_it == gameStateId.action.end())
+                    {
+                        action_it = gameSetupId.action.find(action_id);
+                        if (action_it == gameSetupId.action.end())
+                            return false;
+                    }
+                    Action& action = *(action_it->second);                            
+                    PowerParameter param;
+                    Deserialize(param, buf, &gameSetup, &gameState, &gameSetupId, &gameStateId);
+                    return argThis.Execute(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], action, param);
+                }
+                case 3: // Auction::Bid
                 {                    
                     std::int32_t argThisId = ReadNext<std::int32_t>(buf);
                     auto argThisIt = gameStateId.auction.find(argThisId);

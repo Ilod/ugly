@@ -2,6 +2,7 @@
 #include "Interface.h"
 #include "Map.h"
 #include "Building.h"
+#include "Power.h"
 #include "Auction.h"
 namespace FreeMarket
 {

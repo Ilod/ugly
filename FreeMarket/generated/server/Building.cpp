@@ -8,6 +8,7 @@ namespace ugly
     {
         BuildingType::BuildingType()
             : id()
+            , action()
         { }
             
         BuildingCard::BuildingCard()
@@ -26,5 +27,9 @@ namespace ugly
             , owner()
         { }
             
+        bool Building::Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const Action& action, const PowerParameter& param)
+        {
+            return false;
+        }
     }
 }

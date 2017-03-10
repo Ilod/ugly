@@ -3,6 +3,7 @@
 #include "Interface.h"
 #include "Map.h"
 #include "Building.h"
+#include "Power.h"
 #include "Auction.h"
 namespace ugly
 {
@@ -20,6 +21,7 @@ namespace ugly
             public:
                 std::map<std::int32_t, BuildingCard*> buildingCard;
                 std::map<std::int32_t, Building*> building;
+                std::map<std::int32_t, Action*> action;
                 std::map<std::int32_t, Auction*> auction;
                 void Clear();
             };

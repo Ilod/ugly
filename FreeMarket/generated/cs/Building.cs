@@ -7,6 +7,7 @@ namespace FreeMarket
     public class BuildingType
     {
         public int Id;
+        public Action[] Action;
         
     }
 
@@ -28,5 +29,9 @@ namespace FreeMarket
         public Cell Position;
         public int Owner;
         
+        public void Execute(Action action, PowerParameter param)
+        {
+            Console.WriteLine("2 {0} {1} {2} {3}", (action != null) ? (action.Id) : -1, param.Quantity, param.Resource, (param.BuildingSource != null) ? (param.BuildingSource.Id) : -1);
+        }
     }
 }

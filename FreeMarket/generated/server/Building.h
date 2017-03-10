@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include "Power.h"
 
 namespace ugly
 {
@@ -11,6 +12,7 @@ namespace ugly
         struct BuildingType
         {
             std::int32_t id;
+            std::vector<Action> action;
     
             BuildingType();
             
@@ -35,6 +37,7 @@ namespace ugly
     
             Building();
             
+            bool Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const Action& action, const PowerParameter& param);
         };
     }
 }

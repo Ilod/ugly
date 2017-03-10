@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include "Power.h"
 namespace FreeMarket
 {
     struct Cell;
@@ -8,6 +9,7 @@ namespace FreeMarket
     struct BuildingType
     {
         std::int32_t id;
+        std::vector<Action> action;
 
         BuildingType();
         
@@ -32,5 +34,6 @@ namespace FreeMarket
 
         Building();
         
+        void Execute(const Action& action, const PowerParameter& param);
     };
 }

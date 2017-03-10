@@ -19,10 +19,9 @@ namespace FreeMarket
         public int MapSizeX;
         public int MapSizeY;
         public int StartMoney;
+        public int ResourceCount;
         public BuildingType[] Building;
         public PlayerConfig[] Player;
-        public Auction[] Auction;
-        public Auction[] EndedAuction;
         
     }
 
@@ -39,8 +38,11 @@ namespace FreeMarket
     {
         public int Turn;
         public Cell[,] Map;
+        public int[] ResourcePrice;
         public Building[] Building;
         public PlayerState[] Player;
+        public Auction[] Auction;
+        public Auction[] EndedAuction;
         
     }
 }
