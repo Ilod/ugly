@@ -120,6 +120,8 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
 
         foreach (GameClass c in CsHelper.Definition.Class.Values)
         {
+            if (!c.IsReceivedFromServer)
+                continue;
             #>
 
 
