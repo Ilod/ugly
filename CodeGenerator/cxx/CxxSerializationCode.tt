@@ -270,7 +270,7 @@ this.PopIndent();
                             #>
                             
                     <#= Case.CamelCase.Convert(a.Type) #> <#= Case.LowerCamelCase.Convert(a.Name) #>;
-                    Deserialize(<#= Case.LowerCamelCase.Convert(a.Name) #>, &gameSetup, &gameState, &gameSetupId, &gameStateId);<#
+                    Deserialize(<#= Case.LowerCamelCase.Convert(a.Name) #>, buf, &gameSetup, &gameState, &gameSetupId, &gameStateId);<#
                         }
                         else if (aType.Id.Index)
                         {

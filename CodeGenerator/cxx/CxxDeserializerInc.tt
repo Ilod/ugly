@@ -34,6 +34,8 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
     if (CxxHelper.Server && (c.HasId || !c.IsInMethodParam))
         continue;
+    if (!CxxHelper.Server && !c.IsReceivedFromServer)
+        continue;
     #>
     
 template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const char*& buf, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>* gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>* gameState<#
@@ -46,6 +48,8 @@ template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const c
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
     if (CxxHelper.Server && (c.HasId || !c.IsInMethodParam))
+        continue;
+    if (!CxxHelper.Server && !c.IsReceivedFromServer)
         continue;
     #>
 
@@ -78,7 +82,7 @@ template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const c
         <#= deserializeStr #><#
             }
         }
-        else if (m.IsWeak && !c.Id.Index && CxxHelper.Server)
+        else if (m.IsWeak && !CxxHelper.Definition.Class[m.Type].Id.Index && CxxHelper.Server)
         {
             #>
         {

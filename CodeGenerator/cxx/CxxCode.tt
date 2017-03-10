@@ -107,7 +107,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             #>\n"<#
             foreach (MethodParam a in m.Param)
             {
-                #>, <#= CxxHelper.GetSerializedMemberString("", a.Type, Case.LowerCamelCase.Convert(a.Name)) #><#
+                #>, <#= CxxHelper.GetSerializedMemberString("", a.Type, Case.LowerCamelCase.Convert(a.Name), true) #><#
             }
             #>);<#
             }#>

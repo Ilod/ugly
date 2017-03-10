@@ -405,7 +405,7 @@ if (CxxHelper.Server)
             this.Write(", ");
             
             #line 110 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetSerializedMemberString("", a.Type, Case.LowerCamelCase.Convert(a.Name))));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetSerializedMemberString("", a.Type, Case.LowerCamelCase.Convert(a.Name), true)));
             
             #line default
             #line hidden

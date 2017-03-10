@@ -172,7 +172,7 @@ namespace ugly.CodeGenerator.cxx
             return ret;
         }
 
-        public static string GetSerializedMemberString(string parentName, string type, string name, bool forcedPresence = true)
+        public static string GetSerializedMemberString(string parentName, string type, string name, bool forcedPresence)
         {
             switch (Definition.GetBasicType(type))
             {
@@ -187,12 +187,12 @@ namespace ugly.CodeGenerator.cxx
                         }
                         else
                         {
-                            return string.Join(", ", Definition.Class[type].Id.Member.Select(m => string.Format("({0}{1} != nullptr) ? ({2}) : -1", parentName, name, GetSerializedMemberString(string.Format("{0}{1}->", parentName, name), Definition.Class[type].MemberMap[m].Type, Case.LowerCamelCase.Convert(m)))));
+                            return string.Join(", ", Definition.Class[type].Id.Member.Select(m => string.Format("({0}{1} != nullptr) ? ({2}) : -1", parentName, name, GetSerializedMemberString(string.Format("{0}{1}->", parentName, name), Definition.Class[type].MemberMap[m].Type, Case.LowerCamelCase.Convert(m), false))));
                         }
                     }
                     else
                     {
-                        return string.Join(", ", Definition.Class[type].Member.Select(m => GetSerializedMemberString(string.Format("{0}{1}.", parentName, name), m.Type, Case.CamelCase.Convert(m.Name))));
+                        return string.Join(", ", Definition.Class[type].Member.Select(m => GetSerializedMemberString(string.Format("{0}{1}.", parentName, name), m.Type, Case.LowerCamelCase.Convert(m.Name), false)));
                     }
                 default:
                     return string.Format("{0}{1}", parentName, name);

@@ -55,12 +55,35 @@ namespace ugly.CodeGenerator
                 Method.Add(m);
                 foreach (MethodParam a in m.Param)
                 {
-                    if (Class.ContainsKey(a.Type))
-                    {
-                        Class[a.Type].IsInMethodParam = true;
-                    }
+                    MarkAsMethodParam(a.Type);
                 }
             }
+            MarkAsReceivedFromServer(Config.GameSetup);
+            MarkAsReceivedFromServer(Config.GameState);
+        }
+
+        private void MarkAsReceivedFromServer(string type)
+        {
+            if (!Class.ContainsKey(type))
+                return;
+            if (Class[type].IsReceivedFromServer)
+                return;
+            Class[type].IsReceivedFromServer = true;
+            foreach (ClassMember m in Class[type].Member)
+                MarkAsReceivedFromServer(m.Type);
+        }
+
+        private void MarkAsMethodParam(string type)
+        {
+            if (!Class.ContainsKey(type))
+                return;
+            if (Class[type].IsInMethodParam)
+                return;
+            Class[type].IsInMethodParam = true;
+            if (Class[type].HasId)
+                return;
+            foreach (ClassMember m in Class[type].Member)
+                MarkAsMethodParam(m.Type);
         }
 
         public BasicType GetBasicType(string name)
@@ -137,6 +160,8 @@ namespace ugly.CodeGenerator
         public GameFile File;
         [NonSerialized]
         public bool IsInMethodParam = false;
+        [NonSerialized]
+        public bool IsReceivedFromServer = false;
     }
 
     public class GameClassIdConfig
