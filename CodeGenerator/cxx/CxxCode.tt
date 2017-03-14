@@ -116,12 +116,17 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
         }
         if (CxxHelper.Server)
         {
-            foreach (string m in c.ConditionMethod)
+            foreach (Tuple<string, int> m in c.ConditionMethod)
             {
                 #>
 
 
-    bool <#= Case.CamelCase.Convert(c.Name) #>::<#= Case.CamelCase.Convert(m) #>(struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState)
+    bool <#= Case.CamelCase.Convert(c.Name) #>::<#= Case.CamelCase.Convert(m.Item1) #>(struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, struct <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState<#
+                for (int i = 0; i < m.Item2; ++i)
+                {
+                    #>, int idx<#= i #><#
+                }
+                #>)
     {
         return true;
     }<#

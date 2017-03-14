@@ -19,7 +19,7 @@ namespace ugly.CodeGenerator
         {
             Method.Clear();
             Dictionary<int, List<ClassMethod>> methods = new Dictionary<int, List<ClassMethod>>();
-            List<KeyValuePair<string, string>> conditions = new List<KeyValuePair<string, string>>();
+            List<Tuple<string, string, int>> conditions = new List<Tuple<string, string, int>>();
             foreach (GameFile file in Files)
             {
                 foreach (GameClass c in file.Class)
@@ -35,7 +35,16 @@ namespace ugly.CodeGenerator
                     foreach (ClassMember m in c.Member)
                     {
                         if (m.Condition != null)
-                            conditions.Add(new KeyValuePair<string, string>(m.Type, m.Condition.Function));
+                        {
+                            if (m.Condition.Context == ConditionContext.Member)
+                            {
+                                conditions.Add(Tuple.Create(m.Type, m.Condition.Function, 0));
+                            }
+                            else
+                            {
+                                conditions.Add(Tuple.Create(c.Name, m.Condition.Function, m.Array));
+                            }
+                        }
                         c.MemberMap[m.Name] = m;
                     }
                 }
@@ -45,9 +54,9 @@ namespace ugly.CodeGenerator
                     e.File = file;
                 }
             }
-            foreach (KeyValuePair<string, string> condition in conditions)
+            foreach (Tuple<string, string, int> condition in conditions)
             {
-                Class[condition.Key].ConditionMethod.Add(condition.Value);
+                Class[condition.Item1].ConditionMethod.Add(Tuple.Create(condition.Item2, condition.Item3));
             }
             foreach (ClassMethod m in methods.Values.SelectMany(l => l))
             {
@@ -150,7 +159,7 @@ namespace ugly.CodeGenerator
         public string Name;
         public List<ClassMember> Member = new List<ClassMember>();
         public List<ClassMethod> Method = new List<ClassMethod>();
-        public SortedSet<string> ConditionMethod = new SortedSet<string>();
+        public SortedSet<Tuple<string, int>> ConditionMethod = new SortedSet<Tuple<string, int>>();
         public GameClassIdConfig Id = null;
         public List<IndexMapping> IndexMapping = new List<IndexMapping>();
         public bool HasId { get { return Id != null && Id.Member.Any(); } }
@@ -293,12 +302,20 @@ namespace ugly.CodeGenerator
     {
         public string Function;
         public ConditionType Type = ConditionType.When;
+        public ConditionContext Context = ConditionContext.Member;
+        public string DefaultValue = null;
     }
 
     public enum ConditionType
     {
         When,
         While,
+    }
+
+    public enum ConditionContext
+    {
+        Member,
+        Parent,
     }
 
     public enum BasicType

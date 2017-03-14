@@ -432,7 +432,7 @@ if (CxxHelper.Server)
         }
         if (CxxHelper.Server)
         {
-            foreach (string m in c.ConditionMethod)
+            foreach (Tuple<string, int> m in c.ConditionMethod)
             {
                 
             
@@ -448,7 +448,7 @@ if (CxxHelper.Server)
             this.Write("::");
             
             #line 124 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m)));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Item1)));
             
             #line default
             #line hidden
@@ -480,9 +480,34 @@ if (CxxHelper.Server)
             
             #line default
             #line hidden
-            this.Write("& playerState)\r\n    {\r\n        return true;\r\n    }");
+            this.Write("& playerState");
+            
+            #line 124 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+
+                for (int i = 0; i < m.Item2; ++i)
+                {
+                    
+            
+            #line default
+            #line hidden
+            this.Write(", int idx");
             
             #line 127 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(i));
+            
+            #line default
+            #line hidden
+            
+            #line 127 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+
+                }
+                
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n    {\r\n        return true;\r\n    }");
+            
+            #line 132 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
             }
         }
@@ -493,7 +518,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n}");
             
-            #line 133 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 138 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
 if (CxxHelper.Server)
 {
@@ -504,7 +529,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n}");
             
-            #line 139 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
+            #line 144 "D:\ugly\CodeGenerator\cxx\CxxCode.tt"
 
 }
 

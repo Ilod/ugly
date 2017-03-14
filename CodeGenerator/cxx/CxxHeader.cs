@@ -514,7 +514,7 @@ if (CxxHelper.Server)
             #line 198 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
-            foreach (string m in c.ConditionMethod)
+            foreach (Tuple<string, int> m in c.ConditionMethod)
             {
                 
             
@@ -523,7 +523,7 @@ if (CxxHelper.Server)
             this.Write("\r\n        bool ");
             
             #line 204 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m)));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Item1)));
             
             #line default
             #line hidden
@@ -555,9 +555,34 @@ if (CxxHelper.Server)
             
             #line default
             #line hidden
-            this.Write("& playerState);");
+            this.Write("& playerState");
             
             #line 204 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+
+                for (int i = 0; i < m.Item2; ++i)
+                {
+                    
+            
+            #line default
+            #line hidden
+            this.Write(", int idx");
+            
+            #line 207 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(i));
+            
+            #line default
+            #line hidden
+            
+            #line 207 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+
+                }
+                
+            
+            #line default
+            #line hidden
+            this.Write(");");
+            
+            #line 209 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
         }
@@ -567,7 +592,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n    };");
             
-            #line 209 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 214 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
     }
     
@@ -576,7 +601,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n}");
             
-            #line 213 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 218 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
 if (CxxHelper.Server)
 {
@@ -587,7 +612,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n}");
             
-            #line 219 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 224 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
 }
 

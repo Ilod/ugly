@@ -94,6 +94,38 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             this.PushIndent("    ");
             arrayIdxSuffix += string.Format("[idx{0}]", i);
         }
+        if (m.Condition != null)
+        {
+            #>
+
+                    if (<#
+            if (m.Condition.Type == ConditionType.While)
+            {
+                #>(executeLoop = (executeLoop && <#
+            }
+            #>data.<#
+            if (m.Condition.Context == ConditionContext.Member)
+            {
+                #><#= Case.LowerCamelCase.Convert(m.Name) #><#= arrayIdxSuffix #>.<#
+            }
+            #><#= Case.CamelCase.Convert(m.Condition.Function) #>(gameSetup, playerSetup, gameState, playerState<#
+            if (m.Condition.Context == ConditionContext.Parent)
+            {
+                for (int i = 0; i < m.Array; ++i)
+                {
+                    #>, idx<#= i #><#
+                }
+            }
+            #>))<#
+            if (m.Condition.Type == ConditionType.While)
+            {
+                #>))<#
+            }
+            #>
+
+                    {<#
+            this.PushIndent("    ");
+        }
         switch (CxxHelper.Definition.GetBasicType(m.Type))
         {
             case BasicType.Char:
@@ -103,25 +135,6 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
                     buffer << (int)data.<#= Case.LowerCamelCase.Convert(m.Name) #><#= arrayIdxSuffix #> << " ";<#
                 break;
             case BasicType.Class:
-                if (m.Condition != null)
-                {
-                    #>
-                    
-                    if (<#
-                    if (m.Condition.Type == ConditionType.While)
-                    {
-                        #>(executeLoop = (executeLoop && <#
-                    }
-                    #>data.<#= Case.LowerCamelCase.Convert(m.Name) #><#= arrayIdxSuffix #>.<#= Case.CamelCase.Convert(m.Condition.Function) #>(gameSetup, playerSetup, gameState, playerState))<#
-                    if (m.Condition.Type == ConditionType.While)
-                    {
-                        #>))<#
-                    }
-                    #>
-
-                    {<#
-                    this.PushIndent("    ");
-                }
                 if (m.Index == ClassMemberIndexType.RefId)
                 {
                     GameClass mType = CxxHelper.Definition.Class[m.Type];
@@ -161,19 +174,19 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
 
                     SerializeInternal(data.<#= Case.LowerCamelCase.Convert(m.Name) #><#= arrayIdxSuffix #>, buffer, ids, gameSetup, playerSetup, gameState, playerState);<#
                 }
-                if (m.Condition != null)
-                {
-                    this.PopIndent();
-                    #>
-
-                    }<#
-                }
                 break;
             default:
                 #>
 
                     buffer << data.<#= Case.LowerCamelCase.Convert(m.Name) #><#= arrayIdxSuffix #> << " ";<#
                 break;
+        }
+        if (m.Condition != null)
+        {
+            this.PopIndent();
+            #>
+
+                    }<#
         }
         for (int i = 0; i < m.Array; ++i)
         {
