@@ -21,8 +21,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FreeMarketServer", "FreeMarketServer\FreeMarketServer.vcxproj", "{1B223FF5-1D2E-4504-A7A7-3F73F8BF54BE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FreeMarketClient", "FreeMarketClient\FreeMarketClient.vcxproj", "{68755A80-53AF-4852-9E05-C94155CC3897}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1B223FF5-1D2E-4504-A7A7-3F73F8BF54BE} = {1B223FF5-1D2E-4504-A7A7-3F73F8BF54BE}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeMarketClientCs", "FreeMarketClientCs\FreeMarketClientCs.csproj", "{D2ED4CEF-51E7-4279-BDC3-2DBCEFBFFDED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1B223FF5-1D2E-4504-A7A7-3F73F8BF54BE} = {1B223FF5-1D2E-4504-A7A7-3F73F8BF54BE}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
