@@ -664,6 +664,24 @@ namespace ugly.CodeGenerator.cs
             #line 288 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                     }
+                    else if (type == BasicType.Enum)
+                    {
+                        
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 292 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Type)));
+            
+            #line default
+            #line hidden
+            this.Write(")ReadNextInt()");
+            
+            #line 292 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+
+                    }
                     else
                     {
                         
@@ -672,14 +690,14 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("ReadNext");
             
-            #line 292 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 296 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CsHelper.GetBasicTypeName(type))));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 292 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 296 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                     }
                     
@@ -688,7 +706,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write(";");
             
-            #line 294 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 298 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                 
                     for (int i = 0; i < m.Array; ++i)
@@ -700,7 +718,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n                    }");
             
-            #line 301 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 305 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
                     }
                 }
@@ -710,7 +728,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("\r\n                }");
             
-            #line 306 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 310 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
 
             }         
@@ -720,7 +738,7 @@ namespace ugly.CodeGenerator.cs
             #line hidden
             this.Write("           \r\n            }");
             
-            #line 311 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
+            #line 315 "D:\ugly\CodeGenerator\cs\CsImpl.tt"
 
         }
         

@@ -287,6 +287,10 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
                     {
                         #>element<#
                     }
+                    else if (type == BasicType.Enum)
+                    {
+                        #>(<#= Case.CamelCase.Convert(m.Type) #>)ReadNextInt()<#
+                    }
                     else
                     {
                         #>ReadNext<#= Case.CamelCase.Convert(CsHelper.GetBasicTypeName(type)) #>()<#
