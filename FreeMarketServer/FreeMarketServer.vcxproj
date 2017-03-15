@@ -161,6 +161,7 @@
     <ClInclude Include="..\FreeMarket\generated\server\Interface.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Map.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Power.h" />
+    <ClInclude Include="..\FreeMarket\generated\server\Resource.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Serializer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +171,7 @@
     <ClCompile Include="..\FreeMarket\generated\server\Interface.cpp" />
     <ClCompile Include="..\FreeMarket\generated\server\Map.cpp" />
     <ClCompile Include="..\FreeMarket\generated\server\Power.cpp" />
+    <ClCompile Include="..\FreeMarket\generated\server\Resource.cpp" />
     <ClCompile Include="..\FreeMarket\generated\server\Serializer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

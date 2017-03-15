@@ -116,6 +116,21 @@ namespace ugly
                     }
                 }
                 {
+                    int size0 = (int)(data.resourceEvolution.size());
+                    buffer << size0 << " ";
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        if (data.KnowResourceEvolution(gameSetup, playerSetup, gameState, playerState, idx0))
+                        {                
+                            buffer << (int)data.resourceEvolution[idx0] << " ";
+                        }
+                        else
+                        {
+                            buffer << (int)PriceEvolution::Unknown << " ";
+                        }
+                    }
+                }
+                {
                     int size0 = (int)(data.building.size());
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)

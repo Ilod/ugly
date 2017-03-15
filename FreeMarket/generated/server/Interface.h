@@ -4,6 +4,7 @@
 #include "Auction.h"
 #include "Building.h"
 #include "Map.h"
+#include "Resource.h"
 
 namespace ugly
 {
@@ -51,6 +52,7 @@ namespace ugly
             std::int32_t turn;
             std::vector<std::vector<Cell>> map;
             std::vector<std::int32_t> resourcePrice;
+            std::vector<PriceEvolution> resourceEvolution;
             std::vector<Building> building;
             std::vector<PlayerState> player;
             std::vector<Auction> auction;
@@ -58,6 +60,8 @@ namespace ugly
     
             GameState();
             
+    
+            bool KnowResourceEvolution(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, int idx0);
         };
     }
 }

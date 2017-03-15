@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include "Interface.h"
+#include "Resource.h"
 #include "Map.h"
 #include "Building.h"
 #include "Power.h"

@@ -34,11 +34,17 @@ namespace ugly
             : turn()
             , map()
             , resourcePrice()
+            , resourceEvolution()
             , building()
             , player()
             , auction()
             , endedAuction()
         { }
             
+    
+        bool GameState::KnowResourceEvolution(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, int idx0)
+        {
+            return true;
+        }
     }
 }

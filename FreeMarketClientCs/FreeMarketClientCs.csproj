@@ -67,6 +67,9 @@
     <Compile Include="..\FreeMarket\generated\cs\Power.cs">
       <Link>generated\Power.cs</Link>
     </Compile>
+    <Compile Include="..\FreeMarket\generated\cs\Resource.cs">
+      <Link>generated\Resource.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

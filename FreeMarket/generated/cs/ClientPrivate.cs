@@ -208,6 +208,14 @@ namespace FreeMarket
                 }
                 {
                     int size0 = ReadNextInt();
+                    data.ResourceEvolution = new PriceEvolution[size0];
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        data.ResourceEvolution[idx0] = (PriceEvolution)ReadNextInt();
+                    }
+                }
+                {
+                    int size0 = ReadNextInt();
                     data.Building = new Building[size0];
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {

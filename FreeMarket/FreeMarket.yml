@@ -77,6 +77,13 @@ Files:
           - Name:   resource_price
             Type:   int32
             Array:  1
+          - Name:   resource_evolution
+            Type:   price_evolution
+            Array:  1
+            Condition:
+                Function:       know_resource_evolution
+                Context:        Parent
+                DefaultValue:   unknown
           - Name:   building
             Type:   building
             Array:  1
@@ -93,6 +100,16 @@ Files:
             Type:   auction
             Array:  1
             Index:  Strong
+  - Name:   resource
+    Enum:
+      - Name:   price_evolution
+        Value:
+            unknown:        0
+            huge_decrease:  1
+            small_decrease: 2
+            stable:         3
+            small_increase: 4
+            huge_increase:  5
   - Name:   map
     Class:
       - Name:   cell

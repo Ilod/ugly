@@ -31,6 +31,7 @@ namespace FreeMarket
         : turn()
         , map()
         , resourcePrice()
+        , resourceEvolution()
         , building()
         , player()
         , auction()
