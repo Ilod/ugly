@@ -187,6 +187,38 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             #>
 
                     }<#
+            if (m.Condition.DefaultValue != null)
+            {
+                #>
+
+                    else
+                    {<#
+                switch (CxxHelper.Definition.GetBasicType(m.Type))
+                {
+                    case BasicType.Enum:
+                        #>
+
+                        buffer << (int)<#= Case.CamelCase.Convert(m.Type) #>::<#= Case.CamelCase.Convert(m.Condition.DefaultValue) #> << " ";<#
+                        break;
+                    case BasicType.Bool:
+                        #>
+
+                        buffer << <#= string.Equals(m.Condition.DefaultValue, "true", StringComparison.OrdinalIgnoreCase) ? 1 : 0 #> << " ";<#
+                        break;
+                    case BasicType.Char:
+                        #>
+
+                        buffer << '<#= m.Condition.DefaultValue #>' << " ";<#
+                        break;
+                    default:
+                        #>
+
+                        buffer << <#= m.Condition.DefaultValue #> << " ";<#
+                        break;
+                }#>
+
+                    }<#
+            }
         }
         for (int i = 0; i < m.Array; ++i)
         {
