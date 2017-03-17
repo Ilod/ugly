@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include "AuctionPrivate.h"
 
 namespace ugly
 {
@@ -22,6 +23,7 @@ namespace ugly
             std::int32_t buyer;
             std::int32_t turn;
             BuildingType* building;
+            AuctionPrivate additionalData;
     
             Auction();
             

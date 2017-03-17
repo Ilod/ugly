@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include "ResourcePrivate.h"
 
 namespace ugly
 {

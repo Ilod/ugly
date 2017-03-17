@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include "MapPrivate.h"
 
 namespace ugly
 {
@@ -34,6 +35,7 @@ namespace ugly
             CellType type;
             Building* building;
             std::int32_t price;
+            CellPrivate additionalData;
     
             Cell();
             

@@ -34,16 +34,17 @@ namespace ugly.CodeGenerator.cxx
         {
             Server = true;
             Definition = gameDef;
-            Directory.CreateDirectory(path);
+            Directory.CreateDirectory(Path.Combine(path, "private"));
             Generator.WriteFile(Path.Combine(path, "Serializer.h"), new CxxSerializerHeader().TransformText());
             Generator.WriteFile(Path.Combine(path, "Serializer.cpp"), new CxxSerializationCode().TransformText());
             Generator.WriteFile(Path.Combine(path, "Game.h"), new CxxServerHeader().TransformText());
-            Generator.WriteFile(Path.Combine(path, "Game.cpp"), new CxxServerCode().TransformText());
+            Generator.WriteFile(Path.Combine(path, "private", "Game.cpp"), new CxxServerCode().TransformText());
             foreach (GameFile file in gameDef.Files)
             {
                 CurrentFile = file;
                 Generator.WriteFile(Path.Combine(path, string.Format("{0}.h", Case.CamelCase.Convert(file.Name))), new CxxHeader().TransformText());
-                Generator.WriteFile(Path.Combine(path, string.Format("{0}.cpp", Case.CamelCase.Convert(file.Name))), new CxxCode().TransformText());
+                Generator.WriteFile(Path.Combine(path, "private", string.Format("{0}Private.h", Case.CamelCase.Convert(file.Name))), new CxxHeaderPrivate().TransformText());
+                Generator.WriteFile(Path.Combine(path, "private", string.Format("{0}.cpp", Case.CamelCase.Convert(file.Name))), new CxxCode().TransformText());
             }
         }
 

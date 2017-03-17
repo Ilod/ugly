@@ -13,56 +13,80 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="generated headers">
+      <UniqueIdentifier>{9094f05d-6f77-4b17-a425-5f3289509ab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="generated sources">
+      <UniqueIdentifier>{30763566-1459-443c-92fe-28e253b0c9b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\FreeMarket\generated\server\Auction.h">
+      <Filter>generated headers</Filter>
+    </ClInclude>
     <ClInclude Include="..\FreeMarket\generated\server\Building.h">
-      <Filter>Header Files</Filter>
+      <Filter>generated headers</Filter>
     </ClInclude>
     <ClInclude Include="..\FreeMarket\generated\server\Game.h">
-      <Filter>Header Files</Filter>
+      <Filter>generated headers</Filter>
     </ClInclude>
     <ClInclude Include="..\FreeMarket\generated\server\Interface.h">
-      <Filter>Header Files</Filter>
+      <Filter>generated headers</Filter>
     </ClInclude>
     <ClInclude Include="..\FreeMarket\generated\server\Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\FreeMarket\generated\server\Serializer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\FreeMarket\generated\server\Auction.h">
-      <Filter>Header Files</Filter>
+      <Filter>generated headers</Filter>
     </ClInclude>
     <ClInclude Include="..\FreeMarket\generated\server\Power.h">
-      <Filter>Header Files</Filter>
+      <Filter>generated headers</Filter>
     </ClInclude>
     <ClInclude Include="..\FreeMarket\generated\server\Resource.h">
+      <Filter>generated headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FreeMarket\generated\server\Serializer.h">
+      <Filter>generated headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AuctionPrivate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingPrivate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InterfacePrivate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapPrivate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerPrivate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourcePrivate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\FreeMarket\generated\server\Serializer.cpp">
+      <Filter>generated sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\FreeMarket\generated\server\Building.cpp">
+    <ClCompile Include="Auction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\FreeMarket\generated\server\Game.cpp">
+    <ClCompile Include="Building.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\FreeMarket\generated\server\Interface.cpp">
+    <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\FreeMarket\generated\server\Map.cpp">
+    <ClCompile Include="Interface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\FreeMarket\generated\server\Auction.cpp">
+    <ClCompile Include="Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\FreeMarket\generated\server\Power.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\FreeMarket\generated\server\Resource.cpp">
+    <ClCompile Include="Power.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

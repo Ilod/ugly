@@ -68,6 +68,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CsInterface.tt</DependentUpon>
     </Compile>
+    <Compile Include="cxx\CxxHeaderPrivate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CxxHeaderPrivate.tt</DependentUpon>
+    </Compile>
     <Compile Include="cxx\CxxHelper.cs" />
     <Compile Include="cxx\CxxCode.cs">
       <AutoGen>True</AutoGen>
@@ -147,6 +152,10 @@
     <Content Include="cxx\CxxHeader.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CxxHeader.cs</LastGenOutput>
+    </Content>
+    <Content Include="cxx\CxxHeaderPrivate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CxxHeaderPrivate.cs</LastGenOutput>
     </Content>
     <Content Include="cxx\CxxImpl.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

@@ -32,7 +32,24 @@ namespace ugly.CodeGenerator.cxx
             
             #line 8 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
+if (CxxHelper.Server)
+{
+    
+            
+            #line default
+            #line hidden
+            this.Write("\r\n#include \"");
+            
+            #line 13 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.CurrentFile.Name)));
+            
+            #line default
+            #line hidden
+            this.Write("Private.h\"");
+            
+            #line 13 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
+}
 ISet<string> weak = new SortedSet<string>();
 ISet<string> strong = new SortedSet<string>();
 foreach (GameClass c in CxxHelper.CurrentFile.Class)
@@ -85,14 +102,14 @@ foreach (string file in strong)
             #line hidden
             this.Write("\r\n#include \"");
             
-            #line 58 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 63 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(file)));
             
             #line default
             #line hidden
             this.Write(".h\"");
             
-            #line 58 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 63 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
 }
 
@@ -104,7 +121,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n\r\nnamespace ugly\r\n{");
             
-            #line 67 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 72 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
     this.PushIndent("    ");
 }
@@ -114,14 +131,14 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\nnamespace ");
             
-            #line 72 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 77 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace)));
             
             #line default
             #line hidden
             this.Write("\r\n{");
             
-            #line 73 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 78 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
     foreach (string s in weak)
     {
@@ -136,14 +153,14 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n    struct ");
             
-            #line 83 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 88 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(s)));
             
             #line default
             #line hidden
             this.Write(";");
             
-            #line 83 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 88 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
     }
 
@@ -156,14 +173,14 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n    \r\n    enum class ");
             
-            #line 92 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 97 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(e.Name)));
             
             #line default
             #line hidden
             this.Write("\r\n    {");
             
-            #line 93 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 98 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
         foreach (KeyValuePair<string, int> kvp in e.Value)
         {
@@ -173,21 +190,21 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("        \r\n        ");
             
-            #line 98 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 103 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(kvp.Key)));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 98 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 103 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Value));
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 98 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 103 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
         }
         
@@ -196,7 +213,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n    };");
             
-            #line 102 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 107 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
     }
     
@@ -208,14 +225,14 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n\r\n    struct ");
             
-            #line 110 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 115 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(c.Name)));
             
             #line default
             #line hidden
             this.Write("\r\n    {");
             
-            #line 111 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 116 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
         foreach (ClassMember m in c.Member)
         {
@@ -225,7 +242,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n        ");
             
-            #line 116 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 121 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             for (int i = 0; i < m.Array; ++i)
             {
@@ -235,7 +252,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("std::vector<");
             
-            #line 119 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 124 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
             BasicType type = CxxHelper.Definition.GetBasicType(m.Type);
@@ -246,13 +263,13 @@ if (CxxHelper.Server)
             #line default
             #line hidden
             
-            #line 124 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 129 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(type)));
             
             #line default
             #line hidden
             
-            #line 124 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 129 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
             else
@@ -262,13 +279,13 @@ if (CxxHelper.Server)
             #line default
             #line hidden
             
-            #line 128 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 133 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Type)));
             
             #line default
             #line hidden
             
-            #line 128 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 133 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
             if (m.IsWeak)
@@ -279,7 +296,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("*");
             
-            #line 132 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 137 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
             for (int i = 0; i < m.Array; ++i)
@@ -290,7 +307,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write(">");
             
-            #line 136 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 141 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
             
@@ -299,14 +316,33 @@ if (CxxHelper.Server)
             #line hidden
             this.Write(" ");
             
-            #line 138 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 143 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(m.Name)));
             
             #line default
             #line hidden
             this.Write(";");
             
-            #line 138 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 143 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+
+        }
+
+        if (CxxHelper.Server)
+        {
+            
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        ");
+            
+            #line 150 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(c.Name)));
+            
+            #line default
+            #line hidden
+            this.Write("Private additionalData;");
+            
+            #line 150 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
         }
         
@@ -315,14 +351,14 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n\r\n        ");
             
-            #line 143 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 155 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(c.Name)));
             
             #line default
             #line hidden
             this.Write("();\r\n        ");
             
-            #line 144 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 156 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
         foreach (ClassMethod m in c.Method)
         {
@@ -334,7 +370,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n        bool");
             
-            #line 151 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 163 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
             else
@@ -345,7 +381,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n        void");
             
-            #line 157 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 169 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
             
@@ -354,14 +390,14 @@ if (CxxHelper.Server)
             #line hidden
             this.Write(" ");
             
-            #line 159 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 171 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Name)));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 159 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 171 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             if (CxxHelper.Server)
             {
@@ -371,41 +407,41 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("struct ");
             
-            #line 162 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 174 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
             
             #line default
             #line hidden
             this.Write("& gameSetup, struct ");
             
-            #line 162 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 174 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup)));
             
             #line default
             #line hidden
             this.Write("& playerSetup, struct ");
             
-            #line 162 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 174 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default
             #line hidden
             this.Write("& gameState, struct ");
             
-            #line 162 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 174 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState)));
             
             #line default
             #line hidden
             this.Write("& playerState");
             
-            #line 162 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 174 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.Param.Any() ? ", " : ""));
             
             #line default
             #line hidden
             
-            #line 162 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 174 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
             for (int idxParam = 0; idxParam < m.Param.Count; ++idxParam)
@@ -420,7 +456,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write(", ");
             
-            #line 170 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 182 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 }
                 if (type == BasicType.Class)
@@ -431,7 +467,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("const ");
             
-            #line 174 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 186 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 }
                 if (type.IsBasic())
@@ -441,13 +477,13 @@ if (CxxHelper.Server)
             #line default
             #line hidden
             
-            #line 178 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 190 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CxxHelper.GetBasicTypeName(type)));
             
             #line default
             #line hidden
             
-            #line 178 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 190 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 }
                 else
@@ -457,13 +493,13 @@ if (CxxHelper.Server)
             #line default
             #line hidden
             
-            #line 182 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 194 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(a.Type)));
             
             #line default
             #line hidden
             
-            #line 182 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 194 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 }
                 if (type == BasicType.Class)
@@ -474,7 +510,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("&");
             
-            #line 186 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 198 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 }
                 
@@ -483,13 +519,13 @@ if (CxxHelper.Server)
             #line hidden
             this.Write(" ");
             
-            #line 188 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 200 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.LowerCamelCase.Convert(a.Name)));
             
             #line default
             #line hidden
             
-            #line 188 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 200 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
             
@@ -498,7 +534,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write(");");
             
-            #line 190 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 202 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
         }
         if (CxxHelper.Server)
@@ -511,7 +547,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n");
             
-            #line 198 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 210 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
             foreach (Tuple<string, int> m in c.ConditionMethod)
@@ -522,42 +558,42 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n        bool ");
             
-            #line 204 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 216 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(m.Item1)));
             
             #line default
             #line hidden
             this.Write("(struct ");
             
-            #line 204 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 216 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
             
             #line default
             #line hidden
             this.Write("& gameSetup, struct ");
             
-            #line 204 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 216 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup)));
             
             #line default
             #line hidden
             this.Write("& playerSetup, struct ");
             
-            #line 204 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 216 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default
             #line hidden
             this.Write("& gameState, struct ");
             
-            #line 204 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 216 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState)));
             
             #line default
             #line hidden
             this.Write("& playerState");
             
-            #line 204 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 216 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 for (int i = 0; i < m.Item2; ++i)
                 {
@@ -567,13 +603,13 @@ if (CxxHelper.Server)
             #line hidden
             this.Write(", int idx");
             
-            #line 207 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 219 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             
-            #line 207 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 219 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 }
                 
@@ -582,7 +618,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write(");");
             
-            #line 209 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 221 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
             }
         }
@@ -592,7 +628,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n    };");
             
-            #line 214 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 226 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
     }
     
@@ -601,7 +637,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n}");
             
-            #line 218 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 230 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
 if (CxxHelper.Server)
 {
@@ -612,7 +648,7 @@ if (CxxHelper.Server)
             #line hidden
             this.Write("\r\n}");
             
-            #line 224 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
+            #line 236 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
 }
 

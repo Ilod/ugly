@@ -6,7 +6,12 @@
 #pragma once
 #include <vector>
 #include <cstdint><#
+if (CxxHelper.Server)
+{
+    #>
 
+#include "<#= Case.CamelCase.Convert(CxxHelper.CurrentFile.Name) #>Private.h"<#
+}
 ISet<string> weak = new SortedSet<string>();
 ISet<string> strong = new SortedSet<string>();
 foreach (GameClass c in CxxHelper.CurrentFile.Class)
@@ -136,6 +141,13 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
                 #>><#
             }
             #> <#= Case.LowerCamelCase.Convert(m.Name) #>;<#
+        }
+
+        if (CxxHelper.Server)
+        {
+            #>
+
+        <#= Case.CamelCase.Convert(c.Name) #>Private additionalData;<#
         }
         #>
 

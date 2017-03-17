@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include "BuildingPrivate.h"
 #include "Power.h"
 
 namespace ugly
@@ -13,6 +14,7 @@ namespace ugly
         {
             std::int32_t id;
             std::vector<Action> action;
+            BuildingTypePrivate additionalData;
     
             BuildingType();
             
@@ -22,6 +24,7 @@ namespace ugly
         {
             std::int32_t id;
             BuildingType* building;
+            BuildingCardPrivate additionalData;
     
             BuildingCard();
             
@@ -34,6 +37,7 @@ namespace ugly
             BuildingType* type;
             Cell* position;
             std::int32_t owner;
+            BuildingPrivate additionalData;
     
             Building();
             

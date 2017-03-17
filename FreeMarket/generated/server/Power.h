@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include "PowerPrivate.h"
 
 namespace ugly
 {
@@ -29,6 +30,7 @@ namespace ugly
             std::int32_t quantity;
             std::int32_t resource;
             Building* buildingSource;
+            PowerParameterPrivate additionalData;
     
             PowerParameter();
             
@@ -42,6 +44,7 @@ namespace ugly
             ParameterType resource;
             std::int32_t resourceForce;
             ParameterType buildingSource;
+            PowerPrivate additionalData;
     
             Power();
             
@@ -54,6 +57,7 @@ namespace ugly
             std::int32_t actionPoint;
             std::int32_t cooldown;
             std::int32_t turnLimit;
+            ActionPrivate additionalData;
     
             Action();
             
