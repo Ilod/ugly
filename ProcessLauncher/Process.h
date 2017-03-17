@@ -55,6 +55,7 @@ namespace ugly
             virtual bool Start() = 0;
             virtual bool Stop() = 0;
             virtual bool Kill() = 0;
+            virtual ProcessState GetState() const = 0;
 
             virtual ProcessStepResult Run(const std::string& input, std::chrono::high_resolution_clock::duration timeout, const std::string& endStepMarker, ProcessResultStreamer* streamer = nullptr) = 0;
         };
@@ -66,6 +67,7 @@ namespace ugly
             bool Start() override;
             bool Stop() override;
             bool Kill() override;
+            ProcessState GetState() const override;
 
             ProcessStepResult Run(const std::string& input, std::chrono::high_resolution_clock::duration timeout, const std::string& endStepMarker, ProcessResultStreamer* streamer = nullptr) override;
         protected:

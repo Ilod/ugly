@@ -37,5 +37,10 @@ namespace ugly
         {
             players.push_back(std::move(process));
         }
+
+        ugly::process::ProcessState GameBase::GetPlayerState(int player)
+        {
+            return players[player]->GetState();
+        }
     }
 }

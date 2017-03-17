@@ -57,6 +57,11 @@ namespace ugly
 
         IProcess::~IProcess() {}
 
+        ProcessState Process::GetState() const
+        {
+            return state;
+        }
+
         bool Process::Create()
         {
             if (state != ProcessState::NotCreated)

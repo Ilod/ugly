@@ -27,6 +27,7 @@ namespace ugly
             void AddPlayer(loader::unique_ptr<process::IProcess> process) override;
             int GetPlayerCount() const override { return (int)players.size(); }
         protected:
+            ugly::process::ProcessState GetPlayerState(int player);
             virtual void InitGame() = 0;
             virtual std::string GetGameSetup(int player) = 0;
             virtual std::string GetGameState(int player) = 0;
