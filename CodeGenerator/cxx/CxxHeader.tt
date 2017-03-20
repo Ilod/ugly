@@ -88,6 +88,23 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
     struct <#= Case.CamelCase.Convert(s) #>;<#
     }
 
+    foreach (GameConstantContainer c in CxxHelper.CurrentFile.ConstantContainer)
+    {
+        #>
+
+    namespace <#= Case.CamelCase.Convert(c.Name) #>
+    {<#
+        foreach (GameConstant gc in c.Constant)
+        {
+            #>
+
+        static const <#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(gc.Type)) #> <#= Case.CamelCase.Convert(gc.Name) #> = <#= gc.Value #>;<#
+        }
+        #>
+
+    }<#
+    }
+
 
     foreach (GameEnum e in CxxHelper.CurrentFile.Enum)
     {
@@ -148,6 +165,16 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
             #>
 
         <#= Case.CamelCase.Convert(c.Name) #>Private additionalData;<#
+        }
+        #>
+        
+
+        <#
+        foreach (GameConstant gc in c.Constant)
+        {
+            #>
+
+        static const <#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(gc.Type)) #> <#= Case.CamelCase.Convert(gc.Name) #> = <#= gc.Value #>;<#
         }
         #>
 

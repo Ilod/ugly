@@ -8,6 +8,24 @@ using System.Collections.Generic;
 
 namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
 {<#
+    foreach (GameConstantContainer c in CsHelper.CurrentFile.ConstantContainer)
+    {
+    #>
+
+
+    public static class <#= Case.CamelCase.Convert(c.Name) #>
+    {<#
+        foreach (GameConstant gc in c.Constant)
+        {
+            #>
+
+        public const <#= CsHelper.GetBasicTypeName(CsHelper.Definition.GetBasicType(gc.Type)) #> <#= Case.CamelCase.Convert(gc.Name) #> = <#= gc.Value #>;<#
+        }
+        #>
+
+    }<#
+    }
+
     foreach (GameEnum e in CsHelper.CurrentFile.Enum)
     {
     #>
@@ -33,6 +51,15 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
 
     public class <#= Case.CamelCase.Convert(c.Name) #>
     {<#
+        foreach (GameConstant gc in c.Constant)
+        {
+            #>
+
+        public const <#= CsHelper.GetBasicTypeName(CsHelper.Definition.GetBasicType(gc.Type)) #> <#= Case.CamelCase.Convert(gc.Name) #> = <#= gc.Value #>;<#
+        }
+        #>
+
+        <#
         foreach (ClassMember m in c.Member)
         {
             #>

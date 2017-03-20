@@ -144,6 +144,7 @@ namespace ugly.CodeGenerator
         public string Name;
         public List<GameClass> Class = new List<GameClass>();
         public List<GameEnum> Enum = new List<GameEnum>();
+        public List<GameConstantContainer> ConstantContainer = new List<GameConstantContainer>();
     }
 
     public class GameEnum
@@ -154,11 +155,25 @@ namespace ugly.CodeGenerator
         public GameFile File;
     }
 
+    public class GameConstant
+    {
+        public string Name;
+        public string Type = "int32";
+        public int Value;
+    }
+
+    public class GameConstantContainer
+    {
+        public string Name;
+        public List<GameConstant> Constant = new List<GameConstant>();
+    }
+
     public class GameClass
     {
         public string Name;
         public List<ClassMember> Member = new List<ClassMember>();
         public List<ClassMethod> Method = new List<ClassMethod>();
+        public List<GameConstant> Constant = new List<GameConstant>();
         public SortedSet<Tuple<string, int>> ConditionMethod = new SortedSet<Tuple<string, int>>();
         public GameClassIdConfig Id = null;
         public List<IndexMapping> IndexMapping = new List<IndexMapping>();
