@@ -6,13 +6,16 @@ namespace FreeMarket
 
     public class BuildingType
     {
+        
         public int Id;
+        public int ActionPoint;
         public Action[] Action;
         
     }
 
     public class BuildingCard
     {
+        
         public int Id;
         public BuildingType Building;
         
@@ -24,6 +27,7 @@ namespace FreeMarket
 
     public class Building
     {
+        
         public int Id;
         public BuildingType Type;
         public Cell Position;

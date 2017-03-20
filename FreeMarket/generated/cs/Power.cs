@@ -22,6 +22,7 @@ namespace FreeMarket
 
     public class PowerParameter
     {
+        
         public int Quantity;
         public int Resource;
         public Building BuildingSource;
@@ -30,17 +31,19 @@ namespace FreeMarket
 
     public class Power
     {
+        
         public PowerType Type;
         public ParameterType Quantity;
         public int QuantityForced;
         public ParameterType Resource;
-        public int ResourceForce;
+        public int ResourceForced;
         public ParameterType BuildingSource;
         
     }
 
     public class Action
     {
+        
         public int Id;
         public Power Power = new Power();
         public int ActionPoint;

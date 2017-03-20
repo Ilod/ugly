@@ -11,7 +11,9 @@ namespace FreeMarket
     struct PlayerConfig
     {
         std::int32_t id;
-        std::int32_t team;
+        std::int32_t team;        
+
+        
 
         PlayerConfig();
         
@@ -27,7 +29,9 @@ namespace FreeMarket
         std::int32_t startMoney;
         std::int32_t resourceCount;
         std::vector<BuildingType> building;
-        std::vector<PlayerConfig> player;
+        std::vector<PlayerConfig> player;        
+
+        
 
         GameConfig();
         
@@ -38,7 +42,9 @@ namespace FreeMarket
         std::int32_t id;
         std::int32_t team;
         std::int32_t money;
-        std::vector<Building*> building;
+        std::vector<Building*> building;        
+
+        
 
         PlayerState();
         
@@ -53,7 +59,9 @@ namespace FreeMarket
         std::vector<Building> building;
         std::vector<PlayerState> player;
         std::vector<Auction> auction;
-        std::vector<Auction> endedAuction;
+        std::vector<Auction> endedAuction;        
+
+        
 
         GameState();
         

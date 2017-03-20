@@ -17,7 +17,7 @@ namespace ugly
             , quantity()
             , quantityForced()
             , resource()
-            , resourceForce()
+            , resourceForced()
             , buildingSource()
         { }
             

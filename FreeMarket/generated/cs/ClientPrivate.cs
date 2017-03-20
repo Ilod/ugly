@@ -284,6 +284,9 @@ namespace FreeMarket
             public void Deserialize(BuildingType data, GameConfig gameSetup, GameState gameState)
             {
                 {
+                    data.ActionPoint = ReadNextInt();
+                }
+                {
                     int size0 = ReadNextInt();
                     data.Action = new Action[size0];
                     for (int idx0 = 0; idx0 < size0; ++idx0)
@@ -335,7 +338,7 @@ namespace FreeMarket
                     data.Resource = (ParameterType)ReadNextInt();
                 }
                 {
-                    data.ResourceForce = ReadNextInt();
+                    data.ResourceForced = ReadNextInt();
                 }
                 {
                     data.BuildingSource = (ParameterType)ReadNextInt();

@@ -9,7 +9,10 @@ namespace FreeMarket
     struct BuildingType
     {
         std::int32_t id;
-        std::vector<Action> action;
+        std::int32_t actionPoint;
+        std::vector<Action> action;        
+
+        
 
         BuildingType();
         
@@ -18,7 +21,9 @@ namespace FreeMarket
     struct BuildingCard
     {
         std::int32_t id;
-        BuildingType* building;
+        BuildingType* building;        
+
+        
 
         BuildingCard();
         
@@ -30,7 +35,9 @@ namespace FreeMarket
         std::int32_t id;
         BuildingType* type;
         Cell* position;
-        std::int32_t owner;
+        std::int32_t owner;        
+
+        
 
         Building();
         

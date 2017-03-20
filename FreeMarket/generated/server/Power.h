@@ -30,7 +30,9 @@ namespace ugly
             std::int32_t quantity;
             std::int32_t resource;
             Building* buildingSource;
-            PowerParameterPrivate additionalData;
+            PowerParameterPrivate additionalData;        
+    
+            
     
             PowerParameter();
             
@@ -42,9 +44,11 @@ namespace ugly
             ParameterType quantity;
             std::int32_t quantityForced;
             ParameterType resource;
-            std::int32_t resourceForce;
+            std::int32_t resourceForced;
             ParameterType buildingSource;
-            PowerPrivate additionalData;
+            PowerPrivate additionalData;        
+    
+            
     
             Power();
             
@@ -57,7 +61,9 @@ namespace ugly
             std::int32_t actionPoint;
             std::int32_t cooldown;
             std::int32_t turnLimit;
-            ActionPrivate additionalData;
+            ActionPrivate additionalData;        
+    
+            
     
             Action();
             

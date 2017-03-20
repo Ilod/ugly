@@ -30,7 +30,9 @@ namespace FreeMarket
         Ownership ownership;
         CellType type;
         Building* building;
-        std::int32_t price;
+        std::int32_t price;        
+
+        
 
         Cell();
         

@@ -183,6 +183,9 @@ namespace ugly
             template<> void SerializeInternal(BuildingType& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
                 {
+                    buffer << data.actionPoint << " ";
+                }
+                {
                     int size0 = (int)(data.action.size());
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
@@ -284,7 +287,7 @@ namespace ugly
                     buffer << (int)data.resource << " ";
                 }
                 {
-                    buffer << data.resourceForce << " ";
+                    buffer << data.resourceForced << " ";
                 }
                 {                
                     buffer << (int)data.buildingSource << " ";

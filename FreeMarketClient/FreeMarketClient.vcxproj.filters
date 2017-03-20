@@ -48,6 +48,9 @@
     <ClCompile Include="..\FreeMarket\generated\cxx\Resource.cpp">
       <Filter>generated</Filter>
     </ClCompile>
+    <ClCompile Include="..\FreeMarket\generated\cxx\Player.cpp">
+      <Filter>generated</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\FreeMarket\generated\cxx\Map.h">
@@ -69,6 +72,9 @@
       <Filter>generated headers</Filter>
     </ClInclude>
     <ClInclude Include="..\FreeMarket\generated\cxx\Resource.h">
+      <Filter>generated headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FreeMarket\generated\cxx\Player.h">
       <Filter>generated headers</Filter>
     </ClInclude>
   </ItemGroup>

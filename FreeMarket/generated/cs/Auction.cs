@@ -11,6 +11,7 @@ namespace FreeMarket
 
     public class Auction
     {
+        
         public int Id;
         public AuctionType Type;
         public int Price;

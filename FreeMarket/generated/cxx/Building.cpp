@@ -5,6 +5,7 @@ namespace FreeMarket
 {
     BuildingType::BuildingType()
         : id()
+        , actionPoint()
         , action()
     { }
         

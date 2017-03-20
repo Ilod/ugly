@@ -100,6 +100,16 @@ Files:
             Type:   auction
             Array:  1
             Index:  Strong
+  - Name:   player
+    ConstantContainer:
+      - Name:   player
+        Constant:
+          - Name:   city
+            Value:  -1
+          - Name:   none
+            Value:  -2
+          - Name:   multiple
+            Value:  -3
   - Name:   resource
     Enum:
       - Name:   price_evolution
@@ -159,6 +169,8 @@ Files:
       - Name:   building_type
         Member:
           - Name:   id
+            Type:   int32
+          - Name:   action_point
             Type:   int32
           - Name:   action
             Type:   action
@@ -258,7 +270,7 @@ Files:
             Type:   int32
           - Name:   resource
             Type:   parameter_type
-          - Name:   resource_force
+          - Name:   resource_forced
             Type:   int32
           - Name:   building_source
             Type:   parameter_type

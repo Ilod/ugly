@@ -23,7 +23,9 @@ namespace ugly
             std::int32_t buyer;
             std::int32_t turn;
             BuildingType* building;
-            AuctionPrivate additionalData;
+            AuctionPrivate additionalData;        
+    
+            
     
             Auction();
             

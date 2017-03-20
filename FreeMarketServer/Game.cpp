@@ -22,7 +22,7 @@ namespace ugly
                 }
                 gameSetup.mapSizeX = 41;
                 gameSetup.mapSizeY = 40;
-                gameSetup.resourceCount = 5;
+                gameSetup.resourceCount = 3;
                 gameSetup.startMoney = 200;
                 gameSetup.setupTimeLimit = 500;
                 gameSetup.turnTimeLimit = 100;
@@ -57,6 +57,124 @@ namespace ugly
                     price.min = -2;
                     price.max = 2;
                     gameSetup.additionalData.resourcePriceEvolution.push_back(price);
+                }
+
+                {
+                    BuildingType building;
+                    building.id = -1;
+                    Action action;
+                    
+                    {
+                        building.action.clear();
+                        ++building.id;
+                        building.actionPoint = 3;
+
+                        action.id = -1;
+
+                        ++action.id;
+                        action.actionPoint = 1;
+                        action.cooldown = -1;
+                        action.turnLimit = -1;
+                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.quantity = ParameterType::Choice;
+                        action.power.quantityForced = -1;
+                        action.power.resource = ParameterType::Choice;
+                        action.power.resourceForced = -1;
+                        action.power.type = FreeMarket::PowerType::SellResource;
+                        building.action.push_back(action);
+
+                        gameSetup.building.push_back(building);
+                    }
+
+                    for (int r = 0; r < gameSetup.resourceCount; ++r)
+                    {
+                        building.action.clear();
+                        ++building.id;
+                        building.actionPoint = 1;
+
+                        action.id = -1;
+
+                        ++action.id;
+                        action.actionPoint = 1;
+                        action.cooldown = -1;
+                        action.turnLimit = -1;
+                        action.power.buildingSource = ParameterType::Self;
+                        action.power.quantity = ParameterType::Forced;
+                        action.power.quantityForced = 2;
+                        action.power.resource = ParameterType::Forced;
+                        action.power.resourceForced = r;
+                        action.power.type = FreeMarket::PowerType::ProduceResource;
+                        building.action.push_back(action);
+
+                        gameSetup.building.push_back(building);
+                    }
+
+                    for (int r = 0; r < gameSetup.resourceCount; ++r)
+                    {
+                        building.action.clear();
+                        ++building.id;
+                        building.actionPoint = 1;
+
+                        action.id = -1;
+
+                        ++action.id;
+                        action.actionPoint = 1;
+                        action.cooldown = -1;
+                        action.turnLimit = -1;
+                        action.power.buildingSource = ParameterType::Self;
+                        action.power.quantity = ParameterType::Forced;
+                        action.power.quantityForced = 5;
+                        action.power.resource = ParameterType::Forced;
+                        action.power.resourceForced = r;
+                        action.power.type = FreeMarket::PowerType::ProduceResource;
+                        building.action.push_back(action);
+
+                        gameSetup.building.push_back(building);
+                    }
+
+                    {
+                        building.action.clear();
+                        ++building.id;
+                        building.actionPoint = 1;
+
+                        action.id = -1;
+
+                        ++action.id;
+                        action.actionPoint = 1;
+                        action.cooldown = -1;
+                        action.turnLimit = -1;
+                        action.power.buildingSource = ParameterType::Self;
+                        action.power.quantity = ParameterType::Forced;
+                        action.power.quantityForced = 1;
+                        action.power.resource = ParameterType::All;
+                        action.power.resourceForced = -1;
+                        action.power.type = FreeMarket::PowerType::ProduceResource;
+                        building.action.push_back(action);
+
+                        gameSetup.building.push_back(building);
+                    }
+
+                    {
+                        building.action.clear();
+                        ++building.id;
+                        building.actionPoint = 1;
+
+                        action.id = -1;
+
+                        ++action.id;
+                        action.actionPoint = 1;
+                        action.cooldown = -1;
+                        action.turnLimit = -1;
+                        action.power.buildingSource = ParameterType::Self;
+                        action.power.quantity = ParameterType::Forced;
+                        action.power.quantityForced = 2;
+                        action.power.resource = ParameterType::Choice;
+                        action.power.resourceForced = -1;
+                        action.power.type = FreeMarket::PowerType::ProduceResource;
+                        building.action.push_back(action);
+
+                        gameSetup.building.push_back(building);
+                    }
                 }
             }
 
@@ -97,8 +215,8 @@ namespace ugly
                     for (int r = 0; r < gameSetup.resourceCount; ++r)
                     {
                         gameState.resourcePrice[r] += gameState.additionalData.resourceEvolution[r];
-                        if (gameState.resourcePrice < 1)
-                            gameState.resourcePrice = 1;
+                        if (gameState.resourcePrice[r] < 1)
+                            gameState.resourcePrice[r] = 1;
                         const PriceEvolutionRange& evolution = gameSetup.additionalData.resourcePriceEvolution[typeDistribution(generator)];
                         gameState.resourceEvolution[r] = evolution.type;
                         gameState.additionalData.resourceEvolution[r] = std::uniform_int_distribution<>(evolution.min, evolution.max)(generator);

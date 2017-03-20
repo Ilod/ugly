@@ -25,7 +25,9 @@ namespace FreeMarket
     {
         std::int32_t quantity;
         std::int32_t resource;
-        Building* buildingSource;
+        Building* buildingSource;        
+
+        
 
         PowerParameter();
         
@@ -37,8 +39,10 @@ namespace FreeMarket
         ParameterType quantity;
         std::int32_t quantityForced;
         ParameterType resource;
-        std::int32_t resourceForce;
-        ParameterType buildingSource;
+        std::int32_t resourceForced;
+        ParameterType buildingSource;        
+
+        
 
         Power();
         
@@ -50,7 +54,9 @@ namespace FreeMarket
         Power power;
         std::int32_t actionPoint;
         std::int32_t cooldown;
-        std::int32_t turnLimit;
+        std::int32_t turnLimit;        
+
+        
 
         Action();
         

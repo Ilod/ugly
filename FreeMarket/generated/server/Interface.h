@@ -16,7 +16,9 @@ namespace ugly
         {
             std::int32_t id;
             std::int32_t team;
-            PlayerConfigPrivate additionalData;
+            PlayerConfigPrivate additionalData;        
+    
+            
     
             PlayerConfig();
             
@@ -33,7 +35,9 @@ namespace ugly
             std::int32_t resourceCount;
             std::vector<BuildingType> building;
             std::vector<PlayerConfig> player;
-            GameConfigPrivate additionalData;
+            GameConfigPrivate additionalData;        
+    
+            
     
             GameConfig();
             
@@ -45,7 +49,9 @@ namespace ugly
             std::int32_t team;
             std::int32_t money;
             std::vector<Building*> building;
-            PlayerStatePrivate additionalData;
+            PlayerStatePrivate additionalData;        
+    
+            
     
             PlayerState();
             
@@ -61,7 +67,9 @@ namespace ugly
             std::vector<PlayerState> player;
             std::vector<Auction> auction;
             std::vector<Auction> endedAuction;
-            GameStatePrivate additionalData;
+            GameStatePrivate additionalData;        
+    
+            
     
             GameState();
             

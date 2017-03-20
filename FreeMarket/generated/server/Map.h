@@ -35,7 +35,9 @@ namespace ugly
             CellType type;
             Building* building;
             std::int32_t price;
-            CellPrivate additionalData;
+            CellPrivate additionalData;        
+    
+            
     
             Cell();
             

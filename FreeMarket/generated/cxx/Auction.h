@@ -18,7 +18,9 @@ namespace FreeMarket
         std::int32_t seller;
         std::int32_t buyer;
         std::int32_t turn;
-        BuildingType* building;
+        BuildingType* building;        
+
+        
 
         Auction();
         

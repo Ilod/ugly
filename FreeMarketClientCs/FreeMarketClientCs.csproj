@@ -64,6 +64,9 @@
     <Compile Include="..\FreeMarket\generated\cs\Map.cs">
       <Link>generated\Map.cs</Link>
     </Compile>
+    <Compile Include="..\FreeMarket\generated\cs\Player.cs">
+      <Link>generated\Player.cs</Link>
+    </Compile>
     <Compile Include="..\FreeMarket\generated\cs\Power.cs">
       <Link>generated\Power.cs</Link>
     </Compile>

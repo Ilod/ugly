@@ -8,6 +8,7 @@ namespace ugly
     {
         BuildingType::BuildingType()
             : id()
+            , actionPoint()
             , action()
         { }
             

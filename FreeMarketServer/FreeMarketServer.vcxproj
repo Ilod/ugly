@@ -160,6 +160,7 @@
     <ClInclude Include="..\FreeMarket\generated\server\Game.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Interface.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Map.h" />
+    <ClInclude Include="..\FreeMarket\generated\server\Player.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Power.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Resource.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Serializer.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="BuildingPrivate.h" />
     <ClInclude Include="InterfacePrivate.h" />
     <ClInclude Include="MapPrivate.h" />
+    <ClInclude Include="PlayerPrivate.h" />
     <ClInclude Include="PowerPrivate.h" />
     <ClInclude Include="ResourcePrivate.h" />
   </ItemGroup>
@@ -177,6 +179,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Power.cpp" />
     <ClCompile Include="Resource.cpp" />
   </ItemGroup>

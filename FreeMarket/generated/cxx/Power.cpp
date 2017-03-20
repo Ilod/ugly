@@ -14,7 +14,7 @@ namespace FreeMarket
         , quantity()
         , quantityForced()
         , resource()
-        , resourceForce()
+        , resourceForced()
         , buildingSource()
     { }
         

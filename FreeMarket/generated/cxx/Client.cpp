@@ -253,6 +253,10 @@ namespace FreeMarket
         template<> void Deserialize(BuildingType& data, const char*& buf, GameConfig* gameSetup, GameState* gameState)
         {
             {
+                auto& member = data.actionPoint;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
                 auto& member = data.action;
                 int size0 = ReadNext<int>(buf);
                 auto& array0 = member;
@@ -313,7 +317,7 @@ namespace FreeMarket
                 Deserialize(member, buf, gameSetup, gameState);
             }
             {
-                auto& member = data.resourceForce;
+                auto& member = data.resourceForced;
                 Deserialize(member, buf, gameSetup, gameState);
             }
             {

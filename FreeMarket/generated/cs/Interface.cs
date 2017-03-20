@@ -6,6 +6,7 @@ namespace FreeMarket
 
     public class PlayerConfig
     {
+        
         public int Id;
         public int Team;
         
@@ -13,6 +14,7 @@ namespace FreeMarket
 
     public class GameConfig
     {
+        
         public int Turns;
         public int TurnTimeLimit;
         public int SetupTimeLimit;
@@ -27,6 +29,7 @@ namespace FreeMarket
 
     public class PlayerState
     {
+        
         public int Id;
         public int Team;
         public int Money;
@@ -36,6 +39,7 @@ namespace FreeMarket
 
     public class GameState
     {
+        
         public int Turn;
         public Cell[,] Map;
         public int[] ResourcePrice;
