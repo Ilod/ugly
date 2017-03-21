@@ -6,11 +6,13 @@ namespace ugly
     {
         struct BuildingTypePrivate
         {
+            int probability = 0;
         };
         struct BuildingCardPrivate
         {
         };
         struct BuildingPrivate
         {
-        };    }
+        };
+    }
 }

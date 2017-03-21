@@ -23,6 +23,7 @@ namespace ugly
             std::vector<PriceEvolutionRange> resourcePriceEvolution;
             int resourceStartPrice;
             int preemptPrice;
+            std::vector<int> auctionProbability;
         };
 
         struct PlayerStatePrivate

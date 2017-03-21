@@ -68,6 +68,7 @@ namespace ugly
                         building.action.clear();
                         ++building.id;
                         building.actionPoint = 3;
+                        building.additionalData.probability = 0;
 
                         action.id = -1;
 
@@ -91,6 +92,7 @@ namespace ugly
                         building.action.clear();
                         ++building.id;
                         building.actionPoint = 1;
+                        building.additionalData.probability = 100;
 
                         action.id = -1;
 
@@ -114,6 +116,7 @@ namespace ugly
                         building.action.clear();
                         ++building.id;
                         building.actionPoint = 1;
+                        building.additionalData.probability = 10;
 
                         action.id = -1;
 
@@ -136,6 +139,7 @@ namespace ugly
                         building.action.clear();
                         ++building.id;
                         building.actionPoint = 1;
+                        building.additionalData.probability = 15l;
 
                         action.id = -1;
 
@@ -158,6 +162,7 @@ namespace ugly
                         building.action.clear();
                         ++building.id;
                         building.actionPoint = 1;
+                        building.additionalData.probability = 15;
 
                         action.id = -1;
 
@@ -175,10 +180,19 @@ namespace ugly
 
                         gameSetup.building.push_back(building);
                     }
+
+                    {
+                        int proba = 100;
+                        for (int p = 0; p <= players; ++p)
+                        {
+                            gameSetup.additionalData.auctionProbability.push_back(proba);
+                            proba = proba * 2 / 3;
+                        }
+                    }
                 }
             }
 
-            void InitStateData(const GameConfig& gameSetup, GameState& gameState)
+            void InitStateData(GameConfig& gameSetup, GameState& gameState)
             {
                 gameState.player.resize(gameSetup.player.size());
                 gameState.map.resize(gameSetup.mapSizeX);
@@ -197,6 +211,39 @@ namespace ugly
                             (x % 4 == 0 || y % 3 == 0)
                             ? CellType::Road
                             : CellType::House;
+                    }
+                }
+                for (int p = 0; p < gameSetup.player.size(); ++p)
+                {
+                    Building building;
+                    building.owner = p;
+                    building.id = p;
+                    building.type = &gameSetup.building[0];
+                    building.position = &gameState.map[((p % 2) == 0) ? 11 : (gameSetup.mapSizeX - 11)][((p / 2) == 0) ? 12 : (gameSetup.mapSizeY - 12)];
+                    gameState.building.push_back(building);
+                }
+                {
+                    std::random_device rdn;
+                    std::default_random_engine generator(rdn());
+                    std::discrete_distribution<> auctionCount(gameSetup.additionalData.auctionProbability.begin(), gameSetup.additionalData.auctionProbability.end());
+                    auto beginRange = ugly::util::CreateSelectIteratorAdapter(gameSetup.building.begin(), [](const BuildingType& type) { return type.additionalData.probability; });
+                    auto endRange = ugly::util::CopyWithIterator(beginRange, gameSetup.building.end());
+                    std::discrete_distribution<> auctionBuildingType(beginRange, endRange);
+                    int auctionId = 0;
+                    for (int t = 0; t <= gameSetup.turns; ++t)
+                    {
+                        for (int iAuction = 0, iAuctionEnd = auctionCount(generator); iAuction < iAuctionEnd; ++iAuction)
+                        {
+                            Auction auction;
+                            auction.id = auctionId++;
+                            auction.seller = Player::City;
+                            auction.buyer = Player::None;
+                            auction.price = 0;
+                            auction.turn = t;
+                            auction.type = AuctionType::Building;
+                            auction.building = &gameSetup.building[auctionBuildingType(generator)];
+                            gameState.auction.push_back(auction);
+                        }
                     }
                 }
                 gameState.resourcePrice.resize(gameSetup.resourceCount, gameSetup.additionalData.resourceStartPrice);
