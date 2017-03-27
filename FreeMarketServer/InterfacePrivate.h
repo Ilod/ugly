@@ -28,11 +28,13 @@ namespace ugly
 
         struct PlayerStatePrivate
         {
+            int reservedMoney;
         };
 
         struct GameStatePrivate
         {
             std::vector<int> resourceEvolution;
+            int nextBuildingId = 0;
         };
     }
 }

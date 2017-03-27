@@ -18,7 +18,11 @@ namespace ugly
             
         bool Cell::Buy(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState)
         {
-            return false;
+            if (ownership != Ownership::Preempt || owner != playerState.id || price > playerState.money - playerState.additionalData.reservedMoney)
+                return false;
+            ownership = Ownership::Own;
+            playerState.money -= price;
+            return true;
         }
     }
 }

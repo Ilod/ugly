@@ -18,7 +18,15 @@ namespace ugly
             
         bool Auction::Bid(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, std::int32_t money)
         {
-            return false;
+            if (turn != gameState.turn || money > playerState.money - playerState.additionalData.reservedMoney)
+                return false;
+            playerState.additionalData.reservedMoney += money;
+            if (money > price)
+            {
+                price = money;
+                buyer = playerState.id;
+            }
+            return true;
         }
     }
 }
