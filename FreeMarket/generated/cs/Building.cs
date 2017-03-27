@@ -18,6 +18,7 @@ namespace FreeMarket
         
         public int Id;
         public BuildingType Building;
+        public int Owner;
         
         public void Build(Cell position)
         {

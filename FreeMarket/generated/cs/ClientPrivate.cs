@@ -234,6 +234,20 @@ namespace FreeMarket
                 }
                 {
                     int size0 = ReadNextInt();
+                    data.BuildingCard = new BuildingCard[size0];
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        BuildingCard element = new BuildingCard();
+                        Deserialize(element, gameSetup, gameState);
+                        if (element.Owner >= 0)
+                        {
+                            gameState.Player[element.Owner].BuildingCard.Add(element);
+                        }
+                        data.BuildingCard[idx0] = element;
+                    }
+                }
+                {
+                    int size0 = ReadNextInt();
                     data.Player = new PlayerState[size0];
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
@@ -295,6 +309,23 @@ namespace FreeMarket
                         Deserialize(element, gameSetup, gameState);
                         data.Action[idx0] = element;
                     }
+                }           
+            }
+
+            public void Deserialize(BuildingCard data, GameConfig gameSetup, GameState gameState)
+            {
+                {
+                    data.Id = ReadNextInt();
+                }
+                {
+                    int classIdx0 = ReadNextInt();                            
+                    if (classIdx0 != -1)
+                    {
+                        data.Building = gameSetup.Building[classIdx0];
+                    }
+                }
+                {
+                    data.Owner = ReadNextInt();
                 }           
             }
 

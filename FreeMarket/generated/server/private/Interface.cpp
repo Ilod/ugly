@@ -28,6 +28,7 @@ namespace ugly
             , team()
             , money()
             , building()
+            , buildingCard()
         { }
             
         GameState::GameState()
@@ -36,6 +37,7 @@ namespace ugly
             , resourcePrice()
             , resourceEvolution()
             , building()
+            , buildingCard()
             , player()
             , auction()
             , endedAuction()

@@ -34,6 +34,7 @@ namespace FreeMarket
         public int Team;
         public int Money;
         public List<Building> Building = new List<Building>();
+        public List<BuildingCard> BuildingCard = new List<BuildingCard>();
         
     }
 
@@ -45,6 +46,7 @@ namespace FreeMarket
         public int[] ResourcePrice;
         public PriceEvolution[] ResourceEvolution;
         public Building[] Building;
+        public BuildingCard[] BuildingCard;
         public PlayerState[] Player;
         public Auction[] Auction;
         public Auction[] EndedAuction;

@@ -58,6 +58,10 @@ Files:
             Type:   building
             Array:  1
             Index:  MappedFromStrong
+          - Name:   building_card
+            Type:   building_card
+            Array:  1
+            Index:  MappedFromStrong
         Id:
             Member:
               - id
@@ -86,6 +90,10 @@ Files:
                 DefaultValue:   unknown
           - Name:   building
             Type:   building
+            Array:  1
+            Index:  Strong
+          - Name:   building_card
+            Type:   building_card
             Array:  1
             Index:  Strong
           - Name:   player
@@ -191,14 +199,29 @@ Files:
           - Name:   building
             Type:   building_type
             Index:  RefId
+          - Name:   owner
+            Type:   int32
         Id:
             Member:
               - id
+            Source:
+                Source: GameState
+                Member:
+                  - Name:   building_card
         Method:
           - Name:   build
             Param:
               - Name:   position
                 Type:   cell
+        IndexMapping:
+          - Source: GameState
+            Member:
+              - Name:   player
+                Index:
+                  - Source: Data
+                    Member:
+                      - Name:   owner
+              - Name:   building_card
       - Name:   building
         Member:
           - Name:   id

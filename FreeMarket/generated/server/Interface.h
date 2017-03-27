@@ -49,6 +49,7 @@ namespace ugly
             std::int32_t team;
             std::int32_t money;
             std::vector<Building*> building;
+            std::vector<BuildingCard*> buildingCard;
             PlayerStatePrivate additionalData;        
     
             
@@ -64,6 +65,7 @@ namespace ugly
             std::vector<std::int32_t> resourcePrice;
             std::vector<PriceEvolution> resourceEvolution;
             std::vector<Building> building;
+            std::vector<BuildingCard> buildingCard;
             std::vector<PlayerState> player;
             std::vector<Auction> auction;
             std::vector<Auction> endedAuction;

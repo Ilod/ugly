@@ -139,6 +139,14 @@ namespace ugly
                     }
                 }
                 {
+                    int size0 = (int)(data.buildingCard.size());
+                    buffer << size0 << " ";
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        SerializeInternal(data.buildingCard[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                    }
+                }
+                {
                     int size0 = (int)(data.player.size());
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
@@ -210,6 +218,9 @@ namespace ugly
                     {                
                         buffer << data.building->id << " ";
                     }
+                }
+                {
+                    buffer << data.owner << " ";
                 }
             }
 

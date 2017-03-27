@@ -12,6 +12,7 @@ namespace FreeMarket
     BuildingCard::BuildingCard()
         : id()
         , building()
+        , owner()
     { }
         
     void BuildingCard::Build(const Cell& position)

@@ -21,7 +21,8 @@ namespace FreeMarket
     struct BuildingCard
     {
         std::int32_t id;
-        BuildingType* building;        
+        BuildingType* building;
+        std::int32_t owner;        
 
         
 

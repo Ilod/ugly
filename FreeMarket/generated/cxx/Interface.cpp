@@ -25,6 +25,7 @@ namespace FreeMarket
         , team()
         , money()
         , building()
+        , buildingCard()
     { }
         
     GameState::GameState()
@@ -33,6 +34,7 @@ namespace FreeMarket
         , resourcePrice()
         , resourceEvolution()
         , building()
+        , buildingCard()
         , player()
         , auction()
         , endedAuction()

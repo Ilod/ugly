@@ -27,13 +27,14 @@ namespace ugly
         {
             std::int32_t id;
             BuildingType* building;
+            std::int32_t owner;
             BuildingCardPrivate additionalData;        
     
             
     
             BuildingCard();
             
-            bool Build(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const Cell& position);
+            bool Build(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Cell& position);
         };
     
         struct Building
@@ -48,7 +49,7 @@ namespace ugly
     
             Building();
             
-            bool Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const Action& action, const PowerParameter& param);
+            bool Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Action& action, PowerParameter& param);
         };
     }
 }

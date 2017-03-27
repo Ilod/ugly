@@ -15,9 +15,10 @@ namespace ugly
         BuildingCard::BuildingCard()
             : id()
             , building()
+            , owner()
         { }
             
-        bool BuildingCard::Build(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const Cell& position)
+        bool BuildingCard::Build(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Cell& position)
         {
             return false;
         }
@@ -28,7 +29,7 @@ namespace ugly
             , owner()
         { }
             
-        bool Building::Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const Action& action, const PowerParameter& param)
+        bool Building::Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Action& action, PowerParameter& param)
         {
             return false;
         }
