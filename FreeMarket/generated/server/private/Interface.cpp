@@ -41,6 +41,7 @@ namespace ugly
             , player()
             , auction()
             , endedAuction()
+            , futureAuction()
         { }
             
     

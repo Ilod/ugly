@@ -276,6 +276,16 @@ namespace FreeMarket
                         Deserialize(element, gameSetup, gameState);
                         data.EndedAuction[idx0] = element;
                     }
+                }
+                {
+                    int size0 = ReadNextInt();
+                    data.FutureAuction = new Auction[size0];
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        Auction element = new Auction();
+                        Deserialize(element, gameSetup, gameState);
+                        data.FutureAuction[idx0] = element;
+                    }
                 }           
             }
 

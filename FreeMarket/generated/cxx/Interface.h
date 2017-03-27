@@ -61,7 +61,8 @@ namespace FreeMarket
         std::vector<BuildingCard> buildingCard;
         std::vector<PlayerState> player;
         std::vector<Auction> auction;
-        std::vector<Auction> endedAuction;        
+        std::vector<Auction> endedAuction;
+        std::vector<Auction> futureAuction;        
 
         
 

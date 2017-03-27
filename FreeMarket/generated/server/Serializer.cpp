@@ -170,6 +170,14 @@ namespace ugly
                         SerializeInternal(data.endedAuction[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
                     }
                 }
+                {
+                    int size0 = (int)(data.futureAuction.size());
+                    buffer << size0 << " ";
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        SerializeInternal(data.futureAuction[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                    }
+                }
             }
 
             template<> void SerializeInternal(Cell& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)

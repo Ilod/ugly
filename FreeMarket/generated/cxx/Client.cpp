@@ -244,6 +244,17 @@ namespace FreeMarket
                     Deserialize(array1, buf, gameSetup, gameState);
                 }
             }
+            {
+                auto& member = data.futureAuction;
+                int size0 = ReadNext<int>(buf);
+                auto& array0 = member;
+                array0.resize(size0);
+                for (int idx0 = 0; idx0 < size0; ++idx0)
+                {
+                    auto& array1 = array0[idx0];
+                    Deserialize(array1, buf, gameSetup, gameState);
+                }
+            }
         }
         
         template<> void Deserialize(Cell& data, const char*& buf, GameConfig* gameSetup, GameState* gameState)

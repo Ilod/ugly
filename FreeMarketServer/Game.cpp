@@ -242,13 +242,15 @@ namespace ugly
                             auction.turn = t;
                             auction.type = AuctionType::Building;
                             auction.building = &gameSetup.building[auctionBuildingType(generator)];
-                            gameState.auction.push_back(auction);
+                            gameState.futureAuction.push_back(auction);
                         }
                     }
                 }
                 gameState.resourcePrice.resize(gameSetup.resourceCount, gameSetup.additionalData.resourceStartPrice);
                 gameState.resourceEvolution.resize(gameSetup.resourceCount);
                 gameState.additionalData.resourceEvolution.resize(gameSetup.resourceCount);
+                
+                PushCurrentAuctions(gameSetup, gameState);
             }
 
             void InitTurnData(const GameConfig& gameSetup, GameState& gameState)
@@ -269,6 +271,65 @@ namespace ugly
                         gameState.additionalData.resourceEvolution[r] = std::uniform_int_distribution<>(evolution.min, evolution.max)(generator);
                     }
                 }
+
+                ResolveAuctions(gameSetup, gameState);
+            }
+
+            void ResolveAuctions(const GameConfig& gameSetup, GameState& gameState)
+            {
+                gameState.endedAuction.clear();
+                std::vector<Auction>::iterator itAuction = gameState.auction.begin();
+                while (itAuction != gameState.auction.end() && itAuction->turn == gameState.turn)
+                {
+                    bool hasEnded = true;
+                    switch (itAuction->buyer)
+                    {
+                    case Player::City:
+                        switch (itAuction->type)
+                        {
+                        case AuctionType::Building:
+                            break;
+                        }
+                        break;
+                    case Player::Multiple:
+                        hasEnded = false;
+                        break;
+                    case Player::None:
+                        break;
+                    default:// Player
+                        switch (itAuction->type)
+                        {
+                        case AuctionType::Building:
+                            gameState.buildingCard.push_back(BuildingCard());
+                            gameState.buildingCard.back().building = itAuction->building;
+                            gameState.buildingCard.back().owner = itAuction->buyer;
+                            gameState.buildingCard.back().id = gameState.additionalData.nextBuildingCardId++;
+                            break;
+                        }
+                        gameState.player[itAuction->buyer].money -= itAuction->price;
+                        break;
+                    }
+                    if (hasEnded)
+                    {
+                        gameState.endedAuction.push_back(*itAuction);
+                        itAuction = gameState.auction.erase(itAuction);
+                    }
+                    else
+                    {
+                        ++itAuction;
+                    }
+                }
+                PushCurrentAuctions(gameSetup, gameState);
+            }
+
+            void PushCurrentAuctions(const GameConfig& gameSetup, GameState& gameState)
+            {
+                std::vector<Auction>::iterator itAuction = gameState.futureAuction.begin();
+                while (itAuction != gameState.futureAuction.end() && itAuction->turn == gameState.turn)
+                {
+                    gameState.auction.push_back(*itAuction);
+                    itAuction = gameState.futureAuction.erase(itAuction);
+                }
             }
         }
 
@@ -280,7 +341,7 @@ namespace ugly
 
         void GameServer::PlayTurn()
         {
-
+            InitTurnData(gameSetup, gameState);
         }
 
         ugly::server::GameResult GameServer::ComputeScore()

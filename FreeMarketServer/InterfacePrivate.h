@@ -35,6 +35,7 @@ namespace ugly
         {
             std::vector<int> resourceEvolution;
             int nextBuildingId = 0;
+            int nextBuildingCardId = 0;
         };
     }
 }

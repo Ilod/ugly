@@ -108,6 +108,10 @@ Files:
             Type:   auction
             Array:  1
             Index:  Strong
+          - Name:   future_auction
+            Type:   auction
+            Array:  1
+            Index:  Strong
   - Name:   player
     ConstantContainer:
       - Name:   player

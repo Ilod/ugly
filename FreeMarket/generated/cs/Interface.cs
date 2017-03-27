@@ -50,6 +50,7 @@ namespace FreeMarket
         public PlayerState[] Player;
         public Auction[] Auction;
         public Auction[] EndedAuction;
+        public Auction[] FutureAuction;
         
     }
 }

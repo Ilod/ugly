@@ -38,6 +38,7 @@ namespace FreeMarket
         , player()
         , auction()
         , endedAuction()
+        , futureAuction()
     { }
         
 }
