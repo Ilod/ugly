@@ -298,7 +298,10 @@ namespace FreeMarket
             public void Deserialize(BuildingType data, GameConfig gameSetup, GameState gameState)
             {
                 {
-                    data.ActionPoint = ReadNextInt();
+                    data.ActionPointMax = ReadNextInt();
+                }
+                {
+                    data.ActionPointGain = ReadNextInt();
                 }
                 {
                     int size0 = ReadNextInt();
@@ -351,6 +354,9 @@ namespace FreeMarket
                 }
                 {
                     data.Owner = ReadNextInt();
+                }
+                {
+                    data.ActionPoint = ReadNextInt();
                 }           
             }
 
@@ -388,10 +394,7 @@ namespace FreeMarket
                     data.ActionPoint = ReadNextInt();
                 }
                 {
-                    data.Cooldown = ReadNextInt();
-                }
-                {
-                    data.TurnLimit = ReadNextInt();
+                    data.Priority = ReadNextInt();
                 }           
             }
 

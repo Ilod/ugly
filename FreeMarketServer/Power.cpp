@@ -25,8 +25,7 @@ namespace ugly
             : id()
             , power()
             , actionPoint()
-            , cooldown()
-            , turnLimit()
+            , priority()
         { }
             
     }

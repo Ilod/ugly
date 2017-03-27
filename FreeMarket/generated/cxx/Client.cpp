@@ -269,7 +269,11 @@ namespace FreeMarket
         template<> void Deserialize(BuildingType& data, const char*& buf, GameConfig* gameSetup, GameState* gameState)
         {
             {
-                auto& member = data.actionPoint;
+                auto& member = data.actionPointMax;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.actionPointGain;
                 Deserialize(member, buf, gameSetup, gameState);
             }
             {
@@ -332,6 +336,10 @@ namespace FreeMarket
                 auto& member = data.owner;
                 Deserialize(member, buf, gameSetup, gameState);
             }
+            {
+                auto& member = data.actionPoint;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
         }
         
         template<> void Deserialize(Power& data, const char*& buf, GameConfig* gameSetup, GameState* gameState)
@@ -377,11 +385,7 @@ namespace FreeMarket
                 Deserialize(member, buf, gameSetup, gameState);
             }
             {
-                auto& member = data.cooldown;
-                Deserialize(member, buf, gameSetup, gameState);
-            }
-            {
-                auto& member = data.turnLimit;
+                auto& member = data.priority;
                 Deserialize(member, buf, gameSetup, gameState);
             }
         }

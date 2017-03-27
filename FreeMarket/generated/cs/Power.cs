@@ -47,8 +47,7 @@ namespace FreeMarket
         public int Id;
         public Power Power = new Power();
         public int ActionPoint;
-        public int Cooldown;
-        public int TurnLimit;
+        public int Priority;
         
     }
 }

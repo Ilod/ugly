@@ -13,7 +13,8 @@ namespace ugly
         struct BuildingType
         {
             std::int32_t id;
-            std::int32_t actionPoint;
+            std::int32_t actionPointMax;
+            std::int32_t actionPointGain;
             std::vector<Action> action;
             BuildingTypePrivate additionalData;        
     
@@ -43,6 +44,7 @@ namespace ugly
             BuildingType* type;
             Cell* position;
             std::int32_t owner;
+            std::int32_t actionPoint;
             BuildingPrivate additionalData;        
     
             

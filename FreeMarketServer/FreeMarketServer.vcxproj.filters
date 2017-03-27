@@ -63,11 +63,11 @@
     <ClInclude Include="ResourcePrivate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\FreeMarket\generated\server\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerPrivate.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FreeMarket\generated\server\Player.h">
+      <Filter>generated headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

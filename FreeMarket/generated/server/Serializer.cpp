@@ -191,7 +191,10 @@ namespace ugly
             template<> void SerializeInternal(BuildingType& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
                 {
-                    buffer << data.actionPoint << " ";
+                    buffer << data.actionPointMax << " ";
+                }
+                {
+                    buffer << data.actionPointGain << " ";
                 }
                 {
                     int size0 = (int)(data.action.size());
@@ -261,6 +264,9 @@ namespace ugly
                 {
                     buffer << data.owner << " ";
                 }
+                {
+                    buffer << data.actionPoint << " ";
+                }
             }
 
             template<> void SerializeInternal(PowerParameter& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
@@ -318,10 +324,7 @@ namespace ugly
                     buffer << data.actionPoint << " ";
                 }
                 {
-                    buffer << data.cooldown << " ";
-                }
-                {
-                    buffer << data.turnLimit << " ";
+                    buffer << data.priority << " ";
                 }
             }
 

@@ -8,7 +8,8 @@ namespace ugly
     {
         BuildingType::BuildingType()
             : id()
-            , actionPoint()
+            , actionPointMax()
+            , actionPointGain()
             , action()
         { }
             
@@ -27,6 +28,7 @@ namespace ugly
             , type()
             , position()
             , owner()
+            , actionPoint()
         { }
             
         bool Building::Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Action& action, PowerParameter& param)

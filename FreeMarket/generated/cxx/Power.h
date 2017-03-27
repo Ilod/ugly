@@ -53,8 +53,7 @@ namespace FreeMarket
         std::int32_t id;
         Power power;
         std::int32_t actionPoint;
-        std::int32_t cooldown;
-        std::int32_t turnLimit;        
+        std::int32_t priority;        
 
         
 

@@ -22,8 +22,7 @@ namespace FreeMarket
         : id()
         , power()
         , actionPoint()
-        , cooldown()
-        , turnLimit()
+        , priority()
     { }
         
 }

@@ -8,7 +8,8 @@ namespace FreeMarket
     {
         
         public int Id;
-        public int ActionPoint;
+        public int ActionPointMax;
+        public int ActionPointGain;
         public Action[] Action;
         
     }
@@ -33,6 +34,7 @@ namespace FreeMarket
         public BuildingType Type;
         public Cell Position;
         public int Owner;
+        public int ActionPoint;
         
         public void Execute(Action action, PowerParameter param)
         {

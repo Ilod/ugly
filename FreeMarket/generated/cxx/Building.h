@@ -9,7 +9,8 @@ namespace FreeMarket
     struct BuildingType
     {
         std::int32_t id;
-        std::int32_t actionPoint;
+        std::int32_t actionPointMax;
+        std::int32_t actionPointGain;
         std::vector<Action> action;        
 
         
@@ -36,7 +37,8 @@ namespace FreeMarket
         std::int32_t id;
         BuildingType* type;
         Cell* position;
-        std::int32_t owner;        
+        std::int32_t owner;
+        std::int32_t actionPoint;        
 
         
 

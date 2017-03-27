@@ -5,7 +5,8 @@ namespace FreeMarket
 {
     BuildingType::BuildingType()
         : id()
-        , actionPoint()
+        , actionPointMax()
+        , actionPointGain()
         , action()
     { }
         
@@ -24,6 +25,7 @@ namespace FreeMarket
         , type()
         , position()
         , owner()
+        , actionPoint()
     { }
         
     void Building::Execute(const Action& action, const PowerParameter& param)

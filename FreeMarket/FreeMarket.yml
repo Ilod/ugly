@@ -178,7 +178,9 @@ Files:
         Member:
           - Name:   id
             Type:   int32
-          - Name:   action_point
+          - Name:   action_point_max
+            Type:   int32
+          - Name:   action_point_gain
             Type:   int32
           - Name:   action
             Type:   action
@@ -233,6 +235,8 @@ Files:
             Type:   cell
             Index:  RefId
           - Name:   owner
+            Type:   int32
+          - Name:   action_point
             Type:   int32
         Id:
             Member:
@@ -305,9 +309,7 @@ Files:
             Type:   power
           - Name:   action_point
             Type:   int32
-          - Name:   cooldown
-            Type:   int32
-          - Name:   turn_limit
+          - Name:   priority
             Type:   int32
         Id:
             Member:

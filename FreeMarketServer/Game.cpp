@@ -67,15 +67,15 @@ namespace ugly
                     {
                         building.action.clear();
                         ++building.id;
-                        building.actionPoint = 3;
+                        building.actionPointMax = 3;
+                        building.actionPointGain = 3;
                         building.additionalData.probability = 0;
 
                         action.id = -1;
 
                         ++action.id;
                         action.actionPoint = 1;
-                        action.cooldown = -1;
-                        action.turnLimit = -1;
+                        action.priority = ActionPriority::ResourceSelling;
                         action.power.buildingSource = ParameterType::Choice;
                         action.power.quantity = ParameterType::Choice;
                         action.power.quantityForced = -1;
@@ -91,15 +91,15 @@ namespace ugly
                     {
                         building.action.clear();
                         ++building.id;
-                        building.actionPoint = 1;
+                        building.actionPointMax = 1;
+                        building.actionPointGain = 1;
                         building.additionalData.probability = 100;
 
                         action.id = -1;
 
                         ++action.id;
                         action.actionPoint = 1;
-                        action.cooldown = -1;
-                        action.turnLimit = -1;
+                        action.priority = ActionPriority::ResourceProduction;
                         action.power.buildingSource = ParameterType::Self;
                         action.power.quantity = ParameterType::Forced;
                         action.power.quantityForced = 2;
@@ -115,15 +115,15 @@ namespace ugly
                     {
                         building.action.clear();
                         ++building.id;
-                        building.actionPoint = 1;
+                        building.actionPointMax = 1;
+                        building.actionPointGain = 1;
                         building.additionalData.probability = 10;
 
                         action.id = -1;
 
                         ++action.id;
                         action.actionPoint = 1;
-                        action.cooldown = -1;
-                        action.turnLimit = -1;
+                        action.priority = ActionPriority::ResourceProduction;
                         action.power.buildingSource = ParameterType::Self;
                         action.power.quantity = ParameterType::Forced;
                         action.power.quantityForced = 5;
@@ -138,15 +138,15 @@ namespace ugly
                     {
                         building.action.clear();
                         ++building.id;
-                        building.actionPoint = 1;
-                        building.additionalData.probability = 15l;
+                        building.actionPointMax = 1;
+                        building.actionPointGain = 1;
+                        building.additionalData.probability = 15;
 
                         action.id = -1;
 
                         ++action.id;
                         action.actionPoint = 1;
-                        action.cooldown = -1;
-                        action.turnLimit = -1;
+                        action.priority = ActionPriority::ResourceProduction;
                         action.power.buildingSource = ParameterType::Self;
                         action.power.quantity = ParameterType::Forced;
                         action.power.quantityForced = 1;
@@ -161,15 +161,15 @@ namespace ugly
                     {
                         building.action.clear();
                         ++building.id;
-                        building.actionPoint = 1;
+                        building.actionPointMax = 1;
+                        building.actionPointGain = 1;
                         building.additionalData.probability = 15;
 
                         action.id = -1;
 
                         ++action.id;
                         action.actionPoint = 1;
-                        action.cooldown = -1;
-                        action.turnLimit = -1;
+                        action.priority = ActionPriority::ResourceProduction;
                         action.power.buildingSource = ParameterType::Self;
                         action.power.quantity = ParameterType::Forced;
                         action.power.quantityForced = 2;
@@ -213,7 +213,7 @@ namespace ugly
                             : CellType::House;
                     }
                 }
-                for (int p = 0; p < gameSetup.player.size(); ++p)
+                for (int p = 0; p < (int)gameSetup.player.size(); ++p)
                 {
                     Building building;
                     building.owner = p;
