@@ -558,7 +558,7 @@ if (CxxHelper.Server)
             #line 209 "D:\ugly\CodeGenerator\cxx\CxxHeader.tt"
 
                 }
-                if (type == BasicType.Class)
+                if (type == BasicType.Class && !CxxHelper.Server)
                 {
                     
             

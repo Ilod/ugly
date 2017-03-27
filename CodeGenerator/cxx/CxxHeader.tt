@@ -208,7 +208,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
                 {
                     #>, <#
                 }
-                if (type == BasicType.Class)
+                if (type == BasicType.Class && !CxxHelper.Server)
                 {
                     #>const <#
                 }
