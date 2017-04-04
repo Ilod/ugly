@@ -47,6 +47,11 @@ namespace ugly
             
         bool Building::Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Action& action, PowerParameter& param, const std::string& orderStr)
         {
+            if (!gameState.additionalData.executeDelayed)
+            {
+                gameState.additionalData.delayedOrders[action.priority].push_back(std::make_tuple(orderStr, playerSetup.id));
+                return true;
+            }
             return false;
         }
     }

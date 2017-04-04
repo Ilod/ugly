@@ -36,6 +36,8 @@ namespace ugly
             std::vector<int> resourceEvolution;
             int nextBuildingId = 0;
             int nextBuildingCardId = 0;
+            bool executeDelayed = false;
+            std::map<int, std::vector<std::tuple<std::string, int>>> delayedOrders;
         };
     }
 }
