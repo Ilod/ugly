@@ -87,6 +87,10 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
                 }
                 #> <#= Case.LowerCamelCase.Convert(a.Name) #><#
             }
+            if (CxxHelper.Server)
+            {
+                #>, const std::string& orderStr<#
+            }
             #>)
     {<#
             if (CxxHelper.Server)

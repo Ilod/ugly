@@ -16,7 +16,7 @@ namespace ugly
             , price()
         { }
             
-        bool Cell::Buy(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState)
+        bool Cell::Buy(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const std::string& orderStr)
         {
             return false;
         }

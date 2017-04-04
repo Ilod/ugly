@@ -41,7 +41,7 @@ namespace ugly
     
             Cell();
             
-            bool Buy(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState);
+            bool Buy(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const std::string& orderStr);
         };
     }
 }

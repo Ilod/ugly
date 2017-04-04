@@ -2501,7 +2501,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             
             #line default
             #line hidden
-            this.Write(");\r\n                }");
+            this.Write(", order);\r\n                }");
             
             #line 509 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 

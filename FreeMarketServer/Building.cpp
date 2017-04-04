@@ -20,7 +20,7 @@ namespace ugly
             , owner()
         { }
             
-        bool BuildingCard::Build(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Cell& position)
+        bool BuildingCard::Build(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Cell& position, const std::string& orderStr)
         {
             if (owner != playerState.id || position.owner != playerState.id || position.ownership != Ownership::Own || position.building != nullptr)
                 return false;
@@ -45,7 +45,7 @@ namespace ugly
             , actionPoint()
         { }
             
-        bool Building::Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Action& action, PowerParameter& param)
+        bool Building::Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Action& action, PowerParameter& param, const std::string& orderStr)
         {
             return false;
         }

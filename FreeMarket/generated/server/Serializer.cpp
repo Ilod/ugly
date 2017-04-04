@@ -1063,7 +1063,7 @@ namespace ugly
                     if (!(argThis_idx0 >= 0 && argThis_idx1 >= 0 && gameState.map.size() > argThis_idx0 && gameState.map[argThis_idx0].size() > argThis_idx1))
                         return false;
                     Cell& argThis = gameState.map[argThis_idx0][argThis_idx1];
-                    return argThis.Buy(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId]);
+                    return argThis.Buy(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], order);
                 }
                 case 1: // BuildingCard::Build
                 {
@@ -1078,7 +1078,7 @@ namespace ugly
                             if (!(position_idx0 >= 0 && position_idx1 >= 0 && gameState.map.size() > position_idx0 && gameState.map[position_idx0].size() > position_idx1))
                                 return false;
                             Cell& position = gameState.map[position_idx0][position_idx1];
-                    return argThis.Build(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], position);
+                    return argThis.Build(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], position, order);
                 }
                 case 2: // Building::Execute
                 {
@@ -1095,7 +1095,7 @@ namespace ugly
                     Action& action = *(action_ptr);                            
                     PowerParameter param;
                     Deserialize(param, buf, &gameSetup, &gameState);
-                    return argThis.Execute(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], action, param);
+                    return argThis.Execute(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], action, param, order);
                 }
                 case 3: // Auction::Bid
                 {
@@ -1106,7 +1106,7 @@ namespace ugly
                         return false;
                     Auction& argThis = *argThisPtr;
                     std::int32_t money = ReadNext<std::int32_t>(buf);
-                    return argThis.Bid(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], money);
+                    return argThis.Bid(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], money, order);
                 }
                 default:
                     return false;

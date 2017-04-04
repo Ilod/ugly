@@ -29,7 +29,7 @@ namespace ugly
     
             Auction();
             
-            bool Bid(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, std::int32_t money);
+            bool Bid(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, std::int32_t money, const std::string& orderStr);
         };
     }
 }
