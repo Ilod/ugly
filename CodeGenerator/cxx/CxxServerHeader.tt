@@ -15,8 +15,8 @@ namespace ugly
         {
         protected:
             void InitGame() override;
-            std::string GetGameSetup(int player) override { return serializer.SerializeSetup(gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
-            std::string GetGameState(int player) override { return serializer.SerializeState(gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
+            std::string GetGameSetup(int player) override { return Serializer::SerializeSetup(gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
+            std::string GetGameState(int player) override { return Serializer::SerializeState(gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
             void PlayTurn() override;
             ugly::server::GameResult ComputeScore() override;
             bool ShouldPlay() override;
@@ -27,7 +27,6 @@ namespace ugly
         private:
             <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #> gameSetup;
             <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #> gameState;
-            Serializer serializer;
             int turn = 0;
         };
     }

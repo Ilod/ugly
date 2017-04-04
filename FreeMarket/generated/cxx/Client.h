@@ -16,7 +16,7 @@ namespace FreeMarket
         virtual void PlayTurn(GameState& gameState, PlayerState& playerState) = 0;
         virtual void Cleanup() {};
     };
-
+    
     class GameServer
     {
     public:

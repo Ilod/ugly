@@ -121,7 +121,7 @@ foreach (GameFile file in CxxHelper.Definition.Files)
             this.Write(@") = 0;
         virtual void Cleanup() {};
     };
-
+    
     class GameServer
     {
     public:

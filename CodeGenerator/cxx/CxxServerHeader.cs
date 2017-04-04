@@ -47,8 +47,8 @@ namespace ugly.CodeGenerator.cxx
         {
         protected:
             void InitGame() override;
-            std::string GetGameSetup(int player) override { return serializer.SerializeSetup(gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
-            std::string GetGameState(int player) override { return serializer.SerializeState(gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
+            std::string GetGameSetup(int player) override { return Serializer::SerializeSetup(gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
+            std::string GetGameState(int player) override { return Serializer::SerializeState(gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
             void PlayTurn() override;
             ugly::server::GameResult ComputeScore() override;
             bool ShouldPlay() override;
@@ -71,8 +71,7 @@ namespace ugly.CodeGenerator.cxx
             
             #line default
             #line hidden
-            this.Write(" gameState;\r\n            Serializer serializer;\r\n            int turn = 0;\r\n     " +
-                    "   };\r\n    }\r\n}");
+            this.Write(" gameState;\r\n            int turn = 0;\r\n        };\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

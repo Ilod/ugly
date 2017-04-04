@@ -11,45 +11,51 @@ namespace ugly
 {
     namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
     {
-        void Serializer::IdMap::Clear()
-        {<#
-foreach (GameClass c in CxxHelper.Definition.Class.Values)
-{
-    if (c.HasId && !c.Id.Index)
-    {
-        #>
-
-            <#= Case.LowerCamelCase.Convert(c.Name) #>.clear();<#
-    }
-}
-#>
-
-        }
-
         namespace
         {
-            template<typename T> void SerializeInternal(T& data, std::stringstream& buffer, Serializer::IdMap& ids, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState);
+            template<typename T> void SerializeInternal(T& data, std::stringstream& buffer, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState);
             <#
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
     #>
 
-            template<> void SerializeInternal(<#= Case.CamelCase.Convert(c.Name) #>& data, std::stringstream& buffer, Serializer::IdMap& ids, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState);<#
+            template<> void SerializeInternal(<#= Case.CamelCase.Convert(c.Name) #>& data, std::stringstream& buffer, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState);<#
 }
+foreach (GameClass c in CxxHelper.Definition.Class.Values)
+{
+    if (c.Id == null || c.Id.Index)
+        continue;
+    #>
+
+
+            template<typename T> <#= Case.CamelCase.Convert(c.Name) #>* Find<#= Case.CamelCase.Convert(c.Name) #>Internal(T& data<#
+    for (int i = 0; i < c.Id.Member.Count; ++i)
+    {
+        #>, <#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[c.Id.Member[i]].Type)) #> <#= Case.LowerCamelCase.Convert(c.Id.Member[i]) #><#
+    }
+    #>);
+    <#
+    foreach (GameClass introClass in CxxHelper.Definition.Class.Values)
+    {
+        #>
+
+            template<> <#= Case.CamelCase.Convert(c.Name) #>* Find<#= Case.CamelCase.Convert(c.Name) #>Internal(<#= Case.CamelCase.Convert(introClass.Name) #>& data<#
+        for (int i = 0; i < c.Id.Member.Count; ++i)
+        {
+            #>, <#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[c.Id.Member[i]].Type)) #> <#= Case.LowerCamelCase.Convert(c.Id.Member[i]) #><#
+        }
+    #>);<#
+    }
+}
+    
             
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
     #>
 
 
-            template<> void SerializeInternal(<#= Case.CamelCase.Convert(c.Name) #>& data, std::stringstream& buffer, Serializer::IdMap& ids, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState)
+            template<> void SerializeInternal(<#= Case.CamelCase.Convert(c.Name) #>& data, std::stringstream& buffer, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState)
             {<#
-    if (c.HasId && !c.Id.Index)
-    {
-        #>
-
-                ids.<#= Case.LowerCamelCase.Convert(c.Name) #>[data.<#= Case.LowerCamelCase.Convert(c.Id.Member[0]) #>] = &data;<#
-    }
     foreach (ClassMember m in c.Member)
     {
         if ((c.HasId && c.Id.Index && c.Id.Member.Contains(m.Name)) || (m.Index == ClassMemberIndexType.MappedFromStrong))
@@ -172,7 +178,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
                 {
                     #>
 
-                    SerializeInternal(data.<#= Case.LowerCamelCase.Convert(m.Name) #><#= arrayIdxSuffix #>, buffer, ids, gameSetup, playerSetup, gameState, playerState);<#
+                    SerializeInternal(data.<#= Case.LowerCamelCase.Convert(m.Name) #><#= arrayIdxSuffix #>, buffer, gameSetup, playerSetup, gameState, playerState);<#
                 }
                 break;
             default:
@@ -236,6 +242,91 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             }<#
 }
 
+foreach (GameClass c in CxxHelper.Definition.Class.Values)
+{
+    if (c.Id == null || c.Id.Index)
+        continue;
+    foreach (GameClass introClass in CxxHelper.Definition.Class.Values)
+    {
+        #>
+
+            template<> <#= Case.CamelCase.Convert(c.Name) #>* Find<#= Case.CamelCase.Convert(c.Name) #>Internal(<#= Case.CamelCase.Convert(introClass.Name) #>& data<#
+        for (int i = 0; i < c.Id.Member.Count; ++i)
+        {
+            #>, <#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[c.Id.Member[i]].Type)) #> <#= Case.LowerCamelCase.Convert(c.Id.Member[i]) #><#
+        }
+        #>)
+            {<#
+        if (introClass == c)
+        {
+            #>
+
+                if (data.<#= Case.LowerCamelCase.Convert(c.Id.Member[0]) #> == <#= Case.LowerCamelCase.Convert(c.Id.Member[0]) #><#
+            for (int i = 1; i < c.Id.Member.Count; ++i)
+            {
+                #> && data.<#= Case.LowerCamelCase.Convert(c.Id.Member[i]) #> == <#= Case.LowerCamelCase.Convert(c.Id.Member[i]) #><#
+            }
+            #>)
+                    return &data;<#
+        }
+        foreach (ClassMember m in introClass.Member)
+        {
+            if (CxxHelper.Definition.GetBasicType(m.Type) != BasicType.Class || m.IsWeak)
+                continue;
+            if (m.Array == 0)
+            {
+                #>
+
+                if (<#= Case.CamelCase.Convert(c.Name) #>* res = Find<#= Case.CamelCase.Convert(c.Name) #>Internal(data.<#= Case.LowerCamelCase.Convert(m.Name) #><#
+                foreach (string idMember in c.Id.Member)
+                {
+                    #>, <#= Case.LowerCamelCase.Convert(idMember) #><#
+                }
+                #>))
+                    return res;<#
+            }
+            else
+            {
+                #>
+
+                {
+                    auto& memberArray0 = data.<#= Case.LowerCamelCase.Convert(m.Name) #>;<#
+                for (int i = 0; i < m.Array; ++i)
+                {
+                        #>
+
+                    for (auto& memberArray<#= i + 1 #> : memberArray<#= i #>)
+                    {<#
+                    this.PushIndent("    ");
+                }
+                #>
+
+                    if (<#= Case.CamelCase.Convert(c.Name) #>* res = Find<#= Case.CamelCase.Convert(c.Name) #>Internal(memberArray<#= m.Array #><#
+                foreach (string idMember in c.Id.Member)
+                {
+                    #>, <#= Case.LowerCamelCase.Convert(idMember) #><#
+                }
+                #>))
+                        return res;<#
+                for (int i = 0; i < m.Array; ++i)
+                {
+                    this.PopIndent();
+                    #>
+
+                    }<#
+                }
+                #>
+
+                }<#
+            }
+        }
+        #>
+                return nullptr;
+            }
+<#
+    }
+}
+
 this.PushIndent("            ");
 #>
 
@@ -249,9 +340,8 @@ this.PopIndent();
         std::string Serializer::SerializeSetup(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState)
         {
             std::stringstream buffer;
-            gameSetupId.Clear();
             buffer << playerSetup.id << '\n';
-            SerializeInternal(gameSetup, buffer, gameSetupId, gameSetup, playerSetup, gameState, playerState);
+            SerializeInternal(gameSetup, buffer, gameSetup, playerSetup, gameState, playerState);
             buffer << '\n';
             return buffer.str();
         }
@@ -259,11 +349,52 @@ this.PopIndent();
         std::string Serializer::SerializeState(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState)
         {
             std::stringstream buffer;
-            gameStateId.Clear();
-            SerializeInternal(gameState, buffer, gameStateId, gameSetup, playerSetup, gameState, playerState);
+            SerializeInternal(gameState, buffer, gameSetup, playerSetup, gameState, playerState);
             buffer << '\n';
             return buffer.str();
+        }<#
+
+foreach (GameClass c in CxxHelper.Definition.Class.Values)
+{
+    if (c.HasId && !c.Id.Index)
+    {
+        #>
+
+
+        <#= Case.CamelCase.Convert(c.Name) #>* Serializer::Find<#= Case.CamelCase.Convert(c.Name) #>(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState<#
+        for (int i = 0; i < c.Id.Member.Count; ++i)
+        {
+            BasicType memberType = CxxHelper.Definition.GetBasicType(c.MemberMap[c.Id.Member[i]].Type);
+            if (memberType.IsBasic())
+            {
+                #>, <#= CxxHelper.GetBasicTypeName(memberType) #><#
+            }
+            else
+            {
+                #>, const <#= Case.CamelCase.Convert(c.MemberMap[c.Id.Member[i]].Type) #>&<#
+            }
+            #> <#= Case.LowerCamelCase.Convert(c.Id.Member[i]) #><#
         }
+        #>)
+        {
+            if (<#= Case.CamelCase.Convert(c.Name) #>* res = Find<#= Case.CamelCase.Convert(c.Name) #>Internal(gameState<#
+        for (int i = 0; i < c.Id.Member.Count; ++i)
+        {
+            #>, <#= Case.LowerCamelCase.Convert(c.Id.Member[i]) #><#
+        }
+        #>))
+                return res;
+            return Find<#= Case.CamelCase.Convert(c.Name) #>Internal(gameSetup<#
+        for (int i = 0; i < c.Id.Member.Count; ++i)
+        {
+            #>, <#= Case.LowerCamelCase.Convert(c.Id.Member[i]) #><#
+        }
+        #>);
+        }<#
+    }
+}
+#>
+
 
         bool Serializer::ExecuteOrder(const std::string& order, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, int currentPlayerId)
         {
@@ -292,17 +423,24 @@ this.PopIndent();
                 }
                 else
                 {
-                    #>
-                    
-                    <#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[c.Id.Member[0]].Type)) #> argThisId = ReadNext<<#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[c.Id.Member[0]].Type)) #>>(buf);
-                    auto argThisIt = gameStateId.<#= Case.LowerCamelCase.Convert(c.Name) #>.find(argThisId);
-                    if (argThisIt == gameStateId.<#= Case.LowerCamelCase.Convert(c.Name) #>.end())
+                    for (int i = 0; i < c.Id.Member.Count; ++i)
                     {
-                        argThisIt = gameSetupId.<#= Case.LowerCamelCase.Convert(c.Name) #>.find(argThisId);
-                        if (argThisIt == gameSetupId.<#= Case.LowerCamelCase.Convert(c.Name) #>.end())
-                            return false;
+                        #>
+
+                    <#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[c.Id.Member[i]].Type)) #> argThisId<#= i #> = ReadNext<<#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(c.MemberMap[c.Id.Member[i]].Type)) #>>(buf);<#
                     }
-                    <#= Case.CamelCase.Convert(c.Name) #>& argThis = *(argThisIt->second);<#
+                    #>
+
+                    <#= Case.CamelCase.Convert(c.Name) #>* argThisPtr = Find<#= Case.CamelCase.Convert(c.Name) #>(gameSetup, gameState<#
+                    for (int i = 0; i < c.Id.Member.Count; ++i)
+                    {
+                        #>, argThisId<#= i #><#
+                    }
+                    #>);
+
+                    if (!argThisPtr)
+                        return false;
+                    <#= Case.CamelCase.Convert(c.Name) #>& argThis = *argThisPtr;<#
                 }
                 foreach (MethodParam a in m.Param)
                 {
@@ -315,7 +453,7 @@ this.PopIndent();
                             #>
                             
                     <#= Case.CamelCase.Convert(a.Type) #> <#= Case.LowerCamelCase.Convert(a.Name) #>;
-                    Deserialize(<#= Case.LowerCamelCase.Convert(a.Name) #>, buf, &gameSetup, &gameState, &gameSetupId, &gameStateId);<#
+                    Deserialize(<#= Case.LowerCamelCase.Convert(a.Name) #>, buf, &gameSetup, &gameState);<#
                         }
                         else if (aType.Id.Index)
                         {
@@ -328,17 +466,23 @@ this.PopIndent();
                         }
                         else
                         {
+                            for (int i = 0; i < aType.Id.Member.Count; ++i)
+                            {
+                                #>
+
+                    <#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(aType.MemberMap[aType.Id.Member[i]].Type)) #> <#= Case.LowerCamelCase.Convert(a.Name) #>_id<#= i #> = ReadNext<<#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(aType.MemberMap[aType.Id.Member[i]].Type)) #>>(buf);<#
+                            }
                             #>
-                    
-                    <#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(aType.MemberMap[aType.Id.Member[0]].Type)) #> <#= Case.LowerCamelCase.Convert(a.Name) #>_id = ReadNext<<#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(aType.MemberMap[aType.Id.Member[0]].Type)) #>>(buf);
-                    auto <#= Case.LowerCamelCase.Convert(a.Name) #>_it = gameStateId.<#= Case.LowerCamelCase.Convert(a.Type) #>.find(<#= Case.LowerCamelCase.Convert(a.Name) #>_id);
-                    if (<#= Case.LowerCamelCase.Convert(a.Name) #>_it == gameStateId.<#= Case.LowerCamelCase.Convert(a.Type) #>.end())
-                    {
-                        <#= Case.LowerCamelCase.Convert(a.Name) #>_it = gameSetupId.<#= Case.LowerCamelCase.Convert(a.Type) #>.find(<#= Case.LowerCamelCase.Convert(a.Name) #>_id);
-                        if (<#= Case.LowerCamelCase.Convert(a.Name) #>_it == gameSetupId.<#= Case.LowerCamelCase.Convert(a.Type) #>.end())
-                            return false;
-                    }
-                    <#= Case.CamelCase.Convert(a.Type) #>& <#= Case.LowerCamelCase.Convert(a.Name) #> = *(<#= Case.LowerCamelCase.Convert(a.Name) #>_it->second);<#
+
+                    auto <#= Case.LowerCamelCase.Convert(a.Name) #>_ptr = Find<#= Case.CamelCase.Convert(a.Type) #>(gameSetup, gameState<#
+                            for (int i = 0; i < aType.Id.Member.Count; ++i)
+                            {
+                                #>, <#= Case.LowerCamelCase.Convert(a.Name) #>_id<#= i #><#
+                            }
+                            #>);
+                    if (!<#= Case.LowerCamelCase.Convert(a.Name) #>_ptr)
+                        return false;
+                    <#= Case.CamelCase.Convert(a.Type) #>& <#= Case.LowerCamelCase.Convert(a.Name) #> = *(<#= Case.LowerCamelCase.Convert(a.Name) #>_ptr);<#
                         }
                     }
                     else if (type == BasicType.Enum)

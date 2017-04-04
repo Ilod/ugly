@@ -6,39 +6,91 @@ namespace ugly
 {
     namespace FreeMarket
     {
-        void Serializer::IdMap::Clear()
-        {
-            buildingCard.clear();
-            building.clear();
-            action.clear();
-            auction.clear();
-        }
-
         namespace
         {
-            template<typename T> void SerializeInternal(T& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<typename T> void SerializeInternal(T& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
             
-            template<> void SerializeInternal(PlayerConfig& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            template<> void SerializeInternal(GameConfig& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            template<> void SerializeInternal(PlayerState& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            template<> void SerializeInternal(GameState& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            template<> void SerializeInternal(Cell& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            template<> void SerializeInternal(BuildingType& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            template<> void SerializeInternal(BuildingCard& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            template<> void SerializeInternal(Building& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            template<> void SerializeInternal(PowerParameter& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            template<> void SerializeInternal(Power& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            template<> void SerializeInternal(Action& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            template<> void SerializeInternal(Auction& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(PlayerConfig& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(GameConfig& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(PlayerState& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(GameState& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(Cell& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(BuildingType& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(BuildingCard& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(Building& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(PowerParameter& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(Power& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(Action& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            template<> void SerializeInternal(Auction& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
 
-            template<> void SerializeInternal(PlayerConfig& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            template<typename T> BuildingCard* FindBuildingCardInternal(T& data, std::int32_t id);
+    
+            template<> BuildingCard* FindBuildingCardInternal(PlayerConfig& data, std::int32_t id);
+            template<> BuildingCard* FindBuildingCardInternal(GameConfig& data, std::int32_t id);
+            template<> BuildingCard* FindBuildingCardInternal(PlayerState& data, std::int32_t id);
+            template<> BuildingCard* FindBuildingCardInternal(GameState& data, std::int32_t id);
+            template<> BuildingCard* FindBuildingCardInternal(Cell& data, std::int32_t id);
+            template<> BuildingCard* FindBuildingCardInternal(BuildingType& data, std::int32_t id);
+            template<> BuildingCard* FindBuildingCardInternal(BuildingCard& data, std::int32_t id);
+            template<> BuildingCard* FindBuildingCardInternal(Building& data, std::int32_t id);
+            template<> BuildingCard* FindBuildingCardInternal(PowerParameter& data, std::int32_t id);
+            template<> BuildingCard* FindBuildingCardInternal(Power& data, std::int32_t id);
+            template<> BuildingCard* FindBuildingCardInternal(Action& data, std::int32_t id);
+            template<> BuildingCard* FindBuildingCardInternal(Auction& data, std::int32_t id);
+
+            template<typename T> Building* FindBuildingInternal(T& data, std::int32_t id);
+    
+            template<> Building* FindBuildingInternal(PlayerConfig& data, std::int32_t id);
+            template<> Building* FindBuildingInternal(GameConfig& data, std::int32_t id);
+            template<> Building* FindBuildingInternal(PlayerState& data, std::int32_t id);
+            template<> Building* FindBuildingInternal(GameState& data, std::int32_t id);
+            template<> Building* FindBuildingInternal(Cell& data, std::int32_t id);
+            template<> Building* FindBuildingInternal(BuildingType& data, std::int32_t id);
+            template<> Building* FindBuildingInternal(BuildingCard& data, std::int32_t id);
+            template<> Building* FindBuildingInternal(Building& data, std::int32_t id);
+            template<> Building* FindBuildingInternal(PowerParameter& data, std::int32_t id);
+            template<> Building* FindBuildingInternal(Power& data, std::int32_t id);
+            template<> Building* FindBuildingInternal(Action& data, std::int32_t id);
+            template<> Building* FindBuildingInternal(Auction& data, std::int32_t id);
+
+            template<typename T> Action* FindActionInternal(T& data, std::int32_t id);
+    
+            template<> Action* FindActionInternal(PlayerConfig& data, std::int32_t id);
+            template<> Action* FindActionInternal(GameConfig& data, std::int32_t id);
+            template<> Action* FindActionInternal(PlayerState& data, std::int32_t id);
+            template<> Action* FindActionInternal(GameState& data, std::int32_t id);
+            template<> Action* FindActionInternal(Cell& data, std::int32_t id);
+            template<> Action* FindActionInternal(BuildingType& data, std::int32_t id);
+            template<> Action* FindActionInternal(BuildingCard& data, std::int32_t id);
+            template<> Action* FindActionInternal(Building& data, std::int32_t id);
+            template<> Action* FindActionInternal(PowerParameter& data, std::int32_t id);
+            template<> Action* FindActionInternal(Power& data, std::int32_t id);
+            template<> Action* FindActionInternal(Action& data, std::int32_t id);
+            template<> Action* FindActionInternal(Auction& data, std::int32_t id);
+
+            template<typename T> Auction* FindAuctionInternal(T& data, std::int32_t id);
+    
+            template<> Auction* FindAuctionInternal(PlayerConfig& data, std::int32_t id);
+            template<> Auction* FindAuctionInternal(GameConfig& data, std::int32_t id);
+            template<> Auction* FindAuctionInternal(PlayerState& data, std::int32_t id);
+            template<> Auction* FindAuctionInternal(GameState& data, std::int32_t id);
+            template<> Auction* FindAuctionInternal(Cell& data, std::int32_t id);
+            template<> Auction* FindAuctionInternal(BuildingType& data, std::int32_t id);
+            template<> Auction* FindAuctionInternal(BuildingCard& data, std::int32_t id);
+            template<> Auction* FindAuctionInternal(Building& data, std::int32_t id);
+            template<> Auction* FindAuctionInternal(PowerParameter& data, std::int32_t id);
+            template<> Auction* FindAuctionInternal(Power& data, std::int32_t id);
+            template<> Auction* FindAuctionInternal(Action& data, std::int32_t id);
+            template<> Auction* FindAuctionInternal(Auction& data, std::int32_t id);
+
+            template<> void SerializeInternal(PlayerConfig& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
                 {
                     buffer << data.team << " ";
                 }
             }
 
-            template<> void SerializeInternal(GameConfig& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            template<> void SerializeInternal(GameConfig& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
                 {
                     buffer << data.turns << " ";
@@ -66,7 +118,7 @@ namespace ugly
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
-                        SerializeInternal(data.building[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                        SerializeInternal(data.building[idx0], buffer, gameSetup, playerSetup, gameState, playerState);
                     }
                 }
                 {
@@ -74,12 +126,12 @@ namespace ugly
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
-                        SerializeInternal(data.player[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                        SerializeInternal(data.player[idx0], buffer, gameSetup, playerSetup, gameState, playerState);
                     }
                 }
             }
 
-            template<> void SerializeInternal(PlayerState& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            template<> void SerializeInternal(PlayerState& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
                 {
                     buffer << data.team << " ";
@@ -89,7 +141,7 @@ namespace ugly
                 }
             }
 
-            template<> void SerializeInternal(GameState& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            template<> void SerializeInternal(GameState& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
                 {
                     buffer << data.turn << " ";
@@ -103,7 +155,7 @@ namespace ugly
                     {
                         for (int idx1 = 0; idx1 < size1; ++idx1)
                         {
-                            SerializeInternal(data.map[idx0][idx1], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                            SerializeInternal(data.map[idx0][idx1], buffer, gameSetup, playerSetup, gameState, playerState);
                         }
                     }
                 }
@@ -135,7 +187,7 @@ namespace ugly
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
-                        SerializeInternal(data.building[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                        SerializeInternal(data.building[idx0], buffer, gameSetup, playerSetup, gameState, playerState);
                     }
                 }
                 {
@@ -143,7 +195,7 @@ namespace ugly
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
-                        SerializeInternal(data.buildingCard[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                        SerializeInternal(data.buildingCard[idx0], buffer, gameSetup, playerSetup, gameState, playerState);
                     }
                 }
                 {
@@ -151,7 +203,7 @@ namespace ugly
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
-                        SerializeInternal(data.player[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                        SerializeInternal(data.player[idx0], buffer, gameSetup, playerSetup, gameState, playerState);
                     }
                 }
                 {
@@ -159,7 +211,7 @@ namespace ugly
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
-                        SerializeInternal(data.auction[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                        SerializeInternal(data.auction[idx0], buffer, gameSetup, playerSetup, gameState, playerState);
                     }
                 }
                 {
@@ -167,7 +219,7 @@ namespace ugly
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
-                        SerializeInternal(data.endedAuction[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                        SerializeInternal(data.endedAuction[idx0], buffer, gameSetup, playerSetup, gameState, playerState);
                     }
                 }
                 {
@@ -175,12 +227,12 @@ namespace ugly
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
-                        SerializeInternal(data.futureAuction[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                        SerializeInternal(data.futureAuction[idx0], buffer, gameSetup, playerSetup, gameState, playerState);
                     }
                 }
             }
 
-            template<> void SerializeInternal(Cell& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            template<> void SerializeInternal(Cell& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
                 {
                     buffer << data.owner << " ";
@@ -196,7 +248,7 @@ namespace ugly
                 }
             }
 
-            template<> void SerializeInternal(BuildingType& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            template<> void SerializeInternal(BuildingType& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
                 {
                     buffer << data.actionPointMax << " ";
@@ -209,14 +261,13 @@ namespace ugly
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
-                        SerializeInternal(data.action[idx0], buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                        SerializeInternal(data.action[idx0], buffer, gameSetup, playerSetup, gameState, playerState);
                     }
                 }
             }
 
-            template<> void SerializeInternal(BuildingCard& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            template<> void SerializeInternal(BuildingCard& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
-                ids.buildingCard[data.id] = &data;
                 {
                     buffer << data.id << " ";
                 }
@@ -235,9 +286,8 @@ namespace ugly
                 }
             }
 
-            template<> void SerializeInternal(Building& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            template<> void SerializeInternal(Building& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
-                ids.building[data.id] = &data;
                 {
                     buffer << data.id << " ";
                 }
@@ -277,7 +327,7 @@ namespace ugly
                 }
             }
 
-            template<> void SerializeInternal(PowerParameter& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            template<> void SerializeInternal(PowerParameter& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
                 {
                     buffer << data.quantity << " ";
@@ -297,7 +347,7 @@ namespace ugly
                 }
             }
 
-            template<> void SerializeInternal(Power& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            template<> void SerializeInternal(Power& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
                 {                
                     buffer << (int)data.type << " ";
@@ -319,14 +369,13 @@ namespace ugly
                 }
             }
 
-            template<> void SerializeInternal(Action& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            template<> void SerializeInternal(Action& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
-                ids.action[data.id] = &data;
                 {
                     buffer << data.id << " ";
                 }
                 {
-                    SerializeInternal(data.power, buffer, ids, gameSetup, playerSetup, gameState, playerState);
+                    SerializeInternal(data.power, buffer, gameSetup, playerSetup, gameState, playerState);
                 }
                 {
                     buffer << data.actionPoint << " ";
@@ -336,9 +385,8 @@ namespace ugly
                 }
             }
 
-            template<> void SerializeInternal(Auction& data, std::stringstream& buffer, Serializer::IdMap& ids, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
+            template<> void SerializeInternal(Auction& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
             {
-                ids.auction[data.id] = &data;
                 {
                     buffer << data.id << " ";
                 }
@@ -368,6 +416,546 @@ namespace ugly
                     }
                 }
             }
+            template<> BuildingCard* FindBuildingCardInternal(PlayerConfig& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> BuildingCard* FindBuildingCardInternal(GameConfig& data, std::int32_t id)
+            {
+                {
+                    auto& memberArray0 = data.building;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (BuildingCard* res = FindBuildingCardInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.player;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (BuildingCard* res = FindBuildingCardInternal(memberArray1, id))
+                            return res;
+                    }
+                }                return nullptr;
+            }
+
+            template<> BuildingCard* FindBuildingCardInternal(PlayerState& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> BuildingCard* FindBuildingCardInternal(GameState& data, std::int32_t id)
+            {
+                {
+                    auto& memberArray0 = data.map;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        for (auto& memberArray2 : memberArray1)
+                        {
+                            if (BuildingCard* res = FindBuildingCardInternal(memberArray2, id))
+                                return res;
+                        }
+                    }
+                }
+                {
+                    auto& memberArray0 = data.building;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (BuildingCard* res = FindBuildingCardInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.buildingCard;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (BuildingCard* res = FindBuildingCardInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.player;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (BuildingCard* res = FindBuildingCardInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.auction;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (BuildingCard* res = FindBuildingCardInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.endedAuction;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (BuildingCard* res = FindBuildingCardInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.futureAuction;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (BuildingCard* res = FindBuildingCardInternal(memberArray1, id))
+                            return res;
+                    }
+                }                return nullptr;
+            }
+
+            template<> BuildingCard* FindBuildingCardInternal(Cell& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> BuildingCard* FindBuildingCardInternal(BuildingType& data, std::int32_t id)
+            {
+                {
+                    auto& memberArray0 = data.action;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (BuildingCard* res = FindBuildingCardInternal(memberArray1, id))
+                            return res;
+                    }
+                }                return nullptr;
+            }
+
+            template<> BuildingCard* FindBuildingCardInternal(BuildingCard& data, std::int32_t id)
+            {
+                if (data.id == id)
+                    return &data;                return nullptr;
+            }
+
+            template<> BuildingCard* FindBuildingCardInternal(Building& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> BuildingCard* FindBuildingCardInternal(PowerParameter& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> BuildingCard* FindBuildingCardInternal(Power& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> BuildingCard* FindBuildingCardInternal(Action& data, std::int32_t id)
+            {
+                if (BuildingCard* res = FindBuildingCardInternal(data.power, id))
+                    return res;                return nullptr;
+            }
+
+            template<> BuildingCard* FindBuildingCardInternal(Auction& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Building* FindBuildingInternal(PlayerConfig& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Building* FindBuildingInternal(GameConfig& data, std::int32_t id)
+            {
+                {
+                    auto& memberArray0 = data.building;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Building* res = FindBuildingInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.player;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Building* res = FindBuildingInternal(memberArray1, id))
+                            return res;
+                    }
+                }                return nullptr;
+            }
+
+            template<> Building* FindBuildingInternal(PlayerState& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Building* FindBuildingInternal(GameState& data, std::int32_t id)
+            {
+                {
+                    auto& memberArray0 = data.map;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        for (auto& memberArray2 : memberArray1)
+                        {
+                            if (Building* res = FindBuildingInternal(memberArray2, id))
+                                return res;
+                        }
+                    }
+                }
+                {
+                    auto& memberArray0 = data.building;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Building* res = FindBuildingInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.buildingCard;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Building* res = FindBuildingInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.player;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Building* res = FindBuildingInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.auction;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Building* res = FindBuildingInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.endedAuction;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Building* res = FindBuildingInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.futureAuction;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Building* res = FindBuildingInternal(memberArray1, id))
+                            return res;
+                    }
+                }                return nullptr;
+            }
+
+            template<> Building* FindBuildingInternal(Cell& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Building* FindBuildingInternal(BuildingType& data, std::int32_t id)
+            {
+                {
+                    auto& memberArray0 = data.action;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Building* res = FindBuildingInternal(memberArray1, id))
+                            return res;
+                    }
+                }                return nullptr;
+            }
+
+            template<> Building* FindBuildingInternal(BuildingCard& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Building* FindBuildingInternal(Building& data, std::int32_t id)
+            {
+                if (data.id == id)
+                    return &data;                return nullptr;
+            }
+
+            template<> Building* FindBuildingInternal(PowerParameter& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Building* FindBuildingInternal(Power& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Building* FindBuildingInternal(Action& data, std::int32_t id)
+            {
+                if (Building* res = FindBuildingInternal(data.power, id))
+                    return res;                return nullptr;
+            }
+
+            template<> Building* FindBuildingInternal(Auction& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Action* FindActionInternal(PlayerConfig& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Action* FindActionInternal(GameConfig& data, std::int32_t id)
+            {
+                {
+                    auto& memberArray0 = data.building;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Action* res = FindActionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.player;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Action* res = FindActionInternal(memberArray1, id))
+                            return res;
+                    }
+                }                return nullptr;
+            }
+
+            template<> Action* FindActionInternal(PlayerState& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Action* FindActionInternal(GameState& data, std::int32_t id)
+            {
+                {
+                    auto& memberArray0 = data.map;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        for (auto& memberArray2 : memberArray1)
+                        {
+                            if (Action* res = FindActionInternal(memberArray2, id))
+                                return res;
+                        }
+                    }
+                }
+                {
+                    auto& memberArray0 = data.building;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Action* res = FindActionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.buildingCard;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Action* res = FindActionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.player;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Action* res = FindActionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.auction;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Action* res = FindActionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.endedAuction;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Action* res = FindActionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.futureAuction;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Action* res = FindActionInternal(memberArray1, id))
+                            return res;
+                    }
+                }                return nullptr;
+            }
+
+            template<> Action* FindActionInternal(Cell& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Action* FindActionInternal(BuildingType& data, std::int32_t id)
+            {
+                {
+                    auto& memberArray0 = data.action;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Action* res = FindActionInternal(memberArray1, id))
+                            return res;
+                    }
+                }                return nullptr;
+            }
+
+            template<> Action* FindActionInternal(BuildingCard& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Action* FindActionInternal(Building& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Action* FindActionInternal(PowerParameter& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Action* FindActionInternal(Power& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Action* FindActionInternal(Action& data, std::int32_t id)
+            {
+                if (data.id == id)
+                    return &data;
+                if (Action* res = FindActionInternal(data.power, id))
+                    return res;                return nullptr;
+            }
+
+            template<> Action* FindActionInternal(Auction& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Auction* FindAuctionInternal(PlayerConfig& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Auction* FindAuctionInternal(GameConfig& data, std::int32_t id)
+            {
+                {
+                    auto& memberArray0 = data.building;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Auction* res = FindAuctionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.player;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Auction* res = FindAuctionInternal(memberArray1, id))
+                            return res;
+                    }
+                }                return nullptr;
+            }
+
+            template<> Auction* FindAuctionInternal(PlayerState& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Auction* FindAuctionInternal(GameState& data, std::int32_t id)
+            {
+                {
+                    auto& memberArray0 = data.map;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        for (auto& memberArray2 : memberArray1)
+                        {
+                            if (Auction* res = FindAuctionInternal(memberArray2, id))
+                                return res;
+                        }
+                    }
+                }
+                {
+                    auto& memberArray0 = data.building;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Auction* res = FindAuctionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.buildingCard;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Auction* res = FindAuctionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.player;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Auction* res = FindAuctionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.auction;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Auction* res = FindAuctionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.endedAuction;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Auction* res = FindAuctionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
+                    auto& memberArray0 = data.futureAuction;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Auction* res = FindAuctionInternal(memberArray1, id))
+                            return res;
+                    }
+                }                return nullptr;
+            }
+
+            template<> Auction* FindAuctionInternal(Cell& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Auction* FindAuctionInternal(BuildingType& data, std::int32_t id)
+            {
+                {
+                    auto& memberArray0 = data.action;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Auction* res = FindAuctionInternal(memberArray1, id))
+                            return res;
+                    }
+                }                return nullptr;
+            }
+
+            template<> Auction* FindAuctionInternal(BuildingCard& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Auction* FindAuctionInternal(Building& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Auction* FindAuctionInternal(PowerParameter& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Auction* FindAuctionInternal(Power& data, std::int32_t id)
+            {                return nullptr;
+            }
+
+            template<> Auction* FindAuctionInternal(Action& data, std::int32_t id)
+            {
+                if (Auction* res = FindAuctionInternal(data.power, id))
+                    return res;                return nullptr;
+            }
+
+            template<> Auction* FindAuctionInternal(Auction& data, std::int32_t id)
+            {
+                if (data.id == id)
+                    return &data;                return nullptr;
+            }
+            
             
             template<class T> T ReadNext(const char*& buf)
             {
@@ -391,42 +979,27 @@ namespace ugly
                 return static_cast<T>(data);
             }
             
-            template<class T> void Deserialize(T& data, const char*& buf, GameConfig* gameSetup, GameState* gameState, Serializer::IdMap* idSetup, Serializer::IdMap* idState)
+            template<class T> void Deserialize(T& data, const char*& buf, GameConfig* gameSetup, GameState* gameState)
             {
                 data = ReadNext<T>(buf);
             }    
-            template<> void Deserialize(PowerParameter& data, const char*& buf, GameConfig* gameSetup, GameState* gameState, Serializer::IdMap* idSetup, Serializer::IdMap* idState);
+            template<> void Deserialize(PowerParameter& data, const char*& buf, GameConfig* gameSetup, GameState* gameState);
             
-            template<> void Deserialize(PowerParameter& data, const char*& buf, GameConfig* gameSetup, GameState* gameState, Serializer::IdMap* idSetup, Serializer::IdMap* idState)
+            template<> void Deserialize(PowerParameter& data, const char*& buf, GameConfig* gameSetup, GameState* gameState)
             {
                 {
                     auto& member = data.quantity;
-                    Deserialize(member, buf, gameSetup, gameState, idSetup, idState);
+                    Deserialize(member, buf, gameSetup, gameState);
                 }
                 {
                     auto& member = data.resource;
-                    Deserialize(member, buf, gameSetup, gameState, idSetup, idState);
+                    Deserialize(member, buf, gameSetup, gameState);
                 }
                 {
-                    auto& member = data.buildingSource;        {
-                        int classIdx = ReadNext<int>(buf);
-                        member = nullptr;
-                        if (idState != nullptr)
-                        {
-                            auto classIt = idState->building.find(classIdx);
-                            if (classIt != idState->building.end())
-                            {
-                                member = classIt->second;
-                            }
-                        }
-                        if (member == nullptr && idSetup != nullptr)
-                        {
-                            auto classIt = idSetup->building.find(classIdx);
-                            if (classIt != idSetup->building.end())
-                            {
-                                member = classIt->second;
-                            }
-                        }
+                    auto& member = data.buildingSource;
+                    {
+                        std::int32_t classIdx0 = ReadNext<std::int32_t>(buf);
+                        member = Serializer::FindBuilding(*gameSetup, *gameState, classIdx0);
                     }
                 }
             }
@@ -435,9 +1008,8 @@ namespace ugly
         std::string Serializer::SerializeSetup(GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
         {
             std::stringstream buffer;
-            gameSetupId.Clear();
             buffer << playerSetup.id << '\n';
-            SerializeInternal(gameSetup, buffer, gameSetupId, gameSetup, playerSetup, gameState, playerState);
+            SerializeInternal(gameSetup, buffer, gameSetup, playerSetup, gameState, playerState);
             buffer << '\n';
             return buffer.str();
         }
@@ -445,10 +1017,37 @@ namespace ugly
         std::string Serializer::SerializeState(GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
         {
             std::stringstream buffer;
-            gameStateId.Clear();
-            SerializeInternal(gameState, buffer, gameStateId, gameSetup, playerSetup, gameState, playerState);
+            SerializeInternal(gameState, buffer, gameSetup, playerSetup, gameState, playerState);
             buffer << '\n';
             return buffer.str();
+        }
+
+        BuildingCard* Serializer::FindBuildingCard(GameConfig& gameSetup, GameState& gameState, std::int32_t id)
+        {
+            if (BuildingCard* res = FindBuildingCardInternal(gameState, id))
+                return res;
+            return FindBuildingCardInternal(gameSetup, id);
+        }
+
+        Building* Serializer::FindBuilding(GameConfig& gameSetup, GameState& gameState, std::int32_t id)
+        {
+            if (Building* res = FindBuildingInternal(gameState, id))
+                return res;
+            return FindBuildingInternal(gameSetup, id);
+        }
+
+        Action* Serializer::FindAction(GameConfig& gameSetup, GameState& gameState, std::int32_t id)
+        {
+            if (Action* res = FindActionInternal(gameState, id))
+                return res;
+            return FindActionInternal(gameSetup, id);
+        }
+
+        Auction* Serializer::FindAuction(GameConfig& gameSetup, GameState& gameState, std::int32_t id)
+        {
+            if (Auction* res = FindAuctionInternal(gameState, id))
+                return res;
+            return FindAuctionInternal(gameSetup, id);
         }
 
         bool Serializer::ExecuteOrder(const std::string& order, GameConfig& gameSetup, GameState& gameState, int currentPlayerId)
@@ -467,16 +1066,13 @@ namespace ugly
                     return argThis.Buy(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId]);
                 }
                 case 1: // BuildingCard::Build
-                {                    
-                    std::int32_t argThisId = ReadNext<std::int32_t>(buf);
-                    auto argThisIt = gameStateId.buildingCard.find(argThisId);
-                    if (argThisIt == gameStateId.buildingCard.end())
-                    {
-                        argThisIt = gameSetupId.buildingCard.find(argThisId);
-                        if (argThisIt == gameSetupId.buildingCard.end())
-                            return false;
-                    }
-                    BuildingCard& argThis = *(argThisIt->second);
+                {
+                    std::int32_t argThisId0 = ReadNext<std::int32_t>(buf);
+                    BuildingCard* argThisPtr = FindBuildingCard(gameSetup, gameState, argThisId0);
+
+                    if (!argThisPtr)
+                        return false;
+                    BuildingCard& argThis = *argThisPtr;
                             int position_idx0 = ReadNext<int>(buf);
                             int position_idx1 = ReadNext<int>(buf);
                             if (!(position_idx0 >= 0 && position_idx1 >= 0 && gameState.map.size() > position_idx0 && gameState.map[position_idx0].size() > position_idx1))
@@ -485,40 +1081,30 @@ namespace ugly
                     return argThis.Build(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], position);
                 }
                 case 2: // Building::Execute
-                {                    
-                    std::int32_t argThisId = ReadNext<std::int32_t>(buf);
-                    auto argThisIt = gameStateId.building.find(argThisId);
-                    if (argThisIt == gameStateId.building.end())
-                    {
-                        argThisIt = gameSetupId.building.find(argThisId);
-                        if (argThisIt == gameSetupId.building.end())
-                            return false;
-                    }
-                    Building& argThis = *(argThisIt->second);                    
-                    std::int32_t action_id = ReadNext<std::int32_t>(buf);
-                    auto action_it = gameStateId.action.find(action_id);
-                    if (action_it == gameStateId.action.end())
-                    {
-                        action_it = gameSetupId.action.find(action_id);
-                        if (action_it == gameSetupId.action.end())
-                            return false;
-                    }
-                    Action& action = *(action_it->second);                            
+                {
+                    std::int32_t argThisId0 = ReadNext<std::int32_t>(buf);
+                    Building* argThisPtr = FindBuilding(gameSetup, gameState, argThisId0);
+
+                    if (!argThisPtr)
+                        return false;
+                    Building& argThis = *argThisPtr;
+                    std::int32_t action_id0 = ReadNext<std::int32_t>(buf);
+                    auto action_ptr = FindAction(gameSetup, gameState, action_id0);
+                    if (!action_ptr)
+                        return false;
+                    Action& action = *(action_ptr);                            
                     PowerParameter param;
-                    Deserialize(param, buf, &gameSetup, &gameState, &gameSetupId, &gameStateId);
+                    Deserialize(param, buf, &gameSetup, &gameState);
                     return argThis.Execute(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], action, param);
                 }
                 case 3: // Auction::Bid
-                {                    
-                    std::int32_t argThisId = ReadNext<std::int32_t>(buf);
-                    auto argThisIt = gameStateId.auction.find(argThisId);
-                    if (argThisIt == gameStateId.auction.end())
-                    {
-                        argThisIt = gameSetupId.auction.find(argThisId);
-                        if (argThisIt == gameSetupId.auction.end())
-                            return false;
-                    }
-                    Auction& argThis = *(argThisIt->second);
+                {
+                    std::int32_t argThisId0 = ReadNext<std::int32_t>(buf);
+                    Auction* argThisPtr = FindAuction(gameSetup, gameState, argThisId0);
+
+                    if (!argThisPtr)
+                        return false;
+                    Auction& argThis = *argThisPtr;
                     std::int32_t money = ReadNext<std::int32_t>(buf);
                     return argThis.Bid(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], money);
                 }

@@ -20,12 +20,7 @@
     return static_cast<T>(data);
 }
 
-template<class T> void Deserialize(T& data, const char*& buf, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>* gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>* gameState<#
-    if (CxxHelper.Server)
-    {
-        #>, Serializer::IdMap* idSetup, Serializer::IdMap* idState<# 
-    }
-    #>)
+template<class T> void Deserialize(T& data, const char*& buf, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>* gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>* gameState)
 {
     data = ReadNext<T>(buf);
 }<#
@@ -38,12 +33,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
         continue;
     #>
     
-template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const char*& buf, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>* gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>* gameState<#
-    if (CxxHelper.Server)
-    {
-        #>, Serializer::IdMap* idSetup, Serializer::IdMap* idState<# 
-    }
-    #>);<#
+template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const char*& buf, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>* gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>* gameState);<#
 }
 foreach (GameClass c in CxxHelper.Definition.Class.Values)
 {
@@ -54,12 +44,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
     #>
 
 
-template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const char*& buf, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>* gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>* gameState<#
-    if (CxxHelper.Server)
-    {
-        #>, Serializer::IdMap* idSetup, Serializer::IdMap* idState<# 
-    }
-    #>)
+template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const char*& buf, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>* gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>* gameState)
 {<#
     foreach (ClassMember m in c.Member)
     {
@@ -85,25 +70,23 @@ template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const c
         else if (m.IsWeak && !CxxHelper.Definition.Class[m.Type].Id.Index && CxxHelper.Server)
         {
             #>
-        {
-            int classIdx = ReadNext<int>(buf);
-            member = nullptr;
-            if (idState != nullptr)
+
+        {<#
+            GameClass memberType = CxxHelper.Definition.Class[m.Type];
+            for (int i = 0; i < memberType.Id.Member.Count; ++i)
             {
-                auto classIt = idState-><#= Case.LowerCamelCase.Convert(m.Type) #>.find(classIdx);
-                if (classIt != idState-><#= Case.LowerCamelCase.Convert(m.Type) #>.end())
-                {
-                    member = classIt->second;
-                }
+                #>
+
+            <#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(memberType.MemberMap[memberType.Id.Member[i]].Type)) #> classIdx<#= i #> = ReadNext<<#= CxxHelper.GetBasicTypeName(CxxHelper.Definition.GetBasicType(memberType.MemberMap[memberType.Id.Member[i]].Type)) #>>(buf);<#
             }
-            if (member == nullptr && idSetup != nullptr)
+            #>
+
+            member = Serializer::Find<#= Case.CamelCase.Convert(m.Type) #>(*gameSetup, *gameState<#
+            for (int i = 0; i < memberType.Id.Member.Count; ++i)
             {
-                auto classIt = idSetup-><#= Case.LowerCamelCase.Convert(m.Type) #>.find(classIdx);
-                if (classIt != idSetup-><#= Case.LowerCamelCase.Convert(m.Type) #>.end())
-                {
-                    member = classIt->second;
-                }
+                #>, classIdx<#= i #><#
             }
+            #>);
         }<#
         }
         else
@@ -151,12 +134,7 @@ template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const c
             {
             #>
 
-        Deserialize(array<#= m.Array #>, buf, gameSetup, gameState<#
-                if (CxxHelper.Server)
-                {
-                    #>, idSetup, idState<#
-                }
-                #>);<#
+        Deserialize(array<#= m.Array #>, buf, gameSetup, gameState);<#
                 if (m.Index == ClassMemberIndexType.Strong)
                 {
                     GameClass mType = CxxHelper.Definition.Class[m.Type];
@@ -210,12 +188,7 @@ template<> void Deserialize(<#= Case.CamelCase.Convert(c.Name) #>& data, const c
             {
             #>
 
-        Deserialize(member, buf, gameSetup, gameState<#
-                if (CxxHelper.Server)
-                {
-                    #>, idSetup, idState<#
-                }
-                #>);<#
+        Deserialize(member, buf, gameSetup, gameState);<#
             }
             for (int i = 0; i < m.Array; ++i)
             {

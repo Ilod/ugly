@@ -22,7 +22,7 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
         virtual void PlayTurn(<#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& <#= Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.GameState) #>, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& <#= Case.LowerCamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>) = 0;
         virtual void Cleanup() {};
     };
-
+    
     class GameServer
     {
     public:

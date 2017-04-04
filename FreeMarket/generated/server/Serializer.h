@@ -14,22 +14,13 @@ namespace ugly
         class Serializer
         {
         public:
-            std::string SerializeState(GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            std::string SerializeSetup(GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            bool ExecuteOrder(const std::string& order, GameConfig& gameSetup, GameState& gameState, int playerId);
-            
-            class IdMap
-            {
-            public:
-                std::map<std::int32_t, BuildingCard*> buildingCard;
-                std::map<std::int32_t, Building*> building;
-                std::map<std::int32_t, Action*> action;
-                std::map<std::int32_t, Auction*> auction;
-                void Clear();
-            };
-        private:
-            IdMap gameSetupId;
-            IdMap gameStateId;
+            static std::string SerializeState(GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            static std::string SerializeSetup(GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
+            static bool ExecuteOrder(const std::string& order, GameConfig& gameSetup, GameState& gameState, int playerId);
+            static BuildingCard* FindBuildingCard(GameConfig& gameSetup, GameState& gameState, std::int32_t id);
+            static Building* FindBuilding(GameConfig& gameSetup, GameState& gameState, std::int32_t id);
+            static Action* FindAction(GameConfig& gameSetup, GameState& gameState, std::int32_t id);
+            static Auction* FindAuction(GameConfig& gameSetup, GameState& gameState, std::int32_t id);
         };
     }
 }
