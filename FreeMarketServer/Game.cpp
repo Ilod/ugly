@@ -12,6 +12,9 @@ namespace ugly
     {
         namespace
         {
+            void PushCurrentAuctions(const GameConfig& gameSetup, GameState& gameState);
+            void ResolveAuctions(const GameConfig& gameSetup, GameState& gameState);
+
             void InitSetupData(GameConfig& gameSetup, int players)
             {
                 gameSetup.player.resize(players);
