@@ -79,15 +79,15 @@ namespace ugly
             switch (action.power.type)
             {
             case PowerType::ProduceResource:
-                return ExecuteSellResource(gameSetup, playerSetup, gameState, playerState, resolved);
+                return ExecuteSellResource(gameSetup, playerSetup, gameState, playerState, action, resolved);
             case PowerType::SellResource:
-                return ExecuteProduceResource(gameSetup, playerSetup, gameState, playerState, resolved);
+                return ExecuteProduceResource(gameSetup, playerSetup, gameState, playerState, action, resolved);
             default:
                 return false;
             }
         }
 
-        bool ActionPrivate::ExecuteProduceResource(const GameConfig& gameSetup, const PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState, const ResolvedPowerParameter& parameter)
+        bool ActionPrivate::ExecuteProduceResource(const GameConfig& gameSetup, const PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState, const Action& action, const ResolvedPowerParameter& parameter)
         {
             if (parameter.resource == ParameterConstant::None)
                 return false;
@@ -118,7 +118,7 @@ namespace ugly
             return true;
         }
 
-        bool ActionPrivate::ExecuteSellResource(const GameConfig& gameSetup, const PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState, const ResolvedPowerParameter& parameter)
+        bool ActionPrivate::ExecuteSellResource(const GameConfig& gameSetup, const PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState, const Action& action, const ResolvedPowerParameter& parameter)
         {
             if (parameter.resource == ParameterConstant::None)
                 return false;
@@ -137,7 +137,17 @@ namespace ugly
                         resourceSold = true;
                         int resourceSoldCount = (parameter.quantity == ParameterConstant::All ? currentResource : std::min(parameter.quantity, currentResource));
                         parameter.source->SetResource(r, currentResource - resourceSoldCount);
-                        playerState.money += gameState.resourcePrice[r] * resourceSoldCount;
+                        int resourcePrice = gameState.resourcePrice[r];
+                        switch (action.power.boost)
+                        {
+                        case BoostType::Fixed:
+                            resourcePrice = std::max(0, resourcePrice + action.power.boostPower);
+                            break;
+                        case BoostType::Percent:
+                            resourcePrice = resourcePrice * (100 + action.power.boostPower) / 100;
+                            break;
+                        }
+                        playerState.money += resourcePrice * resourceSoldCount;
                     }
                 }
                 return resourceSold;
@@ -149,7 +159,17 @@ namespace ugly
                     return false;
                 int resourceSoldCount = (parameter.quantity == ParameterConstant::All ? currentResource : std::min(parameter.quantity, currentResource));
                 parameter.source->SetResource(parameter.resource, currentResource - resourceSoldCount);
-                playerState.money += gameState.resourcePrice[parameter.resource] * resourceSoldCount;
+                int resourcePrice = gameState.resourcePrice[parameter.resource];
+                switch (action.power.boost)
+                {
+                case BoostType::Fixed:
+                    resourcePrice = std::max(0, resourcePrice + action.power.boostPower);
+                    break;
+                case BoostType::Percent:
+                    resourcePrice = resourcePrice * (100 + action.power.boostPower) / 100;
+                    break;
+                }
+                playerState.money += resourcePrice * resourceSoldCount;
                 return true;
             }
         }

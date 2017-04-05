@@ -378,6 +378,12 @@ namespace ugly
                 {                
                     buffer << (int)data.buildingSource << " ";
                 }
+                {                
+                    buffer << (int)data.boost << " ";
+                }
+                {
+                    buffer << data.boostPower << " ";
+                }
             }
 
             template<> void SerializeInternal(Action& data, std::stringstream& buffer, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)

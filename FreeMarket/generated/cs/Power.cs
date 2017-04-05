@@ -19,6 +19,13 @@ namespace FreeMarket
         ProduceResource = 0,
         SellResource = 1,
     }
+    
+    public enum BoostType
+    {
+        None = 0,
+        Fixed = 1,
+        Percent = 2,
+    }
 
     public class PowerParameter
     {
@@ -38,6 +45,8 @@ namespace FreeMarket
         public ParameterType Resource;
         public int ResourceForced;
         public ParameterType BuildingSource;
+        public BoostType Boost;
+        public int BoostPower;
         
     }
 

@@ -24,6 +24,13 @@ namespace ugly
             ProduceResource = 0,        
             SellResource = 1,
         };
+        
+        enum class BoostType
+        {        
+            None = 0,        
+            Fixed = 1,        
+            Percent = 2,
+        };
     
         struct PowerParameter
         {
@@ -46,6 +53,8 @@ namespace ugly
             ParameterType resource;
             std::int32_t resourceForced;
             ParameterType buildingSource;
+            BoostType boost;
+            std::int32_t boostPower;
             PowerPrivate additionalData;        
     
             

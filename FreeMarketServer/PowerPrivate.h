@@ -42,8 +42,8 @@ namespace ugly
         struct ActionPrivate
         {
             bool Execute                (const struct GameConfig& gameSetup, const struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const struct Action& action, const struct PowerParameter& parameter, std::unique_ptr<ActionSource> source);
-            bool ExecuteProduceResource (const struct GameConfig& gameSetup, const struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const ResolvedPowerParameter& parameter);
-            bool ExecuteSellResource    (const struct GameConfig& gameSetup, const struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const ResolvedPowerParameter& parameter);
+            bool ExecuteProduceResource (const struct GameConfig& gameSetup, const struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const struct Action& action, const ResolvedPowerParameter& parameter);
+            bool ExecuteSellResource    (const struct GameConfig& gameSetup, const struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, const struct Action& action, const ResolvedPowerParameter& parameter);
         };
 
         namespace ActionPriority

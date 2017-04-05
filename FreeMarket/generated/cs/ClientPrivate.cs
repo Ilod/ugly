@@ -400,6 +400,12 @@ namespace FreeMarket
                 }
                 {
                     data.BuildingSource = (ParameterType)ReadNextInt();
+                }
+                {
+                    data.Boost = (BoostType)ReadNextInt();
+                }
+                {
+                    data.BoostPower = ReadNextInt();
                 }           
             }
 

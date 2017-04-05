@@ -310,6 +310,10 @@ Files:
             Type:   int32
           - Name:   building_source
             Type:   parameter_type
+          - Name:   boost
+            Type:   boost_type
+          - Name:   boost_power
+            Type:   int32
       - Name:   action
         Member:
           - Name:   id
@@ -336,6 +340,11 @@ Files:
         Value:
             produce_resource:   0
             sell_resource:      1
+      - Name:   boost_type
+        Value:
+            none:       0
+            fixed:      1
+            percent:    2
   - Name:   auction
     Class:
       - Name:   auction

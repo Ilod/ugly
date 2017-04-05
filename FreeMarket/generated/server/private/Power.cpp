@@ -19,6 +19,8 @@ namespace ugly
             , resource()
             , resourceForced()
             , buildingSource()
+            , boost()
+            , boostPower()
         { }
             
         Action::Action()

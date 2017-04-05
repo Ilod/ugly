@@ -394,6 +394,14 @@ namespace FreeMarket
                 auto& member = data.buildingSource;
                 Deserialize(member, buf, gameSetup, gameState);
             }
+            {
+                auto& member = data.boost;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.boostPower;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
         }
         
         template<> void Deserialize(Action& data, const char*& buf, GameConfig* gameSetup, GameState* gameState)

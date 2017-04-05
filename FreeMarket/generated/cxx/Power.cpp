@@ -16,6 +16,8 @@ namespace FreeMarket
         , resource()
         , resourceForced()
         , buildingSource()
+        , boost()
+        , boostPower()
     { }
         
     Action::Action()

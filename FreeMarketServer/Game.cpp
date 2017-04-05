@@ -86,6 +86,8 @@ namespace ugly
                         action.power.resource = ParameterType::Choice;
                         action.power.resourceForced = -1;
                         action.power.type = FreeMarket::PowerType::SellResource;
+                        action.power.boost = BoostType::None;
+                        action.power.boostPower = 0;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);
@@ -111,6 +113,8 @@ namespace ugly
                         action.power.resource = ParameterType::Forced;
                         action.power.resourceForced = r;
                         action.power.type = FreeMarket::PowerType::ProduceResource;
+                        action.power.boost = BoostType::None;
+                        action.power.boostPower = 0;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);
@@ -136,6 +140,8 @@ namespace ugly
                         action.power.resource = ParameterType::Forced;
                         action.power.resourceForced = r;
                         action.power.type = FreeMarket::PowerType::ProduceResource;
+                        action.power.boost = BoostType::None;
+                        action.power.boostPower = 0;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);
@@ -160,6 +166,8 @@ namespace ugly
                         action.power.resource = ParameterType::All;
                         action.power.resourceForced = -1;
                         action.power.type = FreeMarket::PowerType::ProduceResource;
+                        action.power.boost = BoostType::None;
+                        action.power.boostPower = 0;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);
@@ -184,6 +192,8 @@ namespace ugly
                         action.power.resource = ParameterType::Choice;
                         action.power.resourceForced = -1;
                         action.power.type = FreeMarket::PowerType::ProduceResource;
+                        action.power.boost = BoostType::None;
+                        action.power.boostPower = 0;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);

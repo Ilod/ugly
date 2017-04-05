@@ -20,6 +20,13 @@ namespace FreeMarket
         ProduceResource = 0,        
         SellResource = 1,
     };
+    
+    enum class BoostType
+    {        
+        None = 0,        
+        Fixed = 1,        
+        Percent = 2,
+    };
 
     struct PowerParameter
     {
@@ -40,7 +47,9 @@ namespace FreeMarket
         std::int32_t quantityForced;
         ParameterType resource;
         std::int32_t resourceForced;
-        ParameterType buildingSource;        
+        ParameterType buildingSource;
+        BoostType boost;
+        std::int32_t boostPower;        
 
         
 
