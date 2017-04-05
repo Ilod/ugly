@@ -46,25 +46,6 @@ namespace ugly
             , owner()
             , actionPoint()
         { }
-
-        struct BuildingActionSource : ActionSource
-        {
-            BuildingActionSource(Building& building) : building(building) {}
-            Building& building;
-
-            bool TryConsumeActionPoints(int actionPoints) override
-            {
-                if (building.actionPoint < actionPoints)
-                    return false;
-                building.actionPoint -= actionPoints;
-                return true;
-            }
-
-            Cell* GetCell() override
-            {
-                return building.position;
-            }
-        };
             
         bool Building::Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Action& action, PowerParameter& param, const std::string& orderStr)
         {
@@ -74,6 +55,21 @@ namespace ugly
                 return true;
             }
             return action.additionalData.Execute(gameSetup, playerSetup, gameState, playerState, action, param, std::unique_ptr<ActionSource>(new BuildingActionSource(*this)));
+        }
+
+        BuildingActionSource::BuildingActionSource(Building& building) : building(building) {}
+
+        bool BuildingActionSource::TryConsumeActionPoints(int actionPoints)
+        {
+            if (building.actionPoint < actionPoints)
+                return false;
+            building.actionPoint -= actionPoints;
+            return true;
+        }
+
+        Cell* BuildingActionSource::GetCell()
+        {
+            return building.position;
         }
     }
 }
