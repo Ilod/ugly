@@ -11,6 +11,7 @@ namespace ugly
         struct BuildingCardPrivate
         {
         };
+
         struct BuildingPrivate
         {
         };

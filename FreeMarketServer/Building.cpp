@@ -1,5 +1,6 @@
 #include "Building.h"
 #include "Serializer.h"
+#include "Power.h"
 #include <algorithm>
 #include <cstdio>
 
@@ -44,6 +45,25 @@ namespace ugly
             , owner()
             , actionPoint()
         { }
+
+        struct BuildingActionSource : ActionSource
+        {
+            BuildingActionSource(Building& building) : building(building) {}
+            Building& building;
+
+            bool TryConsumeActionPoints(int actionPoints) override
+            {
+                if (building.actionPoint < actionPoints)
+                    return false;
+                building.actionPoint -= actionPoints;
+                return true;
+            }
+
+            Cell* GetCell() override
+            {
+                return building.position;
+            }
+        };
             
         bool Building::Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Action& action, PowerParameter& param, const std::string& orderStr)
         {
@@ -52,7 +72,7 @@ namespace ugly
                 gameState.additionalData.delayedOrders[action.priority].push_back(std::make_tuple(orderStr, playerSetup.id));
                 return true;
             }
-            return false;
+            return action.additionalData.Execute(gameSetup, playerSetup, gameState, playerState, action, param, BuildingActionSource(*this));
         }
     }
 }

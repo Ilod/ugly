@@ -334,6 +334,11 @@ namespace ugly
                     itAuction = gameState.futureAuction.erase(itAuction);
                 }
             }
+
+            void ResolveActionsPendingState(const GameConfig& gameSetup, GameState& gameState)
+            {
+
+            }
         }
 
         void GameServer::InitGame()
@@ -344,6 +349,17 @@ namespace ugly
 
         void GameServer::PlayTurn()
         {
+            gameState.additionalData.executeDelayed = true;
+            for (const auto& delayedOrderList : gameState.additionalData.delayedOrders)
+            {
+                for (const auto& delayedOrder : delayedOrderList.second)
+                {
+                    Serializer::ExecuteOrder(std::get<0>(delayedOrder), gameSetup, gameState, std::get<1>(delayedOrder));
+                }
+                ResolveActionsPendingState(gameSetup, gameState);
+            }
+            gameState.additionalData.delayedOrders.clear();
+            gameState.additionalData.executeDelayed = false;
             InitTurnData(gameSetup, gameState);
         }
 
