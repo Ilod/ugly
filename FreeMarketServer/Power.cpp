@@ -1,6 +1,7 @@
 #include "Power.h"
 #include "Serializer.h"
 #include <cstdio>
+#include <algorithm>
 
 namespace ugly
 {
@@ -88,12 +89,69 @@ namespace ugly
 
         bool ActionPrivate::ExecuteProduceResource(const GameConfig& gameSetup, const PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState, const ResolvedPowerParameter& parameter)
         {
-            return false;
+            if (parameter.resource == ParameterConstant::None)
+                return false;
+            if (!parameter.source)
+                return false;
+            if (parameter.quantity == 0 || parameter.quantity == ParameterConstant::None)
+                return false;
+            int resourceCapacity = parameter.source->GetResourceCapacity();
+            int resources = 0;
+            for (int r = 0; r < gameSetup.resourceCount; ++r)
+                resources += parameter.source->GetResource(r);
+            if (resources >= resourceCapacity)
+                return false;
+            if (parameter.resource == ParameterConstant::All)
+            {
+                for (int r = 0; r < gameSetup.resourceCount && resources < resourceCapacity; ++r)
+                {
+                    int addedResources = std::min(parameter.quantity, resourceCapacity - resources);
+                    parameter.source->SetResource(r, parameter.source->GetResource(r) + addedResources);
+                    resources += addedResources;
+                }
+            }
+            else
+            {
+                int addedResources = std::min(parameter.quantity, resourceCapacity - resources);
+                parameter.source->SetResource(parameter.resource, parameter.source->GetResource(parameter.resource) + addedResources);
+            }
+            return true;
         }
 
         bool ActionPrivate::ExecuteSellResource(const GameConfig& gameSetup, const PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState, const ResolvedPowerParameter& parameter)
         {
-            return false;
+            if (parameter.resource == ParameterConstant::None)
+                return false;
+            if (!parameter.source)
+                return false;
+            if (parameter.quantity == 0 || parameter.quantity == ParameterConstant::None)
+                return false;
+            if (parameter.resource == ParameterConstant::All)
+            {
+                bool resourceSold = false;
+                for (int r = 0; r < gameSetup.resourceCount; ++r)
+                {
+                    int currentResource = parameter.source->GetResource(r);
+                    if (currentResource > 0)
+                    {
+                        resourceSold = true;
+                        int resourceSoldCount = (parameter.quantity == ParameterConstant::All ? currentResource : std::min(parameter.quantity, currentResource));
+                        parameter.source->SetResource(r, currentResource - resourceSoldCount);
+                        playerState.money += gameState.resourcePrice[r] * resourceSoldCount;
+                    }
+                }
+                return resourceSold;
+            }
+            else
+            {
+                int currentResource = parameter.source->GetResource(parameter.resource);
+                if (currentResource <= 0)
+                    return false;
+                int resourceSoldCount = (parameter.quantity == ParameterConstant::All ? currentResource : std::min(parameter.quantity, currentResource));
+                parameter.source->SetResource(parameter.resource, currentResource - resourceSoldCount);
+                playerState.money += gameState.resourcePrice[parameter.resource] * resourceSoldCount;
+                return true;
+            }
         }
     }
 }
