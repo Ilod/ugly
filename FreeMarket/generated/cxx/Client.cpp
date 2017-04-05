@@ -288,6 +288,10 @@ namespace FreeMarket
                 Deserialize(member, buf, gameSetup, gameState);
             }
             {
+                auto& member = data.resourceCapacity;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
                 auto& member = data.action;
                 int size0 = ReadNext<int>(buf);
                 auto& array0 = member;
@@ -350,6 +354,17 @@ namespace FreeMarket
             {
                 auto& member = data.actionPoint;
                 Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.resource;
+                int size0 = ReadNext<int>(buf);
+                auto& array0 = member;
+                array0.resize(size0);
+                for (int idx0 = 0; idx0 < size0; ++idx0)
+                {
+                    auto& array1 = array0[idx0];
+                    Deserialize(array1, buf, gameSetup, gameState);
+                }
             }
         }
         

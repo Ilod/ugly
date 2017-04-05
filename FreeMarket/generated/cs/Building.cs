@@ -10,6 +10,7 @@ namespace FreeMarket
         public int Id;
         public int ActionPointMax;
         public int ActionPointGain;
+        public int ResourceCapacity;
         public Action[] Action;
         
     }
@@ -35,6 +36,7 @@ namespace FreeMarket
         public Cell Position;
         public int Owner;
         public int ActionPoint;
+        public int[] Resource;
         
         public void Execute(Action action, PowerParameter param)
         {

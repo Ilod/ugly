@@ -72,6 +72,7 @@ namespace ugly
                         ++building.id;
                         building.actionPointMax = 3;
                         building.actionPointGain = 3;
+                        building.resourceCapacity = 0;
                         building.additionalData.probability = 0;
 
                         action.id = -1;
@@ -97,6 +98,7 @@ namespace ugly
                         building.actionPointMax = 1;
                         building.actionPointGain = 1;
                         building.additionalData.probability = 100;
+                        building.resourceCapacity = 4;
 
                         action.id = -1;
 
@@ -121,6 +123,7 @@ namespace ugly
                         building.actionPointMax = 1;
                         building.actionPointGain = 1;
                         building.additionalData.probability = 10;
+                        building.resourceCapacity = 10;
 
                         action.id = -1;
 
@@ -144,6 +147,7 @@ namespace ugly
                         building.actionPointMax = 1;
                         building.actionPointGain = 1;
                         building.additionalData.probability = 15;
+                        building.resourceCapacity = gameSetup.resourceCount * 2;
 
                         action.id = -1;
 
@@ -167,6 +171,7 @@ namespace ugly
                         building.actionPointMax = 1;
                         building.actionPointGain = 1;
                         building.additionalData.probability = 15;
+                        building.resourceCapacity = 4;
 
                         action.id = -1;
 

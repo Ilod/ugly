@@ -7,6 +7,7 @@ namespace FreeMarket
         : id()
         , actionPointMax()
         , actionPointGain()
+        , resourceCapacity()
         , action()
     { }
         
@@ -26,6 +27,7 @@ namespace FreeMarket
         , position()
         , owner()
         , actionPoint()
+        , resource()
     { }
         
     void Building::Execute(const Action& action, const PowerParameter& param)

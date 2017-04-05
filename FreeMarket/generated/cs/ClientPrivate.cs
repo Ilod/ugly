@@ -314,6 +314,9 @@ namespace FreeMarket
                     data.ActionPointGain = ReadNextInt();
                 }
                 {
+                    data.ResourceCapacity = ReadNextInt();
+                }
+                {
                     int size0 = ReadNextInt();
                     data.Action = new Action[size0];
                     for (int idx0 = 0; idx0 < size0; ++idx0)
@@ -367,6 +370,14 @@ namespace FreeMarket
                 }
                 {
                     data.ActionPoint = ReadNextInt();
+                }
+                {
+                    int size0 = ReadNextInt();
+                    data.Resource = new int[size0];
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        data.Resource[idx0] = ReadNextInt();
+                    }
                 }           
             }
 

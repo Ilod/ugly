@@ -257,6 +257,9 @@ namespace ugly
                     buffer << data.actionPointGain << " ";
                 }
                 {
+                    buffer << data.resourceCapacity << " ";
+                }
+                {
                     int size0 = (int)(data.action.size());
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
@@ -324,6 +327,14 @@ namespace ugly
                 }
                 {
                     buffer << data.actionPoint << " ";
+                }
+                {
+                    int size0 = (int)(data.resource.size());
+                    buffer << size0 << " ";
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        buffer << data.resource[idx0] << " ";
+                    }
                 }
             }
 

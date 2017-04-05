@@ -186,6 +186,8 @@ Files:
             Type:   int32
           - Name:   action_point_gain
             Type:   int32
+          - Name:   resource_capacity
+            Type:   int32
           - Name:   action
             Type:   action
             Index:  Strong
@@ -242,6 +244,9 @@ Files:
             Type:   int32
           - Name:   action_point
             Type:   int32
+          - Name:   resource
+            Type:   int32
+            Array:  1
         Id:
             Member:
               - id

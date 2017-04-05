@@ -10,6 +10,7 @@ namespace ugly
             : id()
             , actionPointMax()
             , actionPointGain()
+            , resourceCapacity()
             , action()
         { }
             
@@ -29,6 +30,7 @@ namespace ugly
             , position()
             , owner()
             , actionPoint()
+            , resource()
         { }
             
         bool Building::Execute(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Action& action, PowerParameter& param, const std::string& orderStr)

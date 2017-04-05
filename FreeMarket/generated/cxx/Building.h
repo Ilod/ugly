@@ -11,6 +11,7 @@ namespace FreeMarket
         std::int32_t id;
         std::int32_t actionPointMax;
         std::int32_t actionPointGain;
+        std::int32_t resourceCapacity;
         std::vector<Action> action;        
 
         
@@ -38,7 +39,8 @@ namespace FreeMarket
         BuildingType* type;
         Cell* position;
         std::int32_t owner;
-        std::int32_t actionPoint;        
+        std::int32_t actionPoint;
+        std::vector<std::int32_t> resource;        
 
         
 

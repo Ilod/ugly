@@ -32,6 +32,7 @@ namespace ugly
             gameState.building.back().owner = playerState.id;
             gameState.building.back().position = &position;
             gameState.building.back().type = building;
+            gameState.building.back().resource.resize(gameSetup.resourceCount);
 
             gameState.buildingCard.erase(std::find_if(gameState.buildingCard.begin(), gameState.buildingCard.end(), [this](const BuildingCard& other) { return other.id == id; }));
 

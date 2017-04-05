@@ -15,6 +15,7 @@ namespace ugly
             std::int32_t id;
             std::int32_t actionPointMax;
             std::int32_t actionPointGain;
+            std::int32_t resourceCapacity;
             std::vector<Action> action;
             BuildingTypePrivate additionalData;        
     
@@ -45,6 +46,7 @@ namespace ugly
             Cell* position;
             std::int32_t owner;
             std::int32_t actionPoint;
+            std::vector<std::int32_t> resource;
             BuildingPrivate additionalData;        
     
             
