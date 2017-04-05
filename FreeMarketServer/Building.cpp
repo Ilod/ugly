@@ -73,7 +73,7 @@ namespace ugly
                 gameState.additionalData.delayedOrders[action.priority].push_back(std::make_tuple(orderStr, playerSetup.id));
                 return true;
             }
-            return action.additionalData.Execute(gameSetup, playerSetup, gameState, playerState, action, param, BuildingActionSource(*this));
+            return action.additionalData.Execute(gameSetup, playerSetup, gameState, playerState, action, param, std::unique_ptr<ActionSource>(new BuildingActionSource(*this)));
         }
     }
 }
