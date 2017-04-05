@@ -60,6 +60,20 @@ namespace ugly
                 resolved.quantity = ParameterConstant::All;
                 break;
             }
+            switch (action.power.resource)
+            {
+            case ParameterType::All:
+                resolved.resource = ParameterConstant::All;
+                break;
+            case ParameterType::Choice:
+                resolved.resource = parameter.resource;
+                if (resolved.resource < 0 || resolved.resource > gameSetup.resourceCount)
+                    resolved.resource = ParameterConstant::None;
+                break;
+            case ParameterType::Forced:
+                resolved.resource = action.power.resourceForced;
+                break;
+            }
 
             switch (action.power.type)
             {
