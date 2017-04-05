@@ -82,12 +82,143 @@ namespace ugly
                         action.priority = ActionPriority::ResourceSelling;
                         action.power.buildingSource = ParameterType::Choice;
                         action.power.quantity = ParameterType::Choice;
-                        action.power.quantityForced = -1;
+                        action.power.quantityForced = 3;
                         action.power.resource = ParameterType::Choice;
                         action.power.resourceForced = -1;
                         action.power.type = FreeMarket::PowerType::SellResource;
                         action.power.boost = BoostType::None;
                         action.power.boostPower = 0;
+                        building.action.push_back(action);
+
+                        gameSetup.building.push_back(building);
+                    }
+
+                    {
+                        building.action.clear();
+                        ++building.id;
+                        building.actionPointMax = 3;
+                        building.actionPointGain = 5;
+                        building.resourceCapacity = 0;
+                        building.additionalData.probability = 20;
+
+                        action.id = -1;
+
+                        ++action.id;
+                        action.actionPoint = 1;
+                        action.priority = ActionPriority::ResourceSelling;
+                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.quantity = ParameterType::Choice;
+                        action.power.quantityForced = 3;
+                        action.power.resource = ParameterType::Choice;
+                        action.power.resourceForced = -1;
+                        action.power.type = FreeMarket::PowerType::SellResource;
+                        action.power.boost = BoostType::None;
+                        action.power.boostPower = 0;
+                        building.action.push_back(action);
+
+                        ++action.id;
+                        action.actionPoint = 2;
+                        action.priority = ActionPriority::ResourceSelling;
+                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.quantity = ParameterType::Choice;
+                        action.power.quantityForced = 3;
+                        action.power.resource = ParameterType::Choice;
+                        action.power.resourceForced = -1;
+                        action.power.type = FreeMarket::PowerType::SellResource;
+                        action.power.boost = BoostType::Percent;
+                        action.power.boostPower = 30;
+                        building.action.push_back(action);
+
+                        gameSetup.building.push_back(building);
+                    }
+
+                    {
+                        building.action.clear();
+                        ++building.id;
+                        building.actionPointMax = 1;
+                        building.actionPointGain = 5;
+                        building.resourceCapacity = 0;
+                        building.additionalData.probability = 10;
+
+                        action.id = -1;
+
+                        ++action.id;
+                        action.actionPoint = 1;
+                        action.priority = ActionPriority::ResourceSelling;
+                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.quantity = ParameterType::All;
+                        action.power.quantityForced = -1;
+                        action.power.resource = ParameterType::Choice;
+                        action.power.resourceForced = -1;
+                        action.power.type = FreeMarket::PowerType::SellResource;
+                        action.power.boost = BoostType::Percent;
+                        action.power.boostPower = -20;
+                        building.action.push_back(action);
+
+                        ++action.id;
+                        action.actionPoint = 2;
+                        action.priority = ActionPriority::ResourceSelling;
+                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.quantity = ParameterType::All;
+                        action.power.quantityForced = -1;
+                        action.power.resource = ParameterType::All;
+                        action.power.resourceForced = -1;
+                        action.power.type = FreeMarket::PowerType::SellResource;
+                        action.power.boost = BoostType::Percent;
+                        action.power.boostPower = -30;
+                        building.action.push_back(action);
+
+                        ++action.id;
+                        action.actionPoint = 3;
+                        action.priority = ActionPriority::ResourceSelling;
+                        action.power.buildingSource = ParameterType::All;
+                        action.power.quantity = ParameterType::All;
+                        action.power.quantityForced = -1;
+                        action.power.resource = ParameterType::All;
+                        action.power.resourceForced = -1;
+                        action.power.type = FreeMarket::PowerType::SellResource;
+                        action.power.boost = BoostType::Percent;
+                        action.power.boostPower = -50;
+                        building.action.push_back(action);
+
+                        gameSetup.building.push_back(building);
+                    }
+
+                    for (int r = 0; r < gameSetup.resourceCount; ++r)
+                    {
+                        building.action.clear();
+                        ++building.id;
+                        building.actionPointMax = 3;
+                        building.actionPointGain = 3;
+                        building.additionalData.probability = 10;
+                        building.resourceCapacity = 0;
+
+                        action.id = -1;
+
+                        ++action.id;
+                        action.actionPoint = 1;
+                        action.priority = ActionPriority::ResourceSelling;
+                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.quantity = ParameterType::Choice;
+                        action.power.quantityForced = 3;
+                        action.power.resource = ParameterType::Choice;
+                        action.power.resourceForced = -1;
+                        action.power.type = FreeMarket::PowerType::SellResource;
+                        action.power.boost = BoostType::Percent;
+                        action.power.boostPower = -20;
+                        building.action.push_back(action);
+
+                        ++action.id;
+                        action.actionPoint = 2;
+                        action.priority = ActionPriority::ResourceSelling;
+                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.quantity = ParameterType::Choice;
+                        action.power.quantityForced = 3;
+                        action.power.resource = ParameterType::Forced;
+                        action.power.resourceForced = r;
+                        action.power.type = FreeMarket::PowerType::SellResource;
+                        action.power.boost = BoostType::Percent;
+                        action.power.boostPower = 60;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);
