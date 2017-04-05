@@ -71,5 +71,20 @@ namespace ugly
         {
             return building.position;
         }
+
+        int BuildingActionSource::GetResourceCapacity()
+        {
+            return building.type->resourceCapacity;
+        }
+
+        int BuildingActionSource::GetResource(int resource)
+        {
+            return building.resource[resource];
+        }
+
+        void BuildingActionSource::SetResource(int resource, int quantity)
+        {
+            building.resource[resource] = quantity;
+        }
     }
 }

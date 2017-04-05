@@ -25,8 +25,11 @@ namespace ugly
             BuildingActionSource(Building& building);
             Building& building;
 
-            bool TryConsumeActionPoints(int actionPoints);
-            Cell* GetCell();
+            bool TryConsumeActionPoints(int actionPoints) override;
+            Cell* GetCell() override;
+            int GetResourceCapacity() override;
+            int GetResource(int resource) override;
+            void SetResource(int resource, int quantity) override;
         };
     }
 }

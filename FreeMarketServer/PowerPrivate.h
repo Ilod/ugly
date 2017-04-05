@@ -19,6 +19,9 @@ namespace ugly
             virtual ~ActionSource() {}
             virtual bool TryConsumeActionPoints(int actionPoints) = 0;
             virtual Cell* GetCell() = 0;
+            virtual int GetResourceCapacity() = 0;
+            virtual int GetResource(int resource) = 0;
+            virtual void SetResource(int resource, int quantity) = 0;
         };
 
         namespace ParameterConstant
