@@ -10,8 +10,8 @@ namespace ugly
             : id()
             , type()
             , price()
-            , seller()
-            , buyer()
+            , seller(Player::City)
+            , buyer(Player::None)
             , turn()
             , building()
         { }

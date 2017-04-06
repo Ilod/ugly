@@ -370,8 +370,6 @@ namespace ugly
                         Cell& c = gameState.map[x][y];
                         c.x = x;
                         c.y = y;
-                        c.owner = -1;
-                        c.ownership = Ownership::None;
                         c.price = gameSetup.additionalData.preemptPrice;
                         c.type =
                             (x % 4 == 0 || y % 3 == 0)
@@ -402,9 +400,6 @@ namespace ugly
                         {
                             Auction auction;
                             auction.id = auctionId++;
-                            auction.seller = Player::City;
-                            auction.buyer = Player::None;
-                            auction.price = 0;
                             auction.turn = t;
                             auction.type = AuctionType::Building;
                             auction.building = &gameSetup.building[auctionBuildingType(generator)];
