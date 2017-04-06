@@ -19,6 +19,7 @@ namespace ugly
             , resource()
             , resourceForced()
             , buildingTarget()
+            , buildingTargetOwner()
             , boost()
             , boostPower()
             , range()

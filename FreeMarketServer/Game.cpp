@@ -81,6 +81,7 @@ namespace ugly
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceSelling;
                         action.power.buildingTarget = ParameterType::Choice;
+                        action.power.buildingTargetOwner = Owner::Self;
                         action.power.quantity = ParameterType::Choice;
                         action.power.quantityForced = 3;
                         action.power.resource = ParameterType::Choice;
@@ -108,6 +109,7 @@ namespace ugly
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceSelling;
                         action.power.buildingTarget = ParameterType::Choice;
+                        action.power.buildingTargetOwner = Owner::Self;
                         action.power.quantity = ParameterType::Choice;
                         action.power.quantityForced = 3;
                         action.power.resource = ParameterType::Choice;
@@ -122,6 +124,7 @@ namespace ugly
                         action.actionPoint = 2;
                         action.priority = ActionPriority::ResourceSelling;
                         action.power.buildingTarget = ParameterType::Choice;
+                        action.power.buildingTargetOwner = Owner::Self;
                         action.power.quantity = ParameterType::Choice;
                         action.power.quantityForced = 3;
                         action.power.resource = ParameterType::Choice;
@@ -149,6 +152,7 @@ namespace ugly
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceSelling;
                         action.power.buildingTarget = ParameterType::Choice;
+                        action.power.buildingTargetOwner = Owner::Self;
                         action.power.quantity = ParameterType::All;
                         action.power.quantityForced = -1;
                         action.power.resource = ParameterType::Choice;
@@ -163,6 +167,7 @@ namespace ugly
                         action.actionPoint = 2;
                         action.priority = ActionPriority::ResourceSelling;
                         action.power.buildingTarget = ParameterType::Choice;
+                        action.power.buildingTargetOwner = Owner::Self;
                         action.power.quantity = ParameterType::All;
                         action.power.quantityForced = -1;
                         action.power.resource = ParameterType::All;
@@ -177,6 +182,7 @@ namespace ugly
                         action.actionPoint = 3;
                         action.priority = ActionPriority::ResourceSelling;
                         action.power.buildingTarget = ParameterType::All;
+                        action.power.buildingTargetOwner = Owner::Self;
                         action.power.quantity = ParameterType::All;
                         action.power.quantityForced = -1;
                         action.power.resource = ParameterType::All;
@@ -205,6 +211,7 @@ namespace ugly
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceSelling;
                         action.power.buildingTarget = ParameterType::Choice;
+                        action.power.buildingTargetOwner = Owner::Self;
                         action.power.quantity = ParameterType::Choice;
                         action.power.quantityForced = 3;
                         action.power.resource = ParameterType::Choice;
@@ -219,6 +226,7 @@ namespace ugly
                         action.actionPoint = 2;
                         action.priority = ActionPriority::ResourceSelling;
                         action.power.buildingTarget = ParameterType::Choice;
+                        action.power.buildingTargetOwner = Owner::Self;
                         action.power.quantity = ParameterType::Choice;
                         action.power.quantityForced = 3;
                         action.power.resource = ParameterType::Forced;
@@ -247,6 +255,7 @@ namespace ugly
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceProduction;
                         action.power.buildingTarget = ParameterType::Self;
+                        action.power.buildingTargetOwner = Owner::Self;
                         action.power.quantity = ParameterType::Forced;
                         action.power.quantityForced = 2;
                         action.power.resource = ParameterType::Forced;
@@ -275,6 +284,7 @@ namespace ugly
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceProduction;
                         action.power.buildingTarget = ParameterType::Self;
+                        action.power.buildingTargetOwner = Owner::Self;
                         action.power.quantity = ParameterType::Forced;
                         action.power.quantityForced = 5;
                         action.power.resource = ParameterType::Forced;
@@ -302,6 +312,7 @@ namespace ugly
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceProduction;
                         action.power.buildingTarget = ParameterType::Self;
+                        action.power.buildingTargetOwner = Owner::Self;
                         action.power.quantity = ParameterType::Forced;
                         action.power.quantityForced = 1;
                         action.power.resource = ParameterType::All;
@@ -329,6 +340,7 @@ namespace ugly
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceProduction;
                         action.power.buildingTarget = ParameterType::Self;
+                        action.power.buildingTargetOwner = Owner::Self;
                         action.power.quantity = ParameterType::Forced;
                         action.power.quantityForced = 2;
                         action.power.resource = ParameterType::Choice;

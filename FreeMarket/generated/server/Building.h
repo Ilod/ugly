@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include "EnumHelper.h"
 #include "BuildingPrivate.h"
 #include "Power.h"
 

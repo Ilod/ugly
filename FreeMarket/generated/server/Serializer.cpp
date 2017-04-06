@@ -379,6 +379,9 @@ namespace ugly
                     buffer << (int)data.buildingTarget << " ";
                 }
                 {                
+                    buffer << (int)data.buildingTargetOwner << " ";
+                }
+                {                
                     buffer << (int)data.boost << " ";
                 }
                 {

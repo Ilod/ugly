@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include "EnumHelper.h"
 namespace FreeMarket
 {
     struct Building;
@@ -27,6 +28,16 @@ namespace FreeMarket
         Fixed = 1,        
         Percent = 2,
     };
+    
+    enum class Owner
+    {        
+        None = 0,        
+        Self = 1,        
+        Ally = 2,        
+        Opponent = 4,        
+        City = 8,
+    };
+    template<> struct IsFlagEnum<Owner> : std::true_type {};
 
     struct PowerParameter
     {
@@ -48,6 +59,7 @@ namespace FreeMarket
         ParameterType resource;
         std::int32_t resourceForced;
         ParameterType buildingTarget;
+        Owner buildingTargetOwner;
         BoostType boost;
         std::int32_t boostPower;
         std::int32_t range;        

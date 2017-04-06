@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include "EnumHelper.h"
 #include "Auction.h"
 #include "Building.h"
 #include "Map.h"

@@ -310,6 +310,8 @@ Files:
             Type:   int32
           - Name:   building_target
             Type:   parameter_type
+          - Name:   building_target_owner
+            Type:   owner
           - Name:   boost
             Type:   boost_type
           - Name:   boost_power
@@ -347,6 +349,14 @@ Files:
             none:       0
             fixed:      1
             percent:    2
+      - Name:   owner
+        Value:
+            none:            0
+            self:            1
+            ally:            2
+            opponent:        4
+            city:            8
+        Flag:   true
   - Name:   auction
     Class:
       - Name:   auction

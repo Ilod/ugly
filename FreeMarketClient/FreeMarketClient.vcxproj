@@ -157,6 +157,7 @@
     <ClInclude Include="..\FreeMarket\generated\cxx\Auction.h" />
     <ClInclude Include="..\FreeMarket\generated\cxx\Building.h" />
     <ClInclude Include="..\FreeMarket\generated\cxx\Client.h" />
+    <ClInclude Include="..\FreeMarket\generated\cxx\EnumHelper.h" />
     <ClInclude Include="..\FreeMarket\generated\cxx\Interface.h" />
     <ClInclude Include="..\FreeMarket\generated\cxx\Map.h" />
     <ClInclude Include="..\FreeMarket\generated\cxx\Player.h" />

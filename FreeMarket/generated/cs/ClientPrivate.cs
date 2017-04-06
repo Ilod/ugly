@@ -402,6 +402,9 @@ namespace FreeMarket
                     data.BuildingTarget = (ParameterType)ReadNextInt();
                 }
                 {
+                    data.BuildingTargetOwner = (Owner)ReadNextInt();
+                }
+                {
                     data.Boost = (BoostType)ReadNextInt();
                 }
                 {

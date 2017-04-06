@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="..\FreeMarket\generated\server\Auction.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Building.h" />
+    <ClInclude Include="..\FreeMarket\generated\server\EnumHelper.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Game.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Interface.h" />
     <ClInclude Include="..\FreeMarket\generated\server\Map.h" />

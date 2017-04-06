@@ -395,6 +395,10 @@ namespace FreeMarket
                 Deserialize(member, buf, gameSetup, gameState);
             }
             {
+                auto& member = data.buildingTargetOwner;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
                 auto& member = data.boost;
                 Deserialize(member, buf, gameSetup, gameState);
             }

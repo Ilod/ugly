@@ -16,6 +16,7 @@ namespace FreeMarket
         , resource()
         , resourceForced()
         , buildingTarget()
+        , buildingTargetOwner()
         , boost()
         , boostPower()
         , range()

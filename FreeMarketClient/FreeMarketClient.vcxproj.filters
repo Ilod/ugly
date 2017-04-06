@@ -77,5 +77,8 @@
     <ClInclude Include="..\FreeMarket\generated\cxx\Player.h">
       <Filter>generated headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\FreeMarket\generated\cxx\EnumHelper.h">
+      <Filter>generated headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

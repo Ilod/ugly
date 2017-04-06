@@ -28,6 +28,20 @@ namespace ugly
             , actionPoint()
             , priority()
         { }
+
+        namespace
+        {
+            Owner GetOwnerType(int activePlayer, int otherPlayer, const GameConfig& gameSetup)
+            {
+                if (activePlayer == otherPlayer)
+                    return Owner::Self;
+                if (otherPlayer < 0)
+                    return Owner::City;
+                if (gameSetup.player[activePlayer].team == gameSetup.player[otherPlayer].team)
+                    return Owner::Ally;
+                return Owner::Opponent;
+            }
+        }
             
         bool ActionPrivate::Execute(const GameConfig& gameSetup, const PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState, const Action& action, const PowerParameter& parameter, std::unique_ptr<ActionSource> source)
         {
@@ -46,12 +60,14 @@ namespace ugly
                     return false;
                 if (action.power.range >= 0 && CellPrivate::GetDistance(resolved.powerOwner->GetCell(), parameter.buildingTarget->position) > action.power.range)
                     return false;
+                if (!(GetOwnerType(playerSetup.id, parameter.buildingTarget->owner, gameSetup) & action.power.buildingTargetOwner))
+                    return false;
                 resolved.target.push_back(std::shared_ptr<ActionSource>(new BuildingActionSource(*parameter.buildingTarget)));
                 break;
             case ParameterType::All:
                 for (Building& building : gameState.building)
                 {
-                    if (action.power.range < 0 || CellPrivate::GetDistance(resolved.powerOwner->GetCell(), building.position) <= action.power.range)
+                    if ((action.power.range < 0 || CellPrivate::GetDistance(resolved.powerOwner->GetCell(), building.position) <= action.power.range) && (GetOwnerType(playerSetup.id, building.owner, gameSetup) & action.power.buildingTargetOwner))
                     {
                         resolved.target.push_back(std::shared_ptr<ActionSource>(new BuildingActionSource(building)));
                     }

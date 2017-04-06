@@ -26,6 +26,16 @@ namespace FreeMarket
         Fixed = 1,
         Percent = 2,
     }
+    
+    [Flags]
+    public enum Owner
+    {
+        None = 0,
+        Self = 1,
+        Ally = 2,
+        Opponent = 4,
+        City = 8,
+    }
 
     public class PowerParameter
     {
@@ -45,6 +55,7 @@ namespace FreeMarket
         public ParameterType Resource;
         public int ResourceForced;
         public ParameterType BuildingTarget;
+        public Owner BuildingTargetOwner;
         public BoostType Boost;
         public int BoostPower;
         public int Range;
