@@ -190,9 +190,9 @@ namespace ugly
                         break;
                     }
                     playerState.money += resourcePrice * resourceSoldCount;
-                    return true;
                 }
             }
+            return resourceSold;
         }
     }
 }
