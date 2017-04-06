@@ -32,7 +32,7 @@ namespace ugly
 
         bool GameServer::ShouldPlay()
         {
-            return ++turn <= 50;
+            return false;
         }
 
         bool GameServer::CanPlayThisTurn(int player)

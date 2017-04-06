@@ -71,7 +71,7 @@ namespace ugly.CodeGenerator.cxx
             
             #line default
             #line hidden
-            this.Write(" gameState;\r\n            int turn = 0;\r\n        };\r\n    }\r\n}");
+            this.Write(" gameState;\r\n        };\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

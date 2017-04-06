@@ -22,7 +22,6 @@ namespace ugly
         private:
             GameConfig gameSetup;
             GameState gameState;
-            int turn = 0;
         };
     }
 }

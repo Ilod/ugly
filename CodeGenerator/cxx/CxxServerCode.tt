@@ -37,7 +37,7 @@ namespace ugly
 
         bool <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer) #>::ShouldPlay()
         {
-            return ++turn <= 50;
+            return false;
         }
 
         bool <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameServer) #>::CanPlayThisTurn(int player)

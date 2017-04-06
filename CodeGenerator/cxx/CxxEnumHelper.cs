@@ -58,39 +58,41 @@ if (CxxHelper.Server)
             this.Write("\r\n{\r\n    template<typename T> struct IsFlagEnum : std::false_type {};\r\n\r\n    temp" +
                     "late<typename T> struct EnumBoolAutoCast\r\n    {\r\n    public:\r\n        explicit E" +
                     "numBoolAutoCast(T val) : value(val) {}\r\n        operator T() { return value; }\r\n" +
-                    "        explicit operator bool() { return static_cast<std::underlying_type<T>::t" +
-                    "ype>(value) != 0; };\r\n        bool operator!() { return !value; }\r\n        EnumB" +
-                    "oolAutoCast<T> operator&(T val) { return value & val; }\r\n        EnumBoolAutoCas" +
-                    "t<T> operator|(T val) { return value | val; }\r\n        EnumBoolAutoCast<T> opera" +
-                    "tor^(T val) { return value ^ val; }\r\n        EnumBoolAutoCast<T> operator~() { r" +
-                    "eturn ~value; }\r\n    private:\r\n        T value;\r\n    };\r\n    \r\n    template<type" +
-                    "name T> typename std::enable_if<IsFlagEnum<T>::value, EnumBoolAutoCast<T>>::type" +
-                    " operator&(T val, T oVal)\r\n    {\r\n        return EnumBoolAutoCast<T>(static_cast" +
-                    "<T>(static_cast<std::underlying_type<T>::type>(val) & static_cast<std::underlyin" +
-                    "g_type<T>::type>(oVal)));\r\n    }\r\n    \r\n    template<typename T> typename std::e" +
-                    "nable_if<IsFlagEnum<T>::value, EnumBoolAutoCast<T>>::type operator|(T val, T oVa" +
-                    "l)\r\n    {\r\n        return EnumBoolAutoCast<T>(static_cast<T>(static_cast<std::un" +
-                    "derlying_type<T>::type>(val) | static_cast<std::underlying_type<T>::type>(oVal))" +
-                    ");\r\n    }\r\n    \r\n    template<typename T> typename std::enable_if<IsFlagEnum<T>:" +
-                    ":value, EnumBoolAutoCast<T>>::type operator^(T val, T oVal)\r\n    {\r\n        retu" +
-                    "rn EnumBoolAutoCast<T>(static_cast<T>(static_cast<std::underlying_type<T>::type>" +
-                    "(val) ^ static_cast<std::underlying_type<T>::type>(oVal)));\r\n    }\r\n    \r\n    te" +
-                    "mplate<typename T> typename std::enable_if<IsFlagEnum<T>::value, EnumBoolAutoCas" +
-                    "t<T>>::type operator~(T val)\r\n    {\r\n        return EnumBoolAutoCast<T>(static_c" +
-                    "ast<T>(~static_cast<std::underlying_type<T>::type>(val)));\r\n    }\r\n    \r\n    tem" +
-                    "plate<typename T> typename std::enable_if<IsFlagEnum<T>::value, bool>::type oper" +
-                    "ator!(T val)\r\n    {\r\n        return static_cast<std::underlying_type<T>::type>(v" +
-                    "al) != 0;\r\n    }\r\n    \r\n    template<typename T> typename std::enable_if<IsFlagE" +
-                    "num<T>::value, T&>::type operator&=(T& val, T oVal)\r\n    {\r\n        val = static" +
-                    "_cast<T>(static_cast<std::underlying_type<T>::type>(val) & static_cast<std::unde" +
-                    "rlying_type<T>::type>(oVal));\r\n        return val;\r\n    }\r\n    \r\n    template<ty" +
-                    "pename T> typename std::enable_if<IsFlagEnum<T>::value, T&>::type operator|=(T& " +
-                    "val, T oVal)\r\n    {\r\n        val = static_cast<T>(static_cast<std::underlying_ty" +
-                    "pe<T>::type>(val) | static_cast<std::underlying_type<T>::type>(oVal));\r\n        " +
-                    "return val;\r\n    }\r\n    \r\n    template<typename T> typename std::enable_if<IsFla" +
-                    "gEnum<T>::value, T&>::type operator^=(T& val, T oVal)\r\n    {\r\n        val = stat" +
-                    "ic_cast<T>(static_cast<std::underlying_type<T>::type>(val) ^ static_cast<std::un" +
-                    "derlying_type<T>::type>(oVal));\r\n        return val;\r\n    }\r\n}");
+                    "        explicit operator bool() { return static_cast<typename std::underlying_t" +
+                    "ype<T>::type>(value) != 0; };\r\n        bool operator!() { return !value; }\r\n    " +
+                    "    EnumBoolAutoCast<T> operator&(T val) { return value & val; }\r\n        EnumBo" +
+                    "olAutoCast<T> operator|(T val) { return value | val; }\r\n        EnumBoolAutoCast" +
+                    "<T> operator^(T val) { return value ^ val; }\r\n        EnumBoolAutoCast<T> operat" +
+                    "or~() { return ~value; }\r\n    private:\r\n        T value;\r\n    };\r\n    \r\n    temp" +
+                    "late<typename T> typename std::enable_if<IsFlagEnum<T>::value, EnumBoolAutoCast<" +
+                    "T>>::type operator&(T val, T oVal)\r\n    {\r\n        return EnumBoolAutoCast<T>(st" +
+                    "atic_cast<T>(static_cast<typename std::underlying_type<T>::type>(val) & static_c" +
+                    "ast<typename std::underlying_type<T>::type>(oVal)));\r\n    }\r\n    \r\n    template<" +
+                    "typename T> typename std::enable_if<IsFlagEnum<T>::value, EnumBoolAutoCast<T>>::" +
+                    "type operator|(T val, T oVal)\r\n    {\r\n        return EnumBoolAutoCast<T>(static_" +
+                    "cast<T>(static_cast<typename std::underlying_type<T>::type>(val) | static_cast<t" +
+                    "ypename std::underlying_type<T>::type>(oVal)));\r\n    }\r\n    \r\n    template<typen" +
+                    "ame T> typename std::enable_if<IsFlagEnum<T>::value, EnumBoolAutoCast<T>>::type " +
+                    "operator^(T val, T oVal)\r\n    {\r\n        return EnumBoolAutoCast<T>(static_cast<" +
+                    "T>(static_cast<typename std::underlying_type<T>::type>(val) ^ static_cast<typena" +
+                    "me std::underlying_type<T>::type>(oVal)));\r\n    }\r\n    \r\n    template<typename T" +
+                    "> typename std::enable_if<IsFlagEnum<T>::value, EnumBoolAutoCast<T>>::type opera" +
+                    "tor~(T val)\r\n    {\r\n        return EnumBoolAutoCast<T>(static_cast<T>(~static_ca" +
+                    "st<typename std::underlying_type<T>::type>(val)));\r\n    }\r\n    \r\n    template<ty" +
+                    "pename T> typename std::enable_if<IsFlagEnum<T>::value, bool>::type operator!(T " +
+                    "val)\r\n    {\r\n        return static_cast<typename std::underlying_type<T>::type>(" +
+                    "val) != 0;\r\n    }\r\n    \r\n    template<typename T> typename std::enable_if<IsFlag" +
+                    "Enum<T>::value, T&>::type operator&=(T& val, T oVal)\r\n    {\r\n        val = stati" +
+                    "c_cast<T>(static_cast<typename std::underlying_type<T>::type>(val) & static_cast" +
+                    "<typename std::underlying_type<T>::type>(oVal));\r\n        return val;\r\n    }\r\n  " +
+                    "  \r\n    template<typename T> typename std::enable_if<IsFlagEnum<T>::value, T&>::" +
+                    "type operator|=(T& val, T oVal)\r\n    {\r\n        val = static_cast<T>(static_cast" +
+                    "<typename std::underlying_type<T>::type>(val) | static_cast<typename std::underl" +
+                    "ying_type<T>::type>(oVal));\r\n        return val;\r\n    }\r\n    \r\n    template<type" +
+                    "name T> typename std::enable_if<IsFlagEnum<T>::value, T&>::type operator^=(T& va" +
+                    "l, T oVal)\r\n    {\r\n        val = static_cast<T>(static_cast<typename std::underl" +
+                    "ying_type<T>::type>(val) ^ static_cast<typename std::underlying_type<T>::type>(o" +
+                    "Val));\r\n        return val;\r\n    }\r\n}");
             
             #line 79 "D:\ugly\CodeGenerator\cxx\CxxEnumHelper.tt"
 

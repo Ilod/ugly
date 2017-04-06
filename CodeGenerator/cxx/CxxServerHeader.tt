@@ -27,7 +27,6 @@ namespace ugly
         private:
             <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #> gameSetup;
             <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #> gameState;
-            int turn = 0;
         };
     }
 }
