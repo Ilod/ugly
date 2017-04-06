@@ -16,10 +16,14 @@ namespace ugly
         Power::Power()
             : type()
             , quantity()
-            , quantityForced()
+            , quantityForced(-1)
             , resource()
-            , resourceForced()
+            , resourceForced(-1)
             , buildingTarget()
+            , buildingTargetOwner()
+            , boost()
+            , boostPower()
+            , range(-1)
         { }
             
         Action::Action()

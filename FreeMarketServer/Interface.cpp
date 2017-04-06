@@ -19,26 +19,16 @@ namespace ugly
             , mapSizeY()
             , startMoney()
             , resourceCount()
-            , building()
-            , player()
         { }
             
         PlayerState::PlayerState()
             : id()
             , team()
             , money()
-            , building()
         { }
             
         GameState::GameState()
             : turn()
-            , map()
-            , resourcePrice()
-            , resourceEvolution()
-            , building()
-            , player()
-            , auction()
-            , endedAuction()
         { }
             
     

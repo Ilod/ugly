@@ -22,14 +22,14 @@ namespace ugly
         struct GameConfigPrivate
         {
             std::vector<PriceEvolutionRange> resourcePriceEvolution;
-            int resourceStartPrice;
-            int preemptPrice;
+            int resourceStartPrice = 0;
+            int preemptPrice = 0;
             std::vector<int> auctionProbability;
         };
 
         struct PlayerStatePrivate
         {
-            int reservedMoney;
+            int reservedMoney = 0;
         };
 
         struct GameStatePrivate

@@ -12,13 +12,13 @@ namespace ugly
             : id()
             , actionPointMax()
             , actionPointGain()
-            , action()
+            , resourceCapacity()
         { }
             
         BuildingCard::BuildingCard()
             : id()
             , building()
-            , owner()
+            , owner(Player::City)
         { }
             
         bool BuildingCard::Build(struct GameConfig& gameSetup, struct PlayerConfig& playerSetup, struct GameState& gameState, struct PlayerState& playerState, Cell& position, const std::string& orderStr)
@@ -43,7 +43,7 @@ namespace ugly
             : id()
             , type()
             , position()
-            , owner()
+            , owner(Player::City)
             , actionPoint()
         { }
             
