@@ -68,6 +68,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CsInterface.tt</DependentUpon>
     </Compile>
+    <Compile Include="cxx\CxxEnumHelper.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CxxEnumHelper.tt</DependentUpon>
+    </Compile>
     <Compile Include="cxx\CxxHeaderPrivate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -149,6 +154,10 @@
       <LastGenOutput>CxxCode.cs</LastGenOutput>
     </Content>
     <Content Include="cxx\CxxDeserializerInc.tt" />
+    <Content Include="cxx\CxxEnumHelper.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CxxEnumHelper.cs</LastGenOutput>
+    </Content>
     <Content Include="cxx\CxxHeader.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CxxHeader.cs</LastGenOutput>

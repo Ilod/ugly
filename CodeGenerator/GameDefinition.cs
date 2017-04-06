@@ -151,6 +151,7 @@ namespace ugly.CodeGenerator
     {
         public string Name;
         public Dictionary<string, int> Value = new Dictionary<string, int>();
+        public bool Flag;
         [NonSerialized]
         public GameFile File;
     }

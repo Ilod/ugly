@@ -5,7 +5,8 @@
 <#@ import namespace="System.Collections.Generic" #>
 #pragma once
 #include <vector>
-#include <cstdint><#
+#include <cstdint>
+#include "EnumHelper.h"<#
 if (CxxHelper.Server)
 {
     #>
@@ -122,6 +123,12 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
         #>
 
     };<#
+        if (e.Flag)
+        {
+            #>
+
+    template<> struct IsFlagEnum<<#= Case.CamelCase.Convert(e.Name) #>> : std::true_type {};<#
+        }
     }
     
     foreach (GameClass c in CxxHelper.CurrentFile.Class)

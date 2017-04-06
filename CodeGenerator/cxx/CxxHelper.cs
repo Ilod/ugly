@@ -22,6 +22,7 @@ namespace ugly.CodeGenerator.cxx
             Generator.WriteFile(Path.Combine(path, "Client.h"), new CxxInterface().TransformText());
             Generator.WriteFile(Path.Combine(path, "Client.cpp"), new CxxImpl().TransformText());
             Generator.WriteFile(Path.Combine(path, "ClientWindows.cpp"), new CxxImplWindows().TransformText());
+            Generator.WriteFile(Path.Combine(path, "EnumHelper.h"), new CxxEnumHelper().TransformText());
             foreach (GameFile file in gameDef.Files)
             {
                 CurrentFile = file;
@@ -38,6 +39,7 @@ namespace ugly.CodeGenerator.cxx
             Generator.WriteFile(Path.Combine(path, "Serializer.h"), new CxxSerializerHeader().TransformText());
             Generator.WriteFile(Path.Combine(path, "Serializer.cpp"), new CxxSerializationCode().TransformText());
             Generator.WriteFile(Path.Combine(path, "Game.h"), new CxxServerHeader().TransformText());
+            Generator.WriteFile(Path.Combine(path, "EnumHelper.h"), new CxxEnumHelper().TransformText());
             Generator.WriteFile(Path.Combine(path, "private", "Game.cpp"), new CxxServerCode().TransformText());
             foreach (GameFile file in gameDef.Files)
             {
