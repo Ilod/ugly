@@ -399,13 +399,16 @@ namespace FreeMarket
                     data.ResourceForced = ReadNextInt();
                 }
                 {
-                    data.BuildingSource = (ParameterType)ReadNextInt();
+                    data.BuildingTarget = (ParameterType)ReadNextInt();
                 }
                 {
                     data.Boost = (BoostType)ReadNextInt();
                 }
                 {
                     data.BoostPower = ReadNextInt();
+                }
+                {
+                    data.Range = ReadNextInt();
                 }           
             }
 

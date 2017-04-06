@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "Serializer.h"
 #include <cstdio>
+#include <cstdlib>
 
 namespace ugly
 {
@@ -23,6 +24,11 @@ namespace ugly
             ownership = Ownership::Own;
             playerState.money -= price;
             return true;
+        }
+
+        int CellPrivate::GetDistance(const Cell* c1, const Cell* c2)
+        {
+            return std::abs(c1->x - c2->x) + std::abs(c1->y - c2->y);
         }
     }
 }

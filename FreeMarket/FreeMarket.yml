@@ -293,7 +293,7 @@ Files:
             Type:   int32
           - Name:   resource
             Type:   int32
-          - Name:   building_source
+          - Name:   building_target
             Type:   building
             Index:  RefId
       - Name:   power
@@ -308,11 +308,13 @@ Files:
             Type:   parameter_type
           - Name:   resource_forced
             Type:   int32
-          - Name:   building_source
+          - Name:   building_target
             Type:   parameter_type
           - Name:   boost
             Type:   boost_type
           - Name:   boost_power
+            Type:   int32
+          - Name:   range
             Type:   int32
       - Name:   action
         Member:

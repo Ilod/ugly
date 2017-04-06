@@ -32,6 +32,6 @@ namespace FreeMarket
         
     void Building::Execute(const Action& action, const PowerParameter& param)
     {
-        std::printf("2 %d %d %d %d\n", action.id, param.quantity, param.resource, (param.buildingSource != nullptr) ? (param.buildingSource->id) : -1);
+        std::printf("2 %d %d %d %d\n", action.id, param.quantity, param.resource, (param.buildingTarget != nullptr) ? (param.buildingTarget->id) : -1);
     }
 }

@@ -33,8 +33,7 @@ namespace ugly
         struct ResolvedPowerParameter
         {
             std::shared_ptr<ActionSource> powerOwner;
-            std::shared_ptr<ActionSource> source;
-            std::shared_ptr<ActionSource> target;
+            std::vector<std::shared_ptr<ActionSource>> target;
             int quantity = ParameterConstant::None;
             int resource = ParameterConstant::None;
         };

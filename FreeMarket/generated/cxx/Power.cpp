@@ -6,7 +6,7 @@ namespace FreeMarket
     PowerParameter::PowerParameter()
         : quantity()
         , resource()
-        , buildingSource()
+        , buildingTarget()
     { }
         
     Power::Power()
@@ -15,9 +15,10 @@ namespace FreeMarket
         , quantityForced()
         , resource()
         , resourceForced()
-        , buildingSource()
+        , buildingTarget()
         , boost()
         , boostPower()
+        , range()
     { }
         
     Action::Action()

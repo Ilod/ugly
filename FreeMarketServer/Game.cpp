@@ -80,7 +80,7 @@ namespace ugly
                         ++action.id;
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceSelling;
-                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.buildingTarget = ParameterType::Choice;
                         action.power.quantity = ParameterType::Choice;
                         action.power.quantityForced = 3;
                         action.power.resource = ParameterType::Choice;
@@ -88,6 +88,7 @@ namespace ugly
                         action.power.type = FreeMarket::PowerType::SellResource;
                         action.power.boost = BoostType::None;
                         action.power.boostPower = 0;
+                        action.power.range = -1;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);
@@ -106,7 +107,7 @@ namespace ugly
                         ++action.id;
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceSelling;
-                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.buildingTarget = ParameterType::Choice;
                         action.power.quantity = ParameterType::Choice;
                         action.power.quantityForced = 3;
                         action.power.resource = ParameterType::Choice;
@@ -114,12 +115,13 @@ namespace ugly
                         action.power.type = FreeMarket::PowerType::SellResource;
                         action.power.boost = BoostType::None;
                         action.power.boostPower = 0;
+                        action.power.range = -1;
                         building.action.push_back(action);
 
                         ++action.id;
                         action.actionPoint = 2;
                         action.priority = ActionPriority::ResourceSelling;
-                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.buildingTarget = ParameterType::Choice;
                         action.power.quantity = ParameterType::Choice;
                         action.power.quantityForced = 3;
                         action.power.resource = ParameterType::Choice;
@@ -127,6 +129,7 @@ namespace ugly
                         action.power.type = FreeMarket::PowerType::SellResource;
                         action.power.boost = BoostType::Percent;
                         action.power.boostPower = 30;
+                        action.power.range = -1;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);
@@ -145,7 +148,7 @@ namespace ugly
                         ++action.id;
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceSelling;
-                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.buildingTarget = ParameterType::Choice;
                         action.power.quantity = ParameterType::All;
                         action.power.quantityForced = -1;
                         action.power.resource = ParameterType::Choice;
@@ -153,12 +156,13 @@ namespace ugly
                         action.power.type = FreeMarket::PowerType::SellResource;
                         action.power.boost = BoostType::Percent;
                         action.power.boostPower = -20;
+                        action.power.range = -1;
                         building.action.push_back(action);
 
                         ++action.id;
                         action.actionPoint = 2;
                         action.priority = ActionPriority::ResourceSelling;
-                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.buildingTarget = ParameterType::Choice;
                         action.power.quantity = ParameterType::All;
                         action.power.quantityForced = -1;
                         action.power.resource = ParameterType::All;
@@ -166,12 +170,13 @@ namespace ugly
                         action.power.type = FreeMarket::PowerType::SellResource;
                         action.power.boost = BoostType::Percent;
                         action.power.boostPower = -30;
+                        action.power.range = -1;
                         building.action.push_back(action);
 
                         ++action.id;
                         action.actionPoint = 3;
                         action.priority = ActionPriority::ResourceSelling;
-                        action.power.buildingSource = ParameterType::All;
+                        action.power.buildingTarget = ParameterType::All;
                         action.power.quantity = ParameterType::All;
                         action.power.quantityForced = -1;
                         action.power.resource = ParameterType::All;
@@ -179,6 +184,7 @@ namespace ugly
                         action.power.type = FreeMarket::PowerType::SellResource;
                         action.power.boost = BoostType::Percent;
                         action.power.boostPower = -50;
+                        action.power.range = -1;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);
@@ -198,7 +204,7 @@ namespace ugly
                         ++action.id;
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceSelling;
-                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.buildingTarget = ParameterType::Choice;
                         action.power.quantity = ParameterType::Choice;
                         action.power.quantityForced = 3;
                         action.power.resource = ParameterType::Choice;
@@ -206,12 +212,13 @@ namespace ugly
                         action.power.type = FreeMarket::PowerType::SellResource;
                         action.power.boost = BoostType::Percent;
                         action.power.boostPower = -20;
+                        action.power.range = -1;
                         building.action.push_back(action);
 
                         ++action.id;
                         action.actionPoint = 2;
                         action.priority = ActionPriority::ResourceSelling;
-                        action.power.buildingSource = ParameterType::Choice;
+                        action.power.buildingTarget = ParameterType::Choice;
                         action.power.quantity = ParameterType::Choice;
                         action.power.quantityForced = 3;
                         action.power.resource = ParameterType::Forced;
@@ -219,6 +226,7 @@ namespace ugly
                         action.power.type = FreeMarket::PowerType::SellResource;
                         action.power.boost = BoostType::Percent;
                         action.power.boostPower = 60;
+                        action.power.range = -1;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);
@@ -238,7 +246,7 @@ namespace ugly
                         ++action.id;
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceProduction;
-                        action.power.buildingSource = ParameterType::Self;
+                        action.power.buildingTarget = ParameterType::Self;
                         action.power.quantity = ParameterType::Forced;
                         action.power.quantityForced = 2;
                         action.power.resource = ParameterType::Forced;
@@ -246,6 +254,7 @@ namespace ugly
                         action.power.type = FreeMarket::PowerType::ProduceResource;
                         action.power.boost = BoostType::None;
                         action.power.boostPower = 0;
+                        action.power.range = -1;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);
@@ -265,7 +274,7 @@ namespace ugly
                         ++action.id;
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceProduction;
-                        action.power.buildingSource = ParameterType::Self;
+                        action.power.buildingTarget = ParameterType::Self;
                         action.power.quantity = ParameterType::Forced;
                         action.power.quantityForced = 5;
                         action.power.resource = ParameterType::Forced;
@@ -273,6 +282,7 @@ namespace ugly
                         action.power.type = FreeMarket::PowerType::ProduceResource;
                         action.power.boost = BoostType::None;
                         action.power.boostPower = 0;
+                        action.power.range = -1;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);
@@ -291,7 +301,7 @@ namespace ugly
                         ++action.id;
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceProduction;
-                        action.power.buildingSource = ParameterType::Self;
+                        action.power.buildingTarget = ParameterType::Self;
                         action.power.quantity = ParameterType::Forced;
                         action.power.quantityForced = 1;
                         action.power.resource = ParameterType::All;
@@ -299,6 +309,7 @@ namespace ugly
                         action.power.type = FreeMarket::PowerType::ProduceResource;
                         action.power.boost = BoostType::None;
                         action.power.boostPower = 0;
+                        action.power.range = -1;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);
@@ -317,7 +328,7 @@ namespace ugly
                         ++action.id;
                         action.actionPoint = 1;
                         action.priority = ActionPriority::ResourceProduction;
-                        action.power.buildingSource = ParameterType::Self;
+                        action.power.buildingTarget = ParameterType::Self;
                         action.power.quantity = ParameterType::Forced;
                         action.power.quantityForced = 2;
                         action.power.resource = ParameterType::Choice;
@@ -325,6 +336,7 @@ namespace ugly
                         action.power.type = FreeMarket::PowerType::ProduceResource;
                         action.power.boost = BoostType::None;
                         action.power.boostPower = 0;
+                        action.power.range = -1;
                         building.action.push_back(action);
 
                         gameSetup.building.push_back(building);

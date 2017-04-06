@@ -6,5 +6,7 @@ namespace ugly
     {
         struct CellPrivate
         {
-        };    }
+            static int GetDistance(const struct Cell* c1, const struct Cell* c2);
+        };
+    }
 }

@@ -347,13 +347,13 @@ namespace ugly
                     buffer << data.resource << " ";
                 }
                 {
-                    if (data.buildingSource == nullptr)
+                    if (data.buildingTarget == nullptr)
                     {
                         buffer << -1 << " ";
                     }
                     else
                     {                
-                        buffer << data.buildingSource->id << " ";
+                        buffer << data.buildingTarget->id << " ";
                     }
                 }
             }
@@ -376,13 +376,16 @@ namespace ugly
                     buffer << data.resourceForced << " ";
                 }
                 {                
-                    buffer << (int)data.buildingSource << " ";
+                    buffer << (int)data.buildingTarget << " ";
                 }
                 {                
                     buffer << (int)data.boost << " ";
                 }
                 {
                     buffer << data.boostPower << " ";
+                }
+                {
+                    buffer << data.range << " ";
                 }
             }
 
@@ -1013,7 +1016,7 @@ namespace ugly
                     Deserialize(member, buf, gameSetup, gameState);
                 }
                 {
-                    auto& member = data.buildingSource;
+                    auto& member = data.buildingTarget;
                     {
                         std::int32_t classIdx0 = ReadNext<std::int32_t>(buf);
                         member = Serializer::FindBuilding(*gameSetup, *gameState, classIdx0);

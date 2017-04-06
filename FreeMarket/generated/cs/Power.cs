@@ -32,7 +32,7 @@ namespace FreeMarket
         
         public int Quantity;
         public int Resource;
-        public Building BuildingSource;
+        public Building BuildingTarget;
         
     }
 
@@ -44,9 +44,10 @@ namespace FreeMarket
         public int QuantityForced;
         public ParameterType Resource;
         public int ResourceForced;
-        public ParameterType BuildingSource;
+        public ParameterType BuildingTarget;
         public BoostType Boost;
         public int BoostPower;
+        public int Range;
         
     }
 

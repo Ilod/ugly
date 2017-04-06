@@ -10,7 +10,7 @@ namespace ugly
         PowerParameter::PowerParameter()
             : quantity()
             , resource()
-            , buildingSource()
+            , buildingTarget()
         { }
             
         Power::Power()
@@ -19,7 +19,7 @@ namespace ugly
             , quantityForced()
             , resource()
             , resourceForced()
-            , buildingSource()
+            , buildingTarget()
         { }
             
         Action::Action()
@@ -36,13 +36,26 @@ namespace ugly
 
             ResolvedPowerParameter resolved;
             resolved.powerOwner = std::move(source);
-            switch (action.power.buildingSource)
+            switch (action.power.buildingTarget)
             {
             case ParameterType::Self:
-                resolved.source = resolved.powerOwner;
+                resolved.target.push_back(resolved.powerOwner);
                 break;
             case ParameterType::Choice:
-                resolved.source = std::shared_ptr<ActionSource>(new BuildingActionSource(*parameter.buildingSource));
+                if (!parameter.buildingTarget)
+                    return false;
+                if (action.power.range >= 0 && CellPrivate::GetDistance(resolved.powerOwner->GetCell(), parameter.buildingTarget->position) > action.power.range)
+                    return false;
+                resolved.target.push_back(std::shared_ptr<ActionSource>(new BuildingActionSource(*parameter.buildingTarget)));
+                break;
+            case ParameterType::All:
+                for (Building& building : gameState.building)
+                {
+                    if (action.power.range < 0 || CellPrivate::GetDistance(resolved.powerOwner->GetCell(), building.position) <= action.power.range)
+                    {
+                        resolved.target.push_back(std::shared_ptr<ActionSource>(new BuildingActionSource(building)));
+                    }
+                }
                 break;
             }
             switch (action.power.quantity)
@@ -91,86 +104,94 @@ namespace ugly
         {
             if (parameter.resource == ParameterConstant::None)
                 return false;
-            if (!parameter.source)
+            if (parameter.target.empty())
                 return false;
             if (parameter.quantity == 0 || parameter.quantity == ParameterConstant::None)
                 return false;
-            int resourceCapacity = parameter.source->GetResourceCapacity();
-            int resources = 0;
-            for (int r = 0; r < gameSetup.resourceCount; ++r)
-                resources += parameter.source->GetResource(r);
-            if (resources >= resourceCapacity)
-                return false;
-            if (parameter.resource == ParameterConstant::All)
+            bool resourceProduced = false;
+            for (std::shared_ptr<ActionSource> target : parameter.target)
             {
-                for (int r = 0; r < gameSetup.resourceCount && resources < resourceCapacity; ++r)
+                int resourceCapacity = target->GetResourceCapacity();
+                int resources = 0;
+                for (int r = 0; r < gameSetup.resourceCount; ++r)
+                    resources += target->GetResource(r);
+                if (resources >= resourceCapacity)
+                    continue;
+                if (parameter.resource == ParameterConstant::All)
                 {
+                    for (int r = 0; r < gameSetup.resourceCount && resources < resourceCapacity; ++r)
+                    {
+                        int addedResources = std::min(parameter.quantity, resourceCapacity - resources);
+                        target->SetResource(r, target->GetResource(r) + addedResources);
+                        resources += addedResources;
+                    }
+                }
+                else
+                {
+                    resourceProduced = true;
                     int addedResources = std::min(parameter.quantity, resourceCapacity - resources);
-                    parameter.source->SetResource(r, parameter.source->GetResource(r) + addedResources);
-                    resources += addedResources;
+                    target->SetResource(parameter.resource, target->GetResource(parameter.resource) + addedResources);
                 }
             }
-            else
-            {
-                int addedResources = std::min(parameter.quantity, resourceCapacity - resources);
-                parameter.source->SetResource(parameter.resource, parameter.source->GetResource(parameter.resource) + addedResources);
-            }
-            return true;
+            return resourceProduced;
         }
 
         bool ActionPrivate::ExecuteSellResource(const GameConfig& gameSetup, const PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState, const Action& action, const ResolvedPowerParameter& parameter)
         {
             if (parameter.resource == ParameterConstant::None)
                 return false;
-            if (!parameter.source)
+            if (parameter.target.empty())
                 return false;
             if (parameter.quantity == 0 || parameter.quantity == ParameterConstant::None)
                 return false;
-            if (parameter.resource == ParameterConstant::All)
+            bool resourceSold = false;
+            for (std::shared_ptr<ActionSource> target : parameter.target)
             {
-                bool resourceSold = false;
-                for (int r = 0; r < gameSetup.resourceCount; ++r)
+                if (parameter.resource == ParameterConstant::All)
                 {
-                    int currentResource = parameter.source->GetResource(r);
-                    if (currentResource > 0)
+                    for (int r = 0; r < gameSetup.resourceCount; ++r)
                     {
-                        resourceSold = true;
-                        int resourceSoldCount = (parameter.quantity == ParameterConstant::All ? currentResource : std::min(parameter.quantity, currentResource));
-                        parameter.source->SetResource(r, currentResource - resourceSoldCount);
-                        int resourcePrice = gameState.resourcePrice[r];
-                        switch (action.power.boost)
+                        int currentResource = target->GetResource(r);
+                        if (currentResource > 0)
                         {
-                        case BoostType::Fixed:
-                            resourcePrice = std::max(0, resourcePrice + action.power.boostPower);
-                            break;
-                        case BoostType::Percent:
-                            resourcePrice = resourcePrice * (100 + action.power.boostPower) / 100;
-                            break;
+                            resourceSold = true;
+                            int resourceSoldCount = (parameter.quantity == ParameterConstant::All ? currentResource : std::min(parameter.quantity, currentResource));
+                            target->SetResource(r, currentResource - resourceSoldCount);
+                            int resourcePrice = gameState.resourcePrice[r];
+                            switch (action.power.boost)
+                            {
+                            case BoostType::Fixed:
+                                resourcePrice = std::max(0, resourcePrice + action.power.boostPower);
+                                break;
+                            case BoostType::Percent:
+                                resourcePrice = resourcePrice * (100 + action.power.boostPower) / 100;
+                                break;
+                            }
+                            playerState.money += resourcePrice * resourceSoldCount;
                         }
-                        playerState.money += resourcePrice * resourceSoldCount;
                     }
                 }
-                return resourceSold;
-            }
-            else
-            {
-                int currentResource = parameter.source->GetResource(parameter.resource);
-                if (currentResource <= 0)
-                    return false;
-                int resourceSoldCount = (parameter.quantity == ParameterConstant::All ? currentResource : std::min(parameter.quantity, currentResource));
-                parameter.source->SetResource(parameter.resource, currentResource - resourceSoldCount);
-                int resourcePrice = gameState.resourcePrice[parameter.resource];
-                switch (action.power.boost)
+                else
                 {
-                case BoostType::Fixed:
-                    resourcePrice = std::max(0, resourcePrice + action.power.boostPower);
-                    break;
-                case BoostType::Percent:
-                    resourcePrice = resourcePrice * (100 + action.power.boostPower) / 100;
-                    break;
+                    int currentResource = target->GetResource(parameter.resource);
+                    if (currentResource <= 0)
+                        continue;
+                    resourceSold = true;
+                    int resourceSoldCount = (parameter.quantity == ParameterConstant::All ? currentResource : std::min(parameter.quantity, currentResource));
+                    target->SetResource(parameter.resource, currentResource - resourceSoldCount);
+                    int resourcePrice = gameState.resourcePrice[parameter.resource];
+                    switch (action.power.boost)
+                    {
+                    case BoostType::Fixed:
+                        resourcePrice = std::max(0, resourcePrice + action.power.boostPower);
+                        break;
+                    case BoostType::Percent:
+                        resourcePrice = resourcePrice * (100 + action.power.boostPower) / 100;
+                        break;
+                    }
+                    playerState.money += resourcePrice * resourceSoldCount;
+                    return true;
                 }
-                playerState.money += resourcePrice * resourceSoldCount;
-                return true;
             }
         }
     }

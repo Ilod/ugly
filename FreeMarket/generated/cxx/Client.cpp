@@ -391,7 +391,7 @@ namespace FreeMarket
                 Deserialize(member, buf, gameSetup, gameState);
             }
             {
-                auto& member = data.buildingSource;
+                auto& member = data.buildingTarget;
                 Deserialize(member, buf, gameSetup, gameState);
             }
             {
@@ -400,6 +400,10 @@ namespace FreeMarket
             }
             {
                 auto& member = data.boostPower;
+                Deserialize(member, buf, gameSetup, gameState);
+            }
+            {
+                auto& member = data.range;
                 Deserialize(member, buf, gameSetup, gameState);
             }
         }

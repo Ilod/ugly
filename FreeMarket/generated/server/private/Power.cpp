@@ -9,7 +9,7 @@ namespace ugly
         PowerParameter::PowerParameter()
             : quantity()
             , resource()
-            , buildingSource()
+            , buildingTarget()
         { }
             
         Power::Power()
@@ -18,9 +18,10 @@ namespace ugly
             , quantityForced()
             , resource()
             , resourceForced()
-            , buildingSource()
+            , buildingTarget()
             , boost()
             , boostPower()
+            , range()
         { }
             
         Action::Action()

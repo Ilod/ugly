@@ -36,7 +36,7 @@ namespace ugly
         {
             std::int32_t quantity;
             std::int32_t resource;
-            Building* buildingSource;
+            Building* buildingTarget;
             PowerParameterPrivate additionalData;        
     
             
@@ -52,9 +52,10 @@ namespace ugly
             std::int32_t quantityForced;
             ParameterType resource;
             std::int32_t resourceForced;
-            ParameterType buildingSource;
+            ParameterType buildingTarget;
             BoostType boost;
             std::int32_t boostPower;
+            std::int32_t range;
             PowerPrivate additionalData;        
     
             
