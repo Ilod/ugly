@@ -30,7 +30,7 @@ namespace FreeMarket
         
         public static IList<Tuple<int, int>> PlayLocalServer(GameClient client, string serverPath, IList<string> otherPlayers = null, string game = "FreeMarket", string serverArgs = "")
         {
-            return PlayLocalServerCommandLine(client, serverPath, string.Format("-game \"{0}\" {1} {2}", game, string.Join(" ", (otherPlayers ?? Enumerable.Empty<string>()).Select(player => string.Format("-player \"{0}\"", player))), serverArgs));
+            return PlayLocalServerCommandLine(client, serverPath, string.Format("-game \"{0}\" -player parent; {1} {2}", game, string.Join(" ", (otherPlayers ?? Enumerable.Empty<string>()).Select(player => string.Format("-player \"{0}\"", player))), serverArgs));
         }
 
         public static IList<Tuple<int, int>> PlayLocalServerCommandLine(GameClient client, string serverPath, string commandLine)
