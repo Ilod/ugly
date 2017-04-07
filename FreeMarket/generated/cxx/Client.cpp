@@ -177,6 +177,18 @@ namespace FreeMarket
                 }
             }
             {
+                auto& member = data.player;
+                int size0 = ReadNext<int>(buf);
+                auto& array0 = member;
+                array0.resize(size0);
+                for (int idx0 = 0; idx0 < size0; ++idx0)
+                {
+                    auto& array1 = array0[idx0];
+                    Deserialize(array1, buf, gameSetup, gameState);
+                    array1.id = idx0;
+                }
+            }
+            {
                 auto& member = data.building;
                 int size0 = ReadNext<int>(buf);
                 auto& array0 = member;
@@ -208,18 +220,6 @@ namespace FreeMarket
                     {
                         (*gameState).player[array1.owner].buildingCard.push_back(&array1);
                     }
-                }
-            }
-            {
-                auto& member = data.player;
-                int size0 = ReadNext<int>(buf);
-                auto& array0 = member;
-                array0.resize(size0);
-                for (int idx0 = 0; idx0 < size0; ++idx0)
-                {
-                    auto& array1 = array0[idx0];
-                    Deserialize(array1, buf, gameSetup, gameState);
-                    array1.id = idx0;
                 }
             }
             {

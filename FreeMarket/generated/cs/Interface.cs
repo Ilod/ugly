@@ -45,9 +45,9 @@ namespace FreeMarket
         public Cell[,] Map;
         public int[] ResourcePrice;
         public PriceEvolution[] ResourceEvolution;
+        public PlayerState[] Player;
         public Building[] Building;
         public BuildingCard[] BuildingCard;
-        public PlayerState[] Player;
         public Auction[] Auction;
         public Auction[] EndedAuction;
         public Auction[] FutureAuction;

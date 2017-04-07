@@ -216,6 +216,17 @@ namespace FreeMarket
                 }
                 {
                     int size0 = ReadNextInt();
+                    data.Player = new PlayerState[size0];
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        PlayerState element = new PlayerState();
+                        Deserialize(element, gameSetup, gameState);
+                        element.Id = idx0;
+                        data.Player[idx0] = element;
+                    }
+                }
+                {
+                    int size0 = ReadNextInt();
                     data.Building = new Building[size0];
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
@@ -244,17 +255,6 @@ namespace FreeMarket
                             gameState.Player[element.Owner].BuildingCard.Add(element);
                         }
                         data.BuildingCard[idx0] = element;
-                    }
-                }
-                {
-                    int size0 = ReadNextInt();
-                    data.Player = new PlayerState[size0];
-                    for (int idx0 = 0; idx0 < size0; ++idx0)
-                    {
-                        PlayerState element = new PlayerState();
-                        Deserialize(element, gameSetup, gameState);
-                        element.Id = idx0;
-                        data.Player[idx0] = element;
                     }
                 }
                 {

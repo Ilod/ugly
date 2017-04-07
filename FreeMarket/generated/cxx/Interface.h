@@ -58,9 +58,9 @@ namespace FreeMarket
         std::vector<std::vector<Cell>> map;
         std::vector<std::int32_t> resourcePrice;
         std::vector<PriceEvolution> resourceEvolution;
+        std::vector<PlayerState> player;
         std::vector<Building> building;
         std::vector<BuildingCard> buildingCard;
-        std::vector<PlayerState> player;
         std::vector<Auction> auction;
         std::vector<Auction> endedAuction;
         std::vector<Auction> futureAuction;        

@@ -88,16 +88,16 @@ Files:
                 Function:       know_resource_evolution
                 Context:        Parent
                 DefaultValue:   unknown
+          - Name:   player
+            Type:   player_state
+            Array:  1
+            Index:  Strong
           - Name:   building
             Type:   building
             Array:  1
             Index:  Strong
           - Name:   building_card
             Type:   building_card
-            Array:  1
-            Index:  Strong
-          - Name:   player
-            Type:   player_state
             Array:  1
             Index:  Strong
           - Name:   auction

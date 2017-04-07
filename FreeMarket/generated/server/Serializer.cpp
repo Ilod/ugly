@@ -183,6 +183,14 @@ namespace ugly
                     }
                 }
                 {
+                    int size0 = (int)(data.player.size());
+                    buffer << size0 << " ";
+                    for (int idx0 = 0; idx0 < size0; ++idx0)
+                    {
+                        SerializeInternal(data.player[idx0], buffer, gameSetup, playerSetup, gameState, playerState);
+                    }
+                }
+                {
                     int size0 = (int)(data.building.size());
                     buffer << size0 << " ";
                     for (int idx0 = 0; idx0 < size0; ++idx0)
@@ -196,14 +204,6 @@ namespace ugly
                     for (int idx0 = 0; idx0 < size0; ++idx0)
                     {
                         SerializeInternal(data.buildingCard[idx0], buffer, gameSetup, playerSetup, gameState, playerState);
-                    }
-                }
-                {
-                    int size0 = (int)(data.player.size());
-                    buffer << size0 << " ";
-                    for (int idx0 = 0; idx0 < size0; ++idx0)
-                    {
-                        SerializeInternal(data.player[idx0], buffer, gameSetup, playerSetup, gameState, playerState);
                     }
                 }
                 {
@@ -481,6 +481,14 @@ namespace ugly
                     }
                 }
                 {
+                    auto& memberArray0 = data.player;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (BuildingCard* res = FindBuildingCardInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
                     auto& memberArray0 = data.building;
                     for (auto& memberArray1 : memberArray0)
                     {
@@ -490,14 +498,6 @@ namespace ugly
                 }
                 {
                     auto& memberArray0 = data.buildingCard;
-                    for (auto& memberArray1 : memberArray0)
-                    {
-                        if (BuildingCard* res = FindBuildingCardInternal(memberArray1, id))
-                            return res;
-                    }
-                }
-                {
-                    auto& memberArray0 = data.player;
                     for (auto& memberArray1 : memberArray0)
                     {
                         if (BuildingCard* res = FindBuildingCardInternal(memberArray1, id))
@@ -616,6 +616,14 @@ namespace ugly
                     }
                 }
                 {
+                    auto& memberArray0 = data.player;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Building* res = FindBuildingInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
                     auto& memberArray0 = data.building;
                     for (auto& memberArray1 : memberArray0)
                     {
@@ -625,14 +633,6 @@ namespace ugly
                 }
                 {
                     auto& memberArray0 = data.buildingCard;
-                    for (auto& memberArray1 : memberArray0)
-                    {
-                        if (Building* res = FindBuildingInternal(memberArray1, id))
-                            return res;
-                    }
-                }
-                {
-                    auto& memberArray0 = data.player;
                     for (auto& memberArray1 : memberArray0)
                     {
                         if (Building* res = FindBuildingInternal(memberArray1, id))
@@ -751,6 +751,14 @@ namespace ugly
                     }
                 }
                 {
+                    auto& memberArray0 = data.player;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Action* res = FindActionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
                     auto& memberArray0 = data.building;
                     for (auto& memberArray1 : memberArray0)
                     {
@@ -760,14 +768,6 @@ namespace ugly
                 }
                 {
                     auto& memberArray0 = data.buildingCard;
-                    for (auto& memberArray1 : memberArray0)
-                    {
-                        if (Action* res = FindActionInternal(memberArray1, id))
-                            return res;
-                    }
-                }
-                {
-                    auto& memberArray0 = data.player;
                     for (auto& memberArray1 : memberArray0)
                     {
                         if (Action* res = FindActionInternal(memberArray1, id))
@@ -886,6 +886,14 @@ namespace ugly
                     }
                 }
                 {
+                    auto& memberArray0 = data.player;
+                    for (auto& memberArray1 : memberArray0)
+                    {
+                        if (Auction* res = FindAuctionInternal(memberArray1, id))
+                            return res;
+                    }
+                }
+                {
                     auto& memberArray0 = data.building;
                     for (auto& memberArray1 : memberArray0)
                     {
@@ -895,14 +903,6 @@ namespace ugly
                 }
                 {
                     auto& memberArray0 = data.buildingCard;
-                    for (auto& memberArray1 : memberArray0)
-                    {
-                        if (Auction* res = FindAuctionInternal(memberArray1, id))
-                            return res;
-                    }
-                }
-                {
-                    auto& memberArray0 = data.player;
                     for (auto& memberArray1 : memberArray0)
                     {
                         if (Auction* res = FindAuctionInternal(memberArray1, id))
