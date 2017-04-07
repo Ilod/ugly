@@ -37,8 +37,8 @@ namespace ugly
                     PriceEvolutionRange price;
                     price.type = PriceEvolution::HugeDecrease;
                     price.probability = 5;
-                    price.min = -5;
-                    price.max = -25;
+                    price.min = -25;
+                    price.max = -5;
                     gameSetup.additionalData.resourcePriceEvolution.push_back(price);
                     price.type = PriceEvolution::HugeIncrease;
                     price.probability = 5;
@@ -361,6 +361,12 @@ namespace ugly
             void InitStateData(GameConfig& gameSetup, GameState& gameState)
             {
                 gameState.player.resize(gameSetup.player.size());
+                for (int p = 0; p < (int)gameSetup.player.size(); ++p)
+                {
+                    gameState.player[p].id = p;
+                    gameState.player[p].team = p;
+                    gameState.player[p].money = gameSetup.startMoney;
+                }
                 gameState.map.resize(gameSetup.mapSizeX);
                 for (int x = 0; x < gameSetup.mapSizeX; ++x)
                 {
@@ -440,7 +446,7 @@ namespace ugly
             {
                 gameState.endedAuction.clear();
                 std::vector<Auction>::iterator itAuction = gameState.auction.begin();
-                while (itAuction != gameState.auction.end() && itAuction->turn == gameState.turn)
+                while (itAuction != gameState.auction.end())
                 {
                     bool hasEnded = true;
                     switch (itAuction->buyer)
@@ -518,6 +524,7 @@ namespace ugly
             }
             gameState.additionalData.delayedOrders.clear();
             gameState.additionalData.executeDelayed = false;
+            ++gameState.turn;
             InitTurnData(gameSetup, gameState);
         }
 
