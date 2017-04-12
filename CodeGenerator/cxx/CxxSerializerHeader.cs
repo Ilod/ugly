@@ -128,11 +128,25 @@ foreach (GameFile file in CxxHelper.Definition.Files)
             this.Write("& gameSetup, ");
             
             #line 25 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup)));
+            
+            #line default
+            #line hidden
+            this.Write("& playerSetup, ");
+            
+            #line 25 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default
             #line hidden
-            this.Write("& gameState, int playerId);");
+            this.Write("& gameState, ");
+            
+            #line 25 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState)));
+            
+            #line default
+            #line hidden
+            this.Write("& playerState);");
             
             #line 25 "D:\ugly\CodeGenerator\cxx\CxxSerializerHeader.tt"
 

@@ -2061,13 +2061,27 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             this.Write("& gameSetup, ");
             
             #line 399 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup)));
+            
+            #line default
+            #line hidden
+            this.Write("& playerSetup, ");
+            
+            #line 399 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default
             #line hidden
-            this.Write("& gameState, int currentPlayerId)\r\n        {\r\n            const char* buf = order" +
-                    ".c_str();\r\n            int _methodId = ReadNext<int>(buf);\r\n            switch (" +
-                    "_methodId)\r\n            {");
+            this.Write("& gameState, ");
+            
+            #line 399 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState)));
+            
+            #line default
+            #line hidden
+            this.Write("& playerState)\r\n        {\r\n            const char* buf = order.c_str();\r\n        " +
+                    "    int _methodId = ReadNext<int>(buf);\r\n            switch (_methodId)\r\n       " +
+                    "     {");
             
             #line 404 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 
@@ -2475,8 +2489,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
             
             #line default
             #line hidden
-            this.Write("(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[curren" +
-                    "tPlayerId]");
+            this.Write("(gameSetup, playerSetup, gameState, playerState");
             
             #line 503 "D:\ugly\CodeGenerator\cxx\CxxSerializationCode.tt"
 

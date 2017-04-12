@@ -22,6 +22,8 @@ namespace ugly
             ProcessData() {}
             ProcessData(const ProcessData&) = delete;
             ProcessData(ProcessData&&) = default;
+            ProcessData& operator=(const ProcessData&) = delete;
+            ProcessData& operator=(ProcessData&&) = default;
             ProcessData(std::string&& data, std::chrono::high_resolution_clock::duration time)
                 : data(std::move(data))
                 , time(time)

@@ -396,7 +396,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
 #>
 
 
-        bool Serializer::ExecuteOrder(const std::string& order, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, int currentPlayerId)
+        bool Serializer::ExecuteOrder(const std::string& order, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #>& gameSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerSetup) #>& playerSetup, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #>& gameState, <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.PlayerState) #>& playerState)
         {
             const char* buf = order.c_str();
             int _methodId = ReadNext<int>(buf);
@@ -500,7 +500,7 @@ foreach (GameClass c in CxxHelper.Definition.Class.Values)
                 }
                 #>
 
-                    return argThis.<#= Case.CamelCase.Convert(m.Name) #>(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId]<#
+                    return argThis.<#= Case.CamelCase.Convert(m.Name) #>(gameSetup, playerSetup, gameState, playerState<#
                 foreach (MethodParam a in m.Param)
                 {
                     #>, <#= Case.LowerCamelCase.Convert(a.Name) #><#

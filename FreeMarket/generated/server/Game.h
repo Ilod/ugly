@@ -19,6 +19,7 @@ namespace ugly
             std::chrono::milliseconds GetNextTurnTimeLimit(int player) override;
             std::chrono::milliseconds GetSetupTimeLimit(int player) override;
             std::chrono::milliseconds GetCleanupTimeLimit(int player) override;
+            bool ExecuteOrder(const std::string& order, int player) override { return Serializer::ExecuteOrder(order, gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
         private:
             GameConfig gameSetup;
             GameState gameState;

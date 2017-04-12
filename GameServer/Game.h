@@ -38,6 +38,7 @@ namespace ugly
             virtual std::chrono::milliseconds GetNextTurnTimeLimit(int player) = 0;
             virtual std::chrono::milliseconds GetSetupTimeLimit(int player) = 0;
             virtual std::chrono::milliseconds GetCleanupTimeLimit(int player) = 0;
+            virtual bool ExecuteOrder(const std::string& order, int player) = 0;
         private:
             const std::string endOfTurnMarker = "EOT";
             std::vector<loader::unique_ptr<process::IProcess>> players;

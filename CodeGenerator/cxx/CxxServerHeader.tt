@@ -24,6 +24,7 @@ namespace ugly
             std::chrono::milliseconds GetNextTurnTimeLimit(int player) override;
             std::chrono::milliseconds GetSetupTimeLimit(int player) override;
             std::chrono::milliseconds GetCleanupTimeLimit(int player) override;
+            bool ExecuteOrder(const std::string& order, int player) override { return Serializer::ExecuteOrder(order, gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
         private:
             <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup) #> gameSetup;
             <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState) #> gameState;

@@ -1073,7 +1073,7 @@ namespace ugly
             return FindAuctionInternal(gameSetup, id);
         }
 
-        bool Serializer::ExecuteOrder(const std::string& order, GameConfig& gameSetup, GameState& gameState, int currentPlayerId)
+        bool Serializer::ExecuteOrder(const std::string& order, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState)
         {
             const char* buf = order.c_str();
             int _methodId = ReadNext<int>(buf);
@@ -1086,7 +1086,7 @@ namespace ugly
                     if (!(argThis_idx0 >= 0 && argThis_idx1 >= 0 && gameState.map.size() > argThis_idx0 && gameState.map[argThis_idx0].size() > argThis_idx1))
                         return false;
                     Cell& argThis = gameState.map[argThis_idx0][argThis_idx1];
-                    return argThis.Buy(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], order);
+                    return argThis.Buy(gameSetup, playerSetup, gameState, playerState, order);
                 }
                 case 1: // BuildingCard::Build
                 {
@@ -1101,7 +1101,7 @@ namespace ugly
                             if (!(position_idx0 >= 0 && position_idx1 >= 0 && gameState.map.size() > position_idx0 && gameState.map[position_idx0].size() > position_idx1))
                                 return false;
                             Cell& position = gameState.map[position_idx0][position_idx1];
-                    return argThis.Build(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], position, order);
+                    return argThis.Build(gameSetup, playerSetup, gameState, playerState, position, order);
                 }
                 case 2: // Building::Execute
                 {
@@ -1118,7 +1118,7 @@ namespace ugly
                     Action& action = *(action_ptr);                            
                     PowerParameter param;
                     Deserialize(param, buf, &gameSetup, &gameState);
-                    return argThis.Execute(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], action, param, order);
+                    return argThis.Execute(gameSetup, playerSetup, gameState, playerState, action, param, order);
                 }
                 case 3: // Auction::Bid
                 {
@@ -1129,7 +1129,7 @@ namespace ugly
                         return false;
                     Auction& argThis = *argThisPtr;
                     std::int32_t money = ReadNext<std::int32_t>(buf);
-                    return argThis.Bid(gameSetup, gameSetup.player[currentPlayerId], gameState, gameState.player[currentPlayerId], money, order);
+                    return argThis.Bid(gameSetup, playerSetup, gameState, playerState, money, order);
                 }
                 default:
                     return false;

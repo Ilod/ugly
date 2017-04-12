@@ -56,17 +56,18 @@ namespace ugly.CodeGenerator.cxx
             std::chrono::milliseconds GetNextTurnTimeLimit(int player) override;
             std::chrono::milliseconds GetSetupTimeLimit(int player) override;
             std::chrono::milliseconds GetCleanupTimeLimit(int player) override;
+            bool ExecuteOrder(const std::string& order, int player) override { return Serializer::ExecuteOrder(order, gameSetup, gameSetup.player[player], gameState, gameState.player[player]); }
         private:
             ");
             
-            #line 28 "D:\ugly\CodeGenerator\cxx\CxxServerHeader.tt"
+            #line 29 "D:\ugly\CodeGenerator\cxx\CxxServerHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameSetup)));
             
             #line default
             #line hidden
             this.Write(" gameSetup;\r\n            ");
             
-            #line 29 "D:\ugly\CodeGenerator\cxx\CxxServerHeader.tt"
+            #line 30 "D:\ugly\CodeGenerator\cxx\CxxServerHeader.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Case.CamelCase.Convert(CxxHelper.Definition.Config.GameState)));
             
             #line default

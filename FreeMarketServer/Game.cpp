@@ -522,7 +522,7 @@ namespace ugly
             {
                 for (const auto& delayedOrder : delayedOrderList.second)
                 {
-                    Serializer::ExecuteOrder(std::get<0>(delayedOrder), gameSetup, gameState, std::get<1>(delayedOrder));
+                    Serializer::ExecuteOrder(std::get<0>(delayedOrder), gameSetup, gameSetup.player[std::get<1>(delayedOrder)], gameState, gameState.player[std::get<1>(delayedOrder)]);
                 }
                 ResolveActionsPendingState(gameSetup, gameState);
             }

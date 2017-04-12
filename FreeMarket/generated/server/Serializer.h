@@ -16,7 +16,7 @@ namespace ugly
         public:
             static std::string SerializeState(GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
             static std::string SerializeSetup(GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
-            static bool ExecuteOrder(const std::string& order, GameConfig& gameSetup, GameState& gameState, int playerId);
+            static bool ExecuteOrder(const std::string& order, GameConfig& gameSetup, PlayerConfig& playerSetup, GameState& gameState, PlayerState& playerState);
             static BuildingCard* FindBuildingCard(GameConfig& gameSetup, GameState& gameState, std::int32_t id);
             static Building* FindBuilding(GameConfig& gameSetup, GameState& gameState, std::int32_t id);
             static Action* FindAction(GameConfig& gameSetup, GameState& gameState, std::int32_t id);
