@@ -15,6 +15,6 @@ namespace FreeMarket
         
     void Cell::Buy()
     {
-        std::printf("0\n");
+        std::printf("0 %d %d\n", (*this).x, (*this).y);
     }
 }

@@ -34,7 +34,7 @@ namespace FreeMarket
         
         public void Buy()
         {
-            Console.WriteLine("0");
+            Console.WriteLine("0 {0} {1}", (this != null) ? (this.X) : -1, (this != null) ? (this.Y) : -1);
         }
     }
 }

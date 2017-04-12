@@ -139,11 +139,11 @@ namespace <#= Case.CamelCase.Convert(CsHelper.Definition.Config.Namespace) #>
             #>)
         {
             Console.WriteLine("<#= m.MethodId #><#
-            for (int idxParam = 0, paramCount = m.Param.Sum(a => CsHelper.GetSerializedMemberCount(a.Type)); idxParam < paramCount; ++idxParam)
+            for (int idxParam = 0, paramCount = m.Param.Sum(a => CsHelper.GetSerializedMemberCount(a.Type)) + CsHelper.GetSerializedMemberCount(c.Name); idxParam < paramCount; ++idxParam)
             {
                 #> {<#= idxParam #>}<#
             }
-            #>"<#
+            #>", <#= CsHelper.GetSerializedMemberString("", c.Name, "this") #><#
             foreach (MethodParam a in m.Param)
             {
                 #>, <#= CsHelper.GetSerializedMemberString("", a.Type, Case.LowerCamelCase.Convert(a.Name)) #><#

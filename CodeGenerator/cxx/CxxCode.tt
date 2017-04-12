@@ -104,11 +104,13 @@ namespace <#= Case.CamelCase.Convert(CxxHelper.Definition.Config.Namespace) #>
                 #>
 
         std::printf("<#= m.MethodId #><#
+            #> <#= CxxHelper.GetSerializedFormatString(c.Name) #><#
             foreach (MethodParam a in m.Param)
             {
                 #> <#= CxxHelper.GetSerializedFormatString(a.Type) #><#
             }
             #>\n"<#
+            #>, <#= CxxHelper.GetSerializedMemberString("", c.Name, "(*this)", true) #><#
             foreach (MethodParam a in m.Param)
             {
                 #>, <#= CxxHelper.GetSerializedMemberString("", a.Type, Case.LowerCamelCase.Convert(a.Name), true) #><#

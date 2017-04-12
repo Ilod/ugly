@@ -15,6 +15,6 @@ namespace FreeMarket
         
     void Auction::Bid(std::int32_t money)
     {
-        std::printf("3 %d\n", money);
+        std::printf("3 %d %d\n", (*this).id, money);
     }
 }

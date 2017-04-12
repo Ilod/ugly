@@ -19,7 +19,7 @@ namespace FreeMarket
         
     void BuildingCard::Build(const Cell& position)
     {
-        std::printf("1 %d %d\n", position.x, position.y);
+        std::printf("1 %d %d %d\n", (*this).id, position.x, position.y);
     }
     Building::Building()
         : id()
@@ -32,6 +32,6 @@ namespace FreeMarket
         
     void Building::Execute(const Action& action, const PowerParameter& param)
     {
-        std::printf("2 %d %d %d %d\n", action.id, param.quantity, param.resource, (param.buildingTarget != nullptr) ? (param.buildingTarget->id) : -1);
+        std::printf("2 %d %d %d %d %d\n", (*this).id, action.id, param.quantity, param.resource, (param.buildingTarget != nullptr) ? (param.buildingTarget->id) : -1);
     }
 }

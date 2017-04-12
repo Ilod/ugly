@@ -481,7 +481,7 @@ namespace ugly.CodeGenerator.cs
             
             #line 141 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
-            for (int idxParam = 0, paramCount = m.Param.Sum(a => CsHelper.GetSerializedMemberCount(a.Type)); idxParam < paramCount; ++idxParam)
+            for (int idxParam = 0, paramCount = m.Param.Sum(a => CsHelper.GetSerializedMemberCount(a.Type)) + CsHelper.GetSerializedMemberCount(c.Name); idxParam < paramCount; ++idxParam)
             {
                 
             
@@ -503,7 +503,13 @@ namespace ugly.CodeGenerator.cs
             
             #line default
             #line hidden
-            this.Write("\"");
+            this.Write("\", ");
+            
+            #line 146 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CsHelper.GetSerializedMemberString("", c.Name, "this")));
+            
+            #line default
+            #line hidden
             
             #line 146 "D:\ugly\CodeGenerator\cs\CsHeader.tt"
 
