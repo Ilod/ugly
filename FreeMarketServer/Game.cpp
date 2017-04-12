@@ -486,6 +486,10 @@ namespace ugly
                         ++itAuction;
                     }
                 }
+                for (PlayerState& player : gameState.player)
+                {
+                    player.additionalData.reservedMoney = 0;
+                }
                 PushCurrentAuctions(gameSetup, gameState);
             }
 
